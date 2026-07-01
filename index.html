@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı</title>
+  <meta name="description" content="KampanyaLab ile reklam bütçeni hedef, sektör ve kitleye göre medya kanallarına dağıt; tahmini performans ve kampanya raporu oluştur." />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <a href="#" class="logo"><span>Kampanya</span>Lab</a>
+      <div class="nav-links">
+        <a href="#planner">Plan Oluştur</a>
+        <a href="#calculators">Hesaplayıcılar</a>
+        <a href="#how">Nasıl Çalışır?</a>
+      </div>
+    </nav>
+
+    <section class="hero-content">
+      <div>
+        <p class="badge">Türkiye odaklı medya bütçesi simülatörü</p>
+        <h1>Reklam bütçeni doğru kanallara dağıt.</h1>
+        <p class="hero-text">
+          Kampanya hedefini, sektörünü ve bütçeni gir. KampanyaLab sana medya karması,
+          tahmini performans ve uygulanabilir kampanya planı oluştursun.
+        </p>
+        <div class="hero-actions">
+          <a href="#planner" class="btn primary">Plan Oluştur</a>
+          <a href="#calculators" class="btn secondary">CPM / CPC Hesapla</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <p class="mini-title">Örnek çıktı</p>
+        <h3>50.000 TL satış kampanyası</h3>
+        <div class="sample-bars">
+          <div><span>Google Search</span><strong>%30</strong></div>
+          <div><span>Instagram</span><strong>%25</strong></div>
+          <div><span>Remarketing</span><strong>%20</strong></div>
+          <div><span>TikTok</span><strong>%15</strong></div>
+          <div><span>YouTube</span><strong>%10</strong></div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="section intro" id="how">
+      <div class="section-heading">
+        <p class="badge">MVP v1</p>
+        <h2>İlk sürümde neler var?</h2>
+      </div>
+      <div class="features">
+        <article>
+          <h3>Akıllı bütçe dağılımı</h3>
+          <p>Bütçeyi kampanya amacı, sektör ve hedef kitleye göre medya kanallarına böler.</p>
+        </article>
+        <article>
+          <h3>Tahmini performans</h3>
+          <p>CPM, CPC, gösterim, tıklama ve tahmini CTR değerlerini simüle eder.</p>
+        </article>
+        <article>
+          <h3>Rapor metni</h3>
+          <p>Seçimlerine göre strateji açıklaması ve haftalık kampanya planı oluşturur.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section planner" id="planner">
+      <div class="section-heading">
+        <p class="badge">Plan oluşturucu</p>
+        <h2>Kampanyanı planla</h2>
+        <p>Bilgileri gir, medya dağılımını ve tahmini sonuçları anında gör.</p>
+      </div>
+
+      <div class="planner-grid">
+        <form id="plannerForm" class="panel form-panel">
+          <label>
+            Toplam bütçe (TL)
+            <input type="number" id="budget" min="1000" step="500" value="50000" required />
+          </label>
+
+          <label>
+            Kampanya amacı
+            <select id="goal">
+              <option value="awareness">Bilinirlik</option>
+              <option value="sales" selected>Satış</option>
+              <option value="traffic">Web site trafiği</option>
+              <option value="social">Sosyal medya büyütme</option>
+              <option value="launch">Ürün lansmanı</option>
+              <option value="local">Yerel işletme tanıtımı</option>
+            </select>
+          </label>
+
+          <label>
+            Sektör
+            <select id="sector">
+              <option value="ecommerce" selected>E-ticaret</option>
+              <option value="restaurant">Kafe / restoran</option>
+              <option value="fashion">Giyim / moda</option>
+              <option value="education">Eğitim</option>
+              <option value="technology">Teknoloji</option>
+              <option value="beauty">Güzellik / kuaför</option>
+              <option value="event">Etkinlik</option>
+              <option value="localService">Yerel hizmet</option>
+            </select>
+          </label>
+
+          <label>
+            Hedef kitle yaşı
+            <select id="audience">
+              <option value="13-18">13-18</option>
+              <option value="18-24" selected>18-24</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45+">45+</option>
+            </select>
+          </label>
+
+          <label>
+            Kampanya süresi
+            <select id="duration">
+              <option value="7">7 gün</option>
+              <option value="15">15 gün</option>
+              <option value="30" selected>30 gün</option>
+              <option value="60">60 gün</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn primary full">Medya Planı Oluştur</button>
+          <p class="notice">Not: Sonuçlar gerçek reklam performansı değil, medya planlama simülasyonudur.</p>
+        </form>
+
+        <div class="panel result-panel">
+          <div class="result-header">
+            <div>
+              <p class="mini-title">Önerilen medya karması</p>
+              <h3 id="resultTitle">Satış kampanyası planı</h3>
+            </div>
+            <button id="printReport" class="btn small">Raporu Yazdır</button>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="budgetChart"></canvas>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="insight-grid" id="insights"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kanal</th>
+                  <th>Oran</th>
+                  <th>Bütçe</th>
+                  <th>Tahmini Tıklama</th>
+                </tr>
+              </thead>
+              <tbody id="allocationTable"></tbody>
+            </table>
+          </div>
+
+          <div class="weekly-plan" id="weeklyPlan"></div>
+        </div>
+      </div>
+
+      <div class="panel report-panel">
+        <div class="report-header">
+          <div>
+            <p class="mini-title">Otomatik rapor</p>
+            <h3>Kampanya stratejisi</h3>
+          </div>
+          <button id="copyReport" class="btn small">Metni Kopyala</button>
+        </div>
+        <div id="strategyReport" class="report-text"></div>
+      </div>
+    </section>
+
+    <section class="section calculators" id="calculators">
+      <div class="section-heading">
+        <p class="badge">Mini araçlar</p>
+        <h2>CPM / CPC / ROI hesaplayıcı</h2>
+      </div>
+
+      <div class="calc-grid">
+        <div class="panel calc-card">
+          <h3>CPM</h3>
+          <input type="number" id="cpmCost" placeholder="Maliyet (TL)" />
+          <input type="number" id="cpmImpressions" placeholder="Gösterim" />
+          <button class="btn secondary full" data-calc="cpm">Hesapla</button>
+          <p id="cpmResult" class="calc-result">CPM: -</p>
+        </div>
+        <div class="panel calc-card">
+          <h3>CPC</h3>
+          <input type="number" id="cpcCost" placeholder="Maliyet (TL)" />
+          <input type="number" id="cpcClicks" placeholder="Tıklama" />
+          <button class="btn secondary full" data-calc="cpc">Hesapla</button>
+          <p id="cpcResult" class="calc-result">CPC: -</p>
+        </div>
+        <div class="panel calc-card">
+          <h3>ROI</h3>
+          <input type="number" id="roiRevenue" placeholder="Gelir (TL)" />
+          <input type="number" id="roiCost" placeholder="Maliyet (TL)" />
+          <button class="btn secondary full" data-calc="roi">Hesapla</button>
+          <p id="roiResult" class="calc-result">ROI: -</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <strong>KampanyaLab</strong>
+    <span>Reklam bütçesi ve medya planlama aracı</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
