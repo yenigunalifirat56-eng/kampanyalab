@@ -39,3 +39,9 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garan
 ## v1.4.1 güncellemesi
 - PDF çıktısında boş sayfa oluşmasına yol açabilen sayfa kırılımı ayarı düzeltildi.
 - PDF tabloları ve kartlarında sayfa geçişleri daha kontrollü hale getirildi.
+
+
+## v1.4.2 güncellemesi
+- PDF oluşturma sistemi html2pdf yerine pdfmake ile yeniden yazıldı.
+- Boş sayfa sorunu giderildi.
+- PDF raporu tablo ve metin bazlı daha stabil hale getirildi.

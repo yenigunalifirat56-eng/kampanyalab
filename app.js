@@ -519,111 +519,152 @@ function plainTextFromHtml(html) {
   return temp.innerText.replace(/\n{3,}/g, '\n\n').trim();
 }
 
-function buildPdfReportHtml(data) {
-  const reportText = document.getElementById('strategyReport').innerHTML;
+function cleanPdfText(text) {
+  return String(text || '')
+    .replace(/\s+\n/g, '\n')
+    .replace(/\n\s+/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function buildPdfDocumentDefinition(data) {
   const generatedAt = new Date().toLocaleDateString('tr-TR');
   const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
+  const reportText = cleanPdfText(document.getElementById('strategyReport').innerText);
+  const weeklyText = cleanPdfText(document.getElementById('weeklyPlan').innerText);
 
-  return `
-    <div class="pdf-document">
-      <div class="pdf-cover">
-        <div>
-          <p class="pdf-eyebrow">KampanyaLab Medya Planı</p>
-          <h1>${goalLabels[data.goal]} Kampanyası Raporu</h1>
-          <p>${sectorLabels[data.sector]} sektörü için ${data.duration} günlük tahmini medya planı.</p>
-        </div>
-        <div class="pdf-meta">
-          <span>Oluşturma tarihi</span>
-          <strong>${generatedAt}</strong>
-        </div>
-      </div>
+  const channelRows = data.rows.map(row => ([
+    { text: row.channel, bold: true },
+    row.role || '-',
+    `%${row.percent}`,
+    formatter.format(row.budget),
+    row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez',
+    row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'
+  ]));
 
-      <div class="pdf-summary">
-        <div><span>Bütçe</span><strong>${formatter.format(data.budget)}</strong></div>
-        <div><span>Süre</span><strong>${data.duration} gün</strong></div>
-        <div><span>Hedef kitle</span><strong>${data.audience}</strong></div>
-        <div><span>Ana kanallar</span><strong>${topChannels}</strong></div>
-      </div>
-
-      <h2>Performans Özeti</h2>
-      <div class="pdf-metrics">
-        <div><span>Tahmini gösterim</span><strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong></div>
-        <div><span>Tahmini tıklama</span><strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong></div>
-        <div><span>Ortalama CPC</span><strong>${data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-'}</strong></div>
-        <div><span>Ortalama CPM</span><strong>${data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-'}</strong></div>
-        <div><span>Tahmini CTR</span><strong>${data.ctr ? '%' + data.ctr.toFixed(2) : '-'}</strong></div>
-        <div><span>Günlük bütçe</span><strong>${formatter.format(data.dailyBudget)}</strong></div>
-      </div>
-
-      <h2>Kanal Dağılımı</h2>
-      <table class="pdf-table">
-        <thead>
-          <tr>
-            <th>Kanal</th>
-            <th>Rol</th>
-            <th>Oran</th>
-            <th>Bütçe</th>
-            <th>Gösterim</th>
-            <th>Tıklama</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.rows.map(row => `
-            <tr>
-              <td>${row.channel}</td>
-              <td>${row.role}</td>
-              <td>%${row.percent}</td>
-              <td>${formatter.format(row.budget)}</td>
-              <td>${row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez'}</td>
-              <td>${row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-
-      <h2>Strateji Raporu</h2>
-      <div class="pdf-report-text">${reportText}</div>
-
-      <h2>Haftalık Uygulama Planı</h2>
-      <div class="pdf-weekly">${document.getElementById('weeklyPlan').innerHTML}</div>
-
-      <div class="pdf-disclaimer">
-        KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve teklif stratejisine göre değişebilir.
-      </div>
-    </div>
-  `;
+  return {
+    pageSize: 'A4',
+    pageMargins: [32, 36, 32, 36],
+    info: {
+      title: `KampanyaLab ${goalLabels[data.goal]} Kampanyası Raporu`,
+      author: 'KampanyaLab',
+      subject: 'Tahmini medya planlama raporu'
+    },
+    footer(currentPage, pageCount) {
+      return {
+        columns: [
+          { text: 'KampanyaLab', margin: [32, 0, 0, 0], color: '#64748b', fontSize: 8 },
+          { text: `${currentPage} / ${pageCount}`, alignment: 'right', margin: [0, 0, 32, 0], color: '#64748b', fontSize: 8 }
+        ]
+      };
+    },
+    styles: {
+      h1: { fontSize: 20, bold: true, color: '#0f172a', margin: [0, 0, 0, 8] },
+      h2: { fontSize: 13, bold: true, color: '#1e3a8a', margin: [0, 18, 0, 8] },
+      small: { fontSize: 8, color: '#64748b' },
+      label: { fontSize: 8, color: '#64748b', margin: [0, 0, 0, 2] },
+      metric: { fontSize: 11, bold: true, color: '#0f172a' },
+      notice: { fontSize: 9, color: '#334155', margin: [0, 8, 0, 0] }
+    },
+    defaultStyle: {
+      fontSize: 9,
+      color: '#1f2937',
+      lineHeight: 1.25
+    },
+    content: [
+      {
+        table: {
+          widths: ['*'],
+          body: [[
+            {
+              stack: [
+                { text: 'KampanyaLab Medya Planı', color: '#bfdbfe', fontSize: 9, bold: true },
+                { text: `${goalLabels[data.goal]} Kampanyası Raporu`, color: '#ffffff', fontSize: 22, bold: true, margin: [0, 6, 0, 4] },
+                { text: `${sectorLabels[data.sector]} sektörü için ${data.duration} günlük tahmini medya planı.`, color: '#dbeafe', fontSize: 10 },
+                { text: `Oluşturma tarihi: ${generatedAt}`, color: '#dbeafe', fontSize: 8, margin: [0, 10, 0, 0] }
+              ],
+              fillColor: '#1e3a8a',
+              margin: [16, 14, 16, 14]
+            }
+          ]]
+        },
+        layout: 'noBorders'
+      },
+      {
+        columns: [
+          { stack: [{ text: 'Bütçe', style: 'label' }, { text: formatter.format(data.budget), style: 'metric' }] },
+          { stack: [{ text: 'Süre', style: 'label' }, { text: `${data.duration} gün`, style: 'metric' }] },
+          { stack: [{ text: 'Hedef kitle', style: 'label' }, { text: data.audience, style: 'metric' }] },
+          { stack: [{ text: 'Ana kanallar', style: 'label' }, { text: topChannels, style: 'metric' }] }
+        ],
+        columnGap: 10,
+        margin: [0, 14, 0, 4]
+      },
+      { text: 'Performans Özeti', style: 'h2' },
+      {
+        columns: [
+          { stack: [{ text: 'Tahmini gösterim', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalImpressions)), style: 'metric' }] },
+          { stack: [{ text: 'Tahmini tıklama', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalClicks)), style: 'metric' }] },
+          { stack: [{ text: 'Ortalama CPC', style: 'label' }, { text: data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-', style: 'metric' }] }
+        ],
+        columnGap: 10
+      },
+      {
+        columns: [
+          { stack: [{ text: 'Ortalama CPM', style: 'label' }, { text: data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-', style: 'metric' }] },
+          { stack: [{ text: 'Tahmini CTR', style: 'label' }, { text: data.ctr ? '%' + data.ctr.toFixed(2) : '-', style: 'metric' }] },
+          { stack: [{ text: 'Günlük bütçe', style: 'label' }, { text: formatter.format(data.dailyBudget), style: 'metric' }] }
+        ],
+        columnGap: 10,
+        margin: [0, 10, 0, 0]
+      },
+      { text: 'Kanal Dağılımı', style: 'h2' },
+      {
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', 32, 56, 58, 52],
+          body: [
+            [
+              { text: 'Kanal', bold: true, color: '#ffffff' },
+              { text: 'Rol', bold: true, color: '#ffffff' },
+              { text: 'Oran', bold: true, color: '#ffffff' },
+              { text: 'Bütçe', bold: true, color: '#ffffff' },
+              { text: 'Gösterim', bold: true, color: '#ffffff' },
+              { text: 'Tıklama', bold: true, color: '#ffffff' }
+            ],
+            ...channelRows
+          ]
+        },
+        layout: {
+          fillColor(rowIndex) { return rowIndex === 0 ? '#1e40af' : (rowIndex % 2 === 0 ? '#f8fafc' : null); },
+          hLineColor() { return '#e2e8f0'; },
+          vLineColor() { return '#e2e8f0'; }
+        }
+      },
+      { text: 'Strateji Raporu', style: 'h2' },
+      { text: reportText, margin: [0, 0, 0, 4] },
+      { text: 'Haftalık Uygulama Planı', style: 'h2' },
+      { text: weeklyText, margin: [0, 0, 0, 4] },
+      {
+        text: 'Uyarı: KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve teklif stratejisine göre değişebilir.',
+        style: 'notice'
+      }
+    ]
+  };
 }
 
 function downloadPdfReport() {
   if (!lastPlanData) createPlan();
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'pdf-export-wrapper';
-  wrapper.innerHTML = buildPdfReportHtml(lastPlanData);
-  document.body.appendChild(wrapper);
-
-  const fileNameGoal = goalLabels[lastPlanData.goal].toLowerCase().replace(/\s+/g, '-');
-  const options = {
-    margin: [8, 8, 8, 8],
-    filename: `kampanyalab-${fileNameGoal}-medya-plani.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'], avoid: ['.pdf-cover', '.pdf-summary div', '.pdf-metrics div', '.weekly-item', '.pdf-disclaimer'] }
-  };
-
-  const cleanUp = () => wrapper.remove();
-
-  if (typeof html2pdf === 'undefined') {
-    cleanUp();
+  if (typeof pdfMake === 'undefined') {
+    alert('PDF kütüphanesi yüklenemedi. Yazdır seçeneğiyle PDF olarak kaydedebilirsin.');
     window.print();
     return;
   }
 
-  html2pdf().set(options).from(wrapper.querySelector('.pdf-document')).save().then(cleanUp).catch(() => {
-    cleanUp();
-    alert('PDF oluşturma sırasında sorun oluştu. Yazdır seçeneğiyle PDF olarak kaydedebilirsin.');
-  });
+  const fileNameGoal = goalLabels[lastPlanData.goal].toLowerCase().replace(/\s+/g, '-');
+  const docDefinition = buildPdfDocumentDefinition(lastPlanData);
+  pdfMake.createPdf(docDefinition).download(`kampanyalab-${fileNameGoal}-medya-plani.pdf`);
 }
 
 document.getElementById('downloadPdf')?.addEventListener('click', downloadPdfReport);
