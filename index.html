@@ -42,10 +42,14 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#planner">Plan oluşturucuya geç</a>
   <header class="hero">
     <nav class="navbar">
       <a href="#" class="logo"><span>Kampanya</span>Lab</a>
-      <div class="nav-links">
+      <button class="nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="primaryNavigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="primaryNavigation">
         <a href="#planner">Plan Oluştur</a>
         <a href="#templates">Şablonlar</a>
         <a href="#audience">Kimler Kullanır?</a>
@@ -85,11 +89,11 @@
     </section>
   </header>
 
-  <main>
+  <main id="main">
     <section class="section intro" id="how">
       <div class="section-heading">
-        <p class="badge">MVP v1.6</p>
-        <h2>KampanyaLab artık daha profesyonel bir ürün sayfası</h2>
+        <p class="badge">MVP v1.7</p>
+        <h2>KampanyaLab artık mobil ve kalite kontrolleri güçlendirilmiş bir ürün</h2>
       </div>
       <div class="features">
         <article>
@@ -182,7 +186,7 @@
           <p><strong>✓</strong> Düşük bütçede fazla kanala bölünmeyi azaltır.</p>
           <p><strong>✓</strong> Şablonlarla hızlı başlangıç sağlar.</p>
           <p><strong>✓</strong> Sonuçları PDF ve yazdırma çıktısına dönüştürür.</p>
-          <p><strong>✓</strong> Verileri bu MVP sürümünde sunucuya göndermez.</p>
+          <p><strong>✓</strong> Verileri bu v1.7 MVP sürümünde sunucuya göndermez.</p>
         </div>
       </div>
     </section>
@@ -240,7 +244,8 @@
         <form id="plannerForm" class="panel form-panel" autocomplete="off">
           <label>
             Toplam bütçe (TL)
-            <input type="number" id="budget" min="1000" step="500" value="50000" autocomplete="off" required />
+            <input type="number" id="budget" min="1000" max="5000000" step="500" value="50000" inputmode="numeric" autocomplete="off" required />
+            <span class="field-help">Minimum 1.000 TL, önerilen üst test sınırı 5.000.000 TL.</span>
           </label>
 
           <label>
@@ -291,6 +296,7 @@
           </label>
 
           <button type="submit" class="btn primary full">Medya Planı Oluştur</button>
+          <p id="formStatus" class="form-status" aria-live="polite"></p>
           <p class="notice">Not: Sonuçlar gerçek reklam performansı değil, medya planlama simülasyonudur.</p>
         </form>
 
@@ -362,7 +368,7 @@
 
     <section class="section trust" id="trust">
       <div class="section-heading">
-        <p class="badge">Güven ve şeffaflık</p>
+        <p class="badge">Güven ve kalite</p>
         <h2>Verilerin sende kalır, sonuçlar tahminidir.</h2>
         <p>KampanyaLab ilk sürümde kişisel veri toplamaz; hesaplamaları tarayıcı içinde yapar.</p>
       </div>
@@ -370,7 +376,7 @@
       <div class="trust-grid">
         <article class="panel trust-card">
           <h3>Tarayıcıda hesaplama</h3>
-          <p>Girdiğin bütçe, sektör, hedef ve süre bilgileri bu MVP sürümünde sunucuya gönderilmez. Hesaplama doğrudan cihazındaki tarayıcıda yapılır.</p>
+          <p>Girdiğin bütçe, sektör, hedef ve süre bilgileri bu v1.7 MVP sürümünde sunucuya gönderilmez. Hesaplama doğrudan cihazındaki tarayıcıda yapılır.</p>
         </article>
         <article class="panel trust-card">
           <h3>Performans garantisi değildir</h3>
@@ -433,7 +439,7 @@
       </div>
       <p class="footer-note">
         KampanyaLab tahmini medya planlama simülasyonudur; kesin reklam performansı, gelir veya satış garantisi vermez.
-        Bu MVP sürümünde girilen veriler sunucuya gönderilmez.
+        Bu v1.7 MVP sürümünde girilen veriler sunucuya gönderilmez.
       </p>
     </div>
   </footer>

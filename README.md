@@ -36,3 +36,11 @@ GitHub'a dosyaları yükledikten sonra Vercel otomatik deploy alır. Domain Turh
 ## Not
 
 Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, gelir veya satış garantisi vermez.
+
+
+## v1.7 güncellemesi
+- Mobil menü eklendi ve küçük ekranlarda navigasyon iyileştirildi.
+- Bütçe alanına doğrulama ve kullanıcı uyarısı eklendi.
+- Klavye odağı, erişilebilirlik ve azaltılmış hareket desteği iyileştirildi.
+- Mobilde tablo kaydırma ipucu ve buton yerleşimleri düzenlendi.
+- Yazdırma çıktısında gereksiz mobil/yardım elemanları gizlendi.

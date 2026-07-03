@@ -6,6 +6,45 @@ const formatter = new Intl.NumberFormat('tr-TR', {
 
 const numberFormatter = new Intl.NumberFormat('tr-TR');
 
+const MIN_BUDGET = 1000;
+const MAX_BUDGET = 5000000;
+
+function setFormStatus(message, ok = false) {
+  const status = document.getElementById('formStatus');
+  if (!status) return;
+  status.textContent = message || '';
+  status.classList.toggle('is-ok', Boolean(ok && message));
+}
+
+function sanitizeBudgetInput() {
+  const input = document.getElementById('budget');
+  if (!input) return MIN_BUDGET;
+
+  let value = Number(input.value || 0);
+  input.classList.remove('is-invalid');
+
+  if (!Number.isFinite(value) || value <= 0) {
+    input.classList.add('is-invalid');
+    setFormStatus('Bütçe alanına en az 1.000 TL girmelisin.');
+    return MIN_BUDGET;
+  }
+
+  if (value < MIN_BUDGET) {
+    input.classList.add('is-invalid');
+    setFormStatus('Daha anlamlı bir plan için bütçe en az 1.000 TL olmalı.');
+    return MIN_BUDGET;
+  }
+
+  if (value > MAX_BUDGET) {
+    input.value = String(MAX_BUDGET);
+    setFormStatus('Test sınırı olarak bütçe 5.000.000 TL ile sınırlandı. Daha yüksek bütçeler özel planlama gerektirir.');
+    return MAX_BUDGET;
+  }
+
+  setFormStatus('');
+  return value;
+}
+
 const goalLabels = {
   awareness: 'Bilinirlik',
   sales: 'Satış',
@@ -229,7 +268,7 @@ function normalizePlan(plan) {
 }
 
 function createPlan() {
-  const budget = Math.max(Number(document.getElementById('budget').value || 0), 0);
+  const budget = sanitizeBudgetInput();
   const goal = document.getElementById('goal').value;
   const sector = document.getElementById('sector').value;
   const audience = document.getElementById('audience').value;
@@ -541,13 +580,63 @@ function applyTemplate(templateKey) {
     if (element) element.value = value;
   });
 
-  document.querySelectorAll('[data-template]').forEach(card => {
+  const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+navToggle?.addEventListener('click', () => {
+  const isOpen = navLinks?.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  navToggle.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
+});
+
+navLinks?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    navToggle?.setAttribute('aria-label', 'Menüyü aç');
+  });
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    navLinks?.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    navToggle?.setAttribute('aria-label', 'Menüyü aç');
+  }
+});
+
+document.querySelectorAll('[data-template]').forEach(card => {
     card.classList.toggle('is-active', card.dataset.template === templateKey);
   });
 
   createPlan();
   document.getElementById('planner')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+navToggle?.addEventListener('click', () => {
+  const isOpen = navLinks?.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  navToggle.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
+});
+
+navLinks?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    navToggle?.setAttribute('aria-label', 'Menüyü aç');
+  });
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    navLinks?.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    navToggle?.setAttribute('aria-label', 'Menüyü aç');
+  }
+});
 
 document.querySelectorAll('[data-template]').forEach(card => {
   card.addEventListener('click', () => applyTemplate(card.dataset.template));
@@ -761,6 +850,9 @@ function resetPlannerDefaults() {
     const element = document.getElementById(id);
     if (element) element.textContent = `${id.replace('Result', '').toUpperCase()}: -`;
   });
+
+  document.getElementById('budget')?.classList.remove('is-invalid');
+  setFormStatus('');
 }
 
 window.addEventListener('pageshow', () => {
