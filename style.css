@@ -261,12 +261,14 @@ td strong { color: var(--primary-dark); }
   display: block;
   font-size: 22px;
   margin-bottom: 8px;
+  color: #ffffff;
+  letter-spacing: -0.3px;
 }
 
 .footer p,
 .footer span {
   margin: 0;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.82);
   line-height: 1.6;
 }
 
@@ -278,7 +280,7 @@ td strong { color: var(--primary-dark); }
 }
 
 .footer-links a {
-  color: rgba(255,255,255,0.82);
+  color: rgba(255,255,255,0.92);
 }
 
 .footer-links a:hover {
@@ -287,6 +289,7 @@ td strong { color: var(--primary-dark); }
 
 .footer-note {
   font-size: 14px;
+  color: rgba(255,255,255,0.84);
 }
 
 @media (max-width: 900px) {
