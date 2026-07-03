@@ -51,3 +51,7 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garan
 - Hazır kampanya şablonları eklendi.
 - E-ticaret satış, kafe/restoran yerel tanıtım, ürün lansmanı, sosyal medya büyüme, eğitim kayıt ve güzellik/randevu senaryoları eklendi.
 - Şablona tıklayınca form otomatik dolar ve medya planı yeniden hesaplanır.
+
+
+## v1.5.1 güncellemesi
+- Tarayıcıdan yazdırma sırasında PDF indirme/kopyalama/yazdırma butonlarının kağıtta görünmesi engellendi.

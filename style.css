@@ -265,10 +265,24 @@ td strong { color: var(--primary-dark); }
 }
 
 @media print {
-  .navbar, .hero, .form-panel, .calculators, .intro, .footer, #copyReport, #printReport { display: none !important; }
+  .navbar,
+  .hero,
+  .form-panel,
+  .calculators,
+  .intro,
+  .footer,
+  #copyReport,
+  #printReport,
+  #downloadPdf,
+  #downloadPdfReport,
+  .report-actions {
+    display: none !important;
+  }
+
   body { background: white; }
   .section { max-width: none; padding: 0; }
   .panel { box-shadow: none; border: 1px solid #ddd; }
+  .result-header, .report-header { align-items: flex-start; }
 }
 
 
