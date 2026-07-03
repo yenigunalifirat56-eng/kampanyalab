@@ -4,9 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı</title>
-  <meta name="description" content="KampanyaLab ile reklam bütçeni hedef, sektör ve kitleye göre medya kanallarına dağıt; tahmini performans ve kampanya raporu oluştur." />
+  <meta name="description" content="KampanyaLab, Türkiye odaklı reklam bütçesi ve medya planlama simülatörüdür. Bütçeni gir, medya kanallarına dağıt, tahmini performans ve kampanya raporu oluştur." />
+  <meta name="keywords" content="reklam bütçesi, medya planlama, kampanya planlama, CPM hesaplama, CPC hesaplama, ROI hesaplama, dijital reklam bütçesi" />
+  <meta name="author" content="KampanyaLab" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kampanyalab.com.tr/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="KampanyaLab" />
+  <meta property="og:title" content="KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı" />
+  <meta property="og:description" content="Bütçeni gir, medya kanallarına dağıt, tahmini performans ve kampanya raporu oluştur." />
+  <meta property="og:url" content="https://kampanyalab.com.tr/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı" />
+  <meta name="twitter:description" content="Türkiye odaklı reklam bütçesi ve medya planlama simülatörü." />
+
+  <meta name="theme-color" content="#102c78" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "KampanyaLab",
+    "url": "https://kampanyalab.com.tr/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "tr-TR",
+    "description": "Türkiye odaklı reklam bütçesi ve medya planlama simülatörü."
+  }
+  </script>
 </head>
 <body>
   <header class="hero">
@@ -16,6 +47,7 @@
         <a href="#planner">Plan Oluştur</a>
         <a href="#calculators">Hesaplayıcılar</a>
         <a href="#how">Nasıl Çalışır?</a>
+        <a href="#trust">Güven</a>
       </div>
     </nav>
 
@@ -50,7 +82,7 @@
   <main>
     <section class="section intro" id="how">
       <div class="section-heading">
-        <p class="badge">MVP v1</p>
+        <p class="badge">MVP v1.2</p>
         <h2>İlk sürümde neler var?</h2>
       </div>
       <div class="features">
@@ -181,6 +213,31 @@
       </div>
     </section>
 
+
+
+    <section class="section trust" id="trust">
+      <div class="section-heading">
+        <p class="badge">Güven ve şeffaflık</p>
+        <h2>Verilerin sende kalır, sonuçlar tahminidir.</h2>
+        <p>KampanyaLab ilk sürümde kişisel veri toplamaz; hesaplamaları tarayıcı içinde yapar.</p>
+      </div>
+
+      <div class="trust-grid">
+        <article class="panel trust-card">
+          <h3>Tarayıcıda hesaplama</h3>
+          <p>Girdiğin bütçe, sektör, hedef ve süre bilgileri bu MVP sürümünde sunucuya gönderilmez. Hesaplama doğrudan cihazındaki tarayıcıda yapılır.</p>
+        </article>
+        <article class="panel trust-card">
+          <h3>Performans garantisi değildir</h3>
+          <p>Gösterim, tıklama, CPM ve CPC değerleri tahmini simülasyondur. Gerçek sonuçlar hedefleme, kreatif kalite, rekabet, dönem ve teklif stratejisine göre değişebilir.</p>
+        </article>
+        <article class="panel trust-card">
+          <h3>Başlangıç planı üretir</h3>
+          <p>Çıkan medya karması profesyonel planlama için ilk taslak sağlar. Büyük bütçeli kampanyalarda gerçek reklam hesabı verileriyle ayrıca optimize edilmelidir.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="section calculators" id="calculators">
       <div class="section-heading">
         <p class="badge">Mini araçlar</p>
@@ -214,8 +271,21 @@
   </main>
 
   <footer class="footer">
-    <strong>KampanyaLab</strong>
-    <span>Reklam bütçesi ve medya planlama aracı</span>
+    <div class="footer-inner">
+      <div>
+        <strong>KampanyaLab</strong>
+        <p>Reklam bütçesi ve medya planlama aracı.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#planner">Plan Oluştur</a>
+        <a href="#calculators">Hesaplayıcılar</a>
+        <a href="#trust">Güven</a>
+      </div>
+      <p class="footer-note">
+        KampanyaLab tahmini medya planlama simülasyonudur; kesin reklam performansı, gelir veya satış garantisi vermez.
+        Bu MVP sürümünde girilen veriler sunucuya gönderilmez.
+      </p>
+    </div>
   </footer>
 
   <script src="app.js"></script>
