@@ -25,6 +25,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -48,6 +49,7 @@
         <a href="#calculators">Hesaplayıcılar</a>
         <a href="#how">Nasıl Çalışır?</a>
         <a href="#trust">Güven</a>
+        <a href="#planner">PDF Rapor</a>
       </div>
     </nav>
 
@@ -82,8 +84,8 @@
   <main>
     <section class="section intro" id="how">
       <div class="section-heading">
-        <p class="badge">MVP v1.3</p>
-        <h2>Profesyonel medya planı motoru</h2>
+        <p class="badge">MVP v1.4</p>
+        <h2>PDF raporlu profesyonel medya planı motoru</h2>
       </div>
       <div class="features">
         <article>
@@ -96,7 +98,7 @@
         </article>
         <article>
           <h3>Rapor metni</h3>
-          <p>Seçimlerine göre strateji açıklaması, optimizasyon önerileri ve haftalık kampanya planı oluşturur.</p>
+          <p>Seçimlerine göre strateji açıklaması, optimizasyon önerileri, haftalık kampanya planı ve indirilebilir PDF raporu oluşturur.</p>
         </article>
       </div>
     </section>
@@ -172,7 +174,10 @@
               <p class="mini-title">Önerilen medya karması</p>
               <h3 id="resultTitle">Satış kampanyası planı</h3>
             </div>
-            <button id="printReport" class="btn small">Raporu Yazdır</button>
+            <div class="result-actions">
+              <button id="downloadPdf" class="btn small primary-soft" type="button">PDF İndir</button>
+              <button id="printReport" class="btn small" type="button">Yazdır</button>
+            </div>
           </div>
 
           <div id="planSummary" class="plan-summary"></div>
@@ -218,7 +223,10 @@
             <p class="mini-title">Otomatik rapor</p>
             <h3>Kampanya stratejisi</h3>
           </div>
-          <button id="copyReport" class="btn small">Metni Kopyala</button>
+          <div class="result-actions">
+              <button id="downloadPdfReport" class="btn small primary-soft" type="button">PDF Raporu İndir</button>
+              <button id="copyReport" class="btn small" type="button">Metni Kopyala</button>
+            </div>
         </div>
         <div id="strategyReport" class="report-text"></div>
       </div>
@@ -291,6 +299,7 @@
         <a href="#planner">Plan Oluştur</a>
         <a href="#calculators">Hesaplayıcılar</a>
         <a href="#trust">Güven</a>
+        <a href="#planner">PDF Rapor</a>
       </div>
       <p class="footer-note">
         KampanyaLab tahmini medya planlama simülasyonudur; kesin reklam performansı, gelir veya satış garantisi vermez.

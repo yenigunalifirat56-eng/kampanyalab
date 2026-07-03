@@ -27,3 +27,10 @@ Dosyaları bir klasöre çıkarıp `index.html` dosyasını tarayıcıda açman 
 ## Not
 
 Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garanti etmez.
+
+
+## v1.4 güncellemesi
+- PDF raporu indirme sistemi eklendi.
+- PDF içinde kampanya özeti, performans metrikleri, kanal dağılımı, strateji raporu ve haftalık uygulama planı yer alır.
+- PDF oluşturma için html2pdf.js CDN'i kullanılır; kütüphane yüklenemezse yazdırma/PDF olarak kaydetme seçeneğine geri döner.
+- Sonuç ve rapor alanına ayrı PDF indirme butonları eklendi.

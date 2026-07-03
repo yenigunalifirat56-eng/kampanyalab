@@ -89,6 +89,7 @@ const channelColors = [
 ];
 
 let chart;
+let lastPlanData = null;
 
 function clonePlan(plan) {
   return JSON.parse(JSON.stringify(plan));
@@ -217,6 +218,7 @@ function createPlan() {
 }
 
 function renderResults(data) {
+  lastPlanData = data;
   document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı`;
 
   renderPlanSummary(data);
@@ -510,6 +512,122 @@ document.getElementById('copyReport').addEventListener('click', async () => {
 });
 
 document.getElementById('printReport').addEventListener('click', () => window.print());
+
+function plainTextFromHtml(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+  return temp.innerText.replace(/\n{3,}/g, '\n\n').trim();
+}
+
+function buildPdfReportHtml(data) {
+  const reportText = document.getElementById('strategyReport').innerHTML;
+  const generatedAt = new Date().toLocaleDateString('tr-TR');
+  const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
+
+  return `
+    <div class="pdf-document">
+      <div class="pdf-cover">
+        <div>
+          <p class="pdf-eyebrow">KampanyaLab Medya Planı</p>
+          <h1>${goalLabels[data.goal]} Kampanyası Raporu</h1>
+          <p>${sectorLabels[data.sector]} sektörü için ${data.duration} günlük tahmini medya planı.</p>
+        </div>
+        <div class="pdf-meta">
+          <span>Oluşturma tarihi</span>
+          <strong>${generatedAt}</strong>
+        </div>
+      </div>
+
+      <div class="pdf-summary">
+        <div><span>Bütçe</span><strong>${formatter.format(data.budget)}</strong></div>
+        <div><span>Süre</span><strong>${data.duration} gün</strong></div>
+        <div><span>Hedef kitle</span><strong>${data.audience}</strong></div>
+        <div><span>Ana kanallar</span><strong>${topChannels}</strong></div>
+      </div>
+
+      <h2>Performans Özeti</h2>
+      <div class="pdf-metrics">
+        <div><span>Tahmini gösterim</span><strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong></div>
+        <div><span>Tahmini tıklama</span><strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong></div>
+        <div><span>Ortalama CPC</span><strong>${data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-'}</strong></div>
+        <div><span>Ortalama CPM</span><strong>${data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-'}</strong></div>
+        <div><span>Tahmini CTR</span><strong>${data.ctr ? '%' + data.ctr.toFixed(2) : '-'}</strong></div>
+        <div><span>Günlük bütçe</span><strong>${formatter.format(data.dailyBudget)}</strong></div>
+      </div>
+
+      <h2>Kanal Dağılımı</h2>
+      <table class="pdf-table">
+        <thead>
+          <tr>
+            <th>Kanal</th>
+            <th>Rol</th>
+            <th>Oran</th>
+            <th>Bütçe</th>
+            <th>Gösterim</th>
+            <th>Tıklama</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.rows.map(row => `
+            <tr>
+              <td>${row.channel}</td>
+              <td>${row.role}</td>
+              <td>%${row.percent}</td>
+              <td>${formatter.format(row.budget)}</td>
+              <td>${row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez'}</td>
+              <td>${row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <h2>Strateji Raporu</h2>
+      <div class="pdf-report-text">${reportText}</div>
+
+      <h2>Haftalık Uygulama Planı</h2>
+      <div class="pdf-weekly">${document.getElementById('weeklyPlan').innerHTML}</div>
+
+      <div class="pdf-disclaimer">
+        KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve teklif stratejisine göre değişebilir.
+      </div>
+    </div>
+  `;
+}
+
+function downloadPdfReport() {
+  if (!lastPlanData) createPlan();
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'pdf-export-wrapper';
+  wrapper.innerHTML = buildPdfReportHtml(lastPlanData);
+  document.body.appendChild(wrapper);
+
+  const fileNameGoal = goalLabels[lastPlanData.goal].toLowerCase().replace(/\s+/g, '-');
+  const options = {
+    margin: [8, 8, 8, 8],
+    filename: `kampanyalab-${fileNameGoal}-medya-plani.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  const cleanUp = () => wrapper.remove();
+
+  if (typeof html2pdf === 'undefined') {
+    cleanUp();
+    window.print();
+    return;
+  }
+
+  html2pdf().set(options).from(wrapper.querySelector('.pdf-document')).save().then(cleanUp).catch(() => {
+    cleanUp();
+    alert('PDF oluşturma sırasında sorun oluştu. Yazdır seçeneğiyle PDF olarak kaydedebilirsin.');
+  });
+}
+
+document.getElementById('downloadPdf')?.addEventListener('click', downloadPdfReport);
+document.getElementById('downloadPdfReport')?.addEventListener('click', downloadPdfReport);
 
 function resetPlannerDefaults() {
   const defaults = {
