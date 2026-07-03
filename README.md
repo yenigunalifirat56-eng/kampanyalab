@@ -41,7 +41,13 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garan
 - PDF tabloları ve kartlarında sayfa geçişleri daha kontrollü hale getirildi.
 
 
-## v1.4.2 güncellemesi
+## v1.5 güncellemesi
 - PDF oluşturma sistemi html2pdf yerine pdfmake ile yeniden yazıldı.
 - Boş sayfa sorunu giderildi.
 - PDF raporu tablo ve metin bazlı daha stabil hale getirildi.
+
+
+## v1.5 güncellemesi
+- Hazır kampanya şablonları eklendi.
+- E-ticaret satış, kafe/restoran yerel tanıtım, ürün lansmanı, sosyal medya büyüme, eğitim kayıt ve güzellik/randevu senaryoları eklendi.
+- Şablona tıklayınca form otomatik dolar ve medya planı yeniden hesaplanır.

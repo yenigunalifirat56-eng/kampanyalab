@@ -191,6 +191,61 @@ td strong { color: var(--primary-dark); }
 .footer { padding: 36px 5vw; text-align: center; color: var(--muted); display: grid; gap: 6px; }
 .footer strong { color: var(--text); font-size: 22px; }
 
+
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.template-card {
+  border: 1px solid #dbe7fb;
+  border-radius: 24px;
+  padding: 22px;
+  text-align: left;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.template-card:hover {
+  transform: translateY(-4px);
+  border-color: #7c3aed;
+  box-shadow: 0 24px 55px rgba(37, 99, 235, 0.14);
+}
+
+.template-card span {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #eaf1ff;
+  color: #1e40af;
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.template-card strong {
+  display: block;
+  color: #0f172a;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.template-card p {
+  color: #64748b;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.template-card.is-active {
+  border-color: #2563eb;
+  box-shadow: 0 24px 55px rgba(37, 99, 235, 0.20);
+}
+
 @media (max-width: 920px) {
   .hero { min-height: auto; padding-bottom: 120px; }
   .hero-content, .planner-grid, .features, .calc-grid { grid-template-columns: 1fr; }

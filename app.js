@@ -26,6 +26,51 @@ const sectorLabels = {
   localService: 'Yerel hizmet'
 };
 
+const campaignTemplates = {
+  ecommerceSales: {
+    budget: '50000',
+    goal: 'sales',
+    sector: 'ecommerce',
+    audience: '18-24',
+    duration: '30'
+  },
+  localCafe: {
+    budget: '20000',
+    goal: 'local',
+    sector: 'restaurant',
+    audience: '18-24',
+    duration: '15'
+  },
+  productLaunch: {
+    budget: '75000',
+    goal: 'launch',
+    sector: 'technology',
+    audience: '25-34',
+    duration: '30'
+  },
+  socialGrowth: {
+    budget: '15000',
+    goal: 'social',
+    sector: 'fashion',
+    audience: '18-24',
+    duration: '30'
+  },
+  educationLeads: {
+    budget: '35000',
+    goal: 'traffic',
+    sector: 'education',
+    audience: '25-34',
+    duration: '30'
+  },
+  beautyBooking: {
+    budget: '18000',
+    goal: 'local',
+    sector: 'beauty',
+    audience: '18-24',
+    duration: '15'
+  }
+};
+
 const basePlans = {
   awareness: {
     'Instagram Ads': 25,
@@ -487,6 +532,27 @@ function calculateMini(type) {
   }
 }
 
+function applyTemplate(templateKey) {
+  const template = campaignTemplates[templateKey];
+  if (!template) return;
+
+  Object.entries(template).forEach(([id, value]) => {
+    const element = document.getElementById(id);
+    if (element) element.value = value;
+  });
+
+  document.querySelectorAll('[data-template]').forEach(card => {
+    card.classList.toggle('is-active', card.dataset.template === templateKey);
+  });
+
+  createPlan();
+  document.getElementById('planner')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.querySelectorAll('[data-template]').forEach(card => {
+  card.addEventListener('click', () => applyTemplate(card.dataset.template));
+});
+
 document.getElementById('plannerForm').addEventListener('submit', event => {
   event.preventDefault();
   createPlan();
@@ -683,6 +749,8 @@ function resetPlannerDefaults() {
     const element = document.getElementById(id);
     if (element) element.value = value;
   });
+
+  document.querySelectorAll('[data-template]').forEach(card => card.classList.remove('is-active'));
 
   ['cpmCost', 'cpmImpressions', 'cpcCost', 'cpcClicks', 'roiRevenue', 'roiCost'].forEach(id => {
     const element = document.getElementById(id);
