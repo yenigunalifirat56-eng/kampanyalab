@@ -82,21 +82,21 @@
   <main>
     <section class="section intro" id="how">
       <div class="section-heading">
-        <p class="badge">MVP v1.2</p>
-        <h2>İlk sürümde neler var?</h2>
+        <p class="badge">MVP v1.3</p>
+        <h2>Profesyonel medya planı motoru</h2>
       </div>
       <div class="features">
         <article>
           <h3>Akıllı bütçe dağılımı</h3>
-          <p>Bütçeyi kampanya amacı, sektör ve hedef kitleye göre medya kanallarına böler.</p>
+          <p>Bütçeyi kampanya amacı, sektör, hedef kitle ve bütçe seviyesine göre daha dengeli medya kanallarına böler.</p>
         </article>
         <article>
           <h3>Tahmini performans</h3>
-          <p>CPM, CPC, gösterim, tıklama ve tahmini CTR değerlerini simüle eder.</p>
+          <p>CPM, CPC, CTR, gösterim, tıklama ve kanal önceliklerini tahmini olarak simüle eder.</p>
         </article>
         <article>
           <h3>Rapor metni</h3>
-          <p>Seçimlerine göre strateji açıklaması ve haftalık kampanya planı oluşturur.</p>
+          <p>Seçimlerine göre strateji açıklaması, optimizasyon önerileri ve haftalık kampanya planı oluşturur.</p>
         </article>
       </div>
     </section>
@@ -175,6 +175,10 @@
             <button id="printReport" class="btn small">Raporu Yazdır</button>
           </div>
 
+          <div id="planSummary" class="plan-summary"></div>
+
+          <p class="result-notice">Bu ekran gerçek reklam hesabı verisi değil, başlangıç medya planı simülasyonudur. En doğru sonuç için kampanya yayındayken gerçek performans verileriyle optimize edilmelidir.</p>
+
           <div class="chart-wrap">
             <canvas id="budgetChart"></canvas>
           </div>
@@ -183,19 +187,26 @@
 
           <div class="insight-grid" id="insights"></div>
 
+          <div class="optimization-grid" id="optimizationCards"></div>
+
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Kanal</th>
+                  <th>Rol</th>
                   <th>Oran</th>
                   <th>Bütçe</th>
-                  <th>Tahmini Tıklama</th>
+                  <th>Gösterim</th>
+                  <th>Tıklama</th>
+                  <th>CPM/CPC</th>
                 </tr>
               </thead>
               <tbody id="allocationTable"></tbody>
             </table>
           </div>
+
+          <div class="channel-playbook" id="channelPlaybook"></div>
 
           <div class="weekly-plan" id="weeklyPlan"></div>
         </div>

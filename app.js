@@ -72,16 +72,16 @@ const basePlans = {
 };
 
 const channelBenchmarks = {
-  'Instagram Ads': { cpm: 65, cpc: 5.5 },
-  'TikTok Ads': { cpm: 55, cpc: 4.8 },
-  'YouTube Ads': { cpm: 70, cpc: 6.5 },
-  'YouTube Shorts': { cpm: 58, cpc: 5.2 },
-  'Display Ads': { cpm: 45, cpc: 4.2 },
-  'Google Search': { cpm: 90, cpc: 9.5 },
-  'Google Maps/Search': { cpm: 80, cpc: 7.5 },
-  'Remarketing': { cpm: 50, cpc: 4.0 },
-  'Influencer': { cpm: 85, cpc: 8.5 },
-  'Açık Hava': { cpm: 35, cpc: 0 }
+  'Instagram Ads': { cpm: 65, cpc: 5.5, role: 'Keşif ve görsel etkileşim' },
+  'TikTok Ads': { cpm: 55, cpc: 4.8, role: 'Kısa video ve hızlı erişim' },
+  'YouTube Ads': { cpm: 70, cpc: 6.5, role: 'Video bilinirliği' },
+  'YouTube Shorts': { cpm: 58, cpc: 5.2, role: 'Kısa video etkileşimi' },
+  'Display Ads': { cpm: 45, cpc: 4.2, role: 'Geniş görünürlük' },
+  'Google Search': { cpm: 90, cpc: 9.5, role: 'Yüksek satın alma niyeti' },
+  'Google Maps/Search': { cpm: 80, cpc: 7.5, role: 'Yerel arama niyeti' },
+  'Remarketing': { cpm: 50, cpc: 4.0, role: 'Tekrar hedefleme' },
+  'Influencer': { cpm: 85, cpc: 8.5, role: 'Güven ve sosyal kanıt' },
+  'Açık Hava': { cpm: 35, cpc: 0, role: 'Yerel görünürlük' }
 };
 
 const channelColors = [
@@ -94,44 +94,70 @@ function clonePlan(plan) {
   return JSON.parse(JSON.stringify(plan));
 }
 
-function adjustPlan(plan, sector, audience) {
+function addChannel(plan, channel, amount) {
+  plan[channel] = (plan[channel] || 0) + amount;
+}
+
+function adjustPlan(plan, sector, audience, budget, goal) {
   const adjusted = clonePlan(plan);
 
-  function add(channel, amount) {
-    adjusted[channel] = (adjusted[channel] || 0) + amount;
-  }
-
   if (['13-18', '18-24'].includes(audience)) {
-    add('TikTok Ads', 6);
-    add('Instagram Ads', 4);
+    addChannel(adjusted, 'TikTok Ads', 6);
+    addChannel(adjusted, 'Instagram Ads', 4);
   }
 
   if (['35-44', '45+'].includes(audience)) {
-    add('Google Search', 5);
-    add('YouTube Ads', 4);
+    addChannel(adjusted, 'Google Search', 5);
+    addChannel(adjusted, 'YouTube Ads', 4);
   }
 
   if (sector === 'restaurant' || sector === 'localService' || sector === 'beauty') {
-    add('Google Maps/Search', 7);
-    add('Instagram Ads', 4);
+    addChannel(adjusted, 'Google Maps/Search', 7);
+    addChannel(adjusted, 'Instagram Ads', 4);
   }
 
   if (sector === 'ecommerce') {
-    add('Remarketing', 6);
-    add('Google Search', 4);
+    addChannel(adjusted, 'Remarketing', 6);
+    addChannel(adjusted, 'Google Search', 4);
   }
 
   if (sector === 'fashion') {
-    add('Instagram Ads', 7);
-    add('TikTok Ads', 4);
+    addChannel(adjusted, 'Instagram Ads', 7);
+    addChannel(adjusted, 'TikTok Ads', 4);
   }
 
   if (sector === 'education' || sector === 'technology') {
-    add('Google Search', 6);
-    add('YouTube Ads', 4);
+    addChannel(adjusted, 'Google Search', 6);
+    addChannel(adjusted, 'YouTube Ads', 4);
   }
 
-  return normalizePlan(adjusted);
+  if (budget < 10000) {
+    if (goal === 'sales' || goal === 'traffic') addChannel(adjusted, 'Google Search', 5);
+    addChannel(adjusted, 'Remarketing', 3);
+  }
+
+  return limitChannels(normalizePlan(adjusted), budget);
+}
+
+function channelLimitByBudget(budget) {
+  if (budget < 10000) return 3;
+  if (budget < 25000) return 4;
+  if (budget < 75000) return 5;
+  return 6;
+}
+
+function limitChannels(allocation, budget) {
+  const limit = channelLimitByBudget(budget);
+  if (allocation.length <= limit) return allocation;
+
+  const kept = allocation.slice(0, limit);
+  const removedPercent = allocation.slice(limit).reduce((sum, item) => sum + item.percent, 0);
+  const keptTotal = kept.reduce((sum, item) => sum + item.percent, 0);
+
+  return normalizePlan(Object.fromEntries(kept.map(item => [
+    item.channel,
+    item.percent + (item.percent / keptTotal) * removedPercent
+  ])));
 }
 
 function normalizePlan(plan) {
@@ -163,10 +189,10 @@ function createPlan() {
   const audience = document.getElementById('audience').value;
   const duration = Number(document.getElementById('duration').value);
 
-  const allocation = adjustPlan(basePlans[goal], sector, audience);
+  const allocation = adjustPlan(basePlans[goal], sector, audience, budget, goal);
   const rows = allocation.map(item => {
     const channelBudget = budget * item.percent / 100;
-    const benchmark = channelBenchmarks[item.channel] || { cpm: 60, cpc: 6 };
+    const benchmark = channelBenchmarks[item.channel] || { cpm: 60, cpc: 6, role: 'Tamamlayıcı kanal' };
     const impressions = benchmark.cpm > 0 ? (channelBudget / benchmark.cpm) * 1000 : 0;
     const clicks = benchmark.cpc > 0 ? channelBudget / benchmark.cpc : 0;
     return {
@@ -174,6 +200,7 @@ function createPlan() {
       budget: channelBudget,
       cpm: benchmark.cpm,
       cpc: benchmark.cpc,
+      role: benchmark.role,
       impressions,
       clicks
     };
@@ -184,7 +211,7 @@ function createPlan() {
   const avgCpm = totalImpressions > 0 ? budget / totalImpressions * 1000 : 0;
   const avgCpc = totalClicks > 0 ? budget / totalClicks : 0;
   const ctr = totalImpressions > 0 ? totalClicks / totalImpressions * 100 : 0;
-  const dailyBudget = budget / duration;
+  const dailyBudget = duration > 0 ? budget / duration : 0;
 
   renderResults({ budget, goal, sector, audience, duration, rows, totalImpressions, totalClicks, avgCpm, avgCpc, ctr, dailyBudget });
 }
@@ -192,13 +219,18 @@ function createPlan() {
 function renderResults(data) {
   document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı`;
 
+  renderPlanSummary(data);
+
   const table = document.getElementById('allocationTable');
   table.innerHTML = data.rows.map(row => `
     <tr>
       <td><strong>${row.channel}</strong></td>
+      <td>${row.role}</td>
       <td>%${row.percent}</td>
       <td>${formatter.format(row.budget)}</td>
+      <td>${row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez'}</td>
       <td>${row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'}</td>
+      <td>${row.cpm ? row.cpm.toFixed(0) + ' TL CPM' : '-'}${row.cpc ? '<br><small>' + row.cpc.toFixed(2) + ' TL CPC</small>' : ''}</td>
     </tr>
   `).join('');
 
@@ -206,13 +238,46 @@ function renderResults(data) {
     <div class="stat"><span>Tahmini gösterim</span><strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong></div>
     <div class="stat"><span>Tahmini tıklama</span><strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong></div>
     <div class="stat"><span>Ortalama CPC</span><strong>${data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-'}</strong></div>
+    <div class="stat"><span>Ortalama CPM</span><strong>${data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-'}</strong></div>
+    <div class="stat"><span>Tahmini CTR</span><strong>${data.ctr ? '%' + data.ctr.toFixed(2) : '-'}</strong></div>
     <div class="stat"><span>Günlük bütçe</span><strong>${formatter.format(data.dailyBudget)}</strong></div>
   `;
 
   renderInsights(data);
+  renderOptimizationCards(data);
+  renderChannelPlaybook(data);
   renderWeeklyPlan(data);
   updateChart(data.rows);
   renderReport(data);
+}
+
+function renderPlanSummary(data) {
+  const tier = budgetTier(data.budget);
+  const summary = document.getElementById('planSummary');
+  summary.innerHTML = `
+    <div>
+      <span>Bütçe seviyesi</span>
+      <strong>${tier.label}</strong>
+      <p>${tier.description}</p>
+    </div>
+    <div>
+      <span>Kanal sayısı</span>
+      <strong>${data.rows.length} ana kanal</strong>
+      <p>Bütçe seviyesine göre kanal sayısı otomatik dengelendi.</p>
+    </div>
+    <div>
+      <span>Plan odağı</span>
+      <strong>${goalLabels[data.goal]}</strong>
+      <p>${sectorLabels[data.sector]} ve ${data.audience} yaş hedefi dikkate alındı.</p>
+    </div>
+  `;
+}
+
+function budgetTier(budget) {
+  if (budget < 10000) return { label: 'Düşük bütçe', description: 'Daha az kanal, daha net test odağı önerilir.' };
+  if (budget < 25000) return { label: 'Başlangıç bütçesi', description: 'Ana kanallar seçilip öğrenme verisi toplanabilir.' };
+  if (budget < 75000) return { label: 'Orta bütçe', description: 'Test, optimizasyon ve remarketing dengesi kurulabilir.' };
+  return { label: 'Geniş bütçe', description: 'Çok kanallı kampanya ve ayrı kreatif testleri yapılabilir.' };
 }
 
 function updateChart(rows) {
@@ -256,7 +321,7 @@ function renderInsights(data) {
   const strongestChannel = data.rows[0];
   const measurableRows = data.rows.filter(row => row.clicks > 0);
   const bestCpc = measurableRows.length ? measurableRows.reduce((best, row) => row.cpc < best.cpc ? row : best, measurableRows[0]) : null;
-  const budgetHealth = data.budget < 10000 ? 'Düşük bütçede kanal sayısını azaltıp 2-3 ana kanala odaklanmak daha mantıklı olabilir.' : data.budget < 50000 ? 'Orta bütçede test + optimizasyon dengesi kurulabilir.' : 'Bu bütçe ile hem erişim hem dönüşüm odaklı çok kanallı test yapılabilir.';
+  const budgetHealth = data.budget < 10000 ? 'Düşük bütçede kanal sayısı otomatik azaltıldı. İlk hedef hızlı öğrenme olmalı.' : data.budget < 50000 ? 'Orta bütçede test + optimizasyon dengesi kurulabilir.' : 'Bu bütçe ile erişim, dönüşüm ve remarketing aynı anda test edilebilir.';
 
   document.getElementById('insights').innerHTML = `
     <div class="insight-card">
@@ -277,14 +342,54 @@ function renderInsights(data) {
   `;
 }
 
+function renderOptimizationCards(data) {
+  const risk = data.budget < 10000
+    ? 'Bütçe düşük olduğu için çok fazla kanala bölmek öğrenme sürecini zayıflatabilir.'
+    : data.duration <= 7
+      ? 'Kısa kampanya süresinde algoritmaların öğrenme süresi sınırlı kalabilir.'
+      : 'Ana risk kreatif kalitesi ve hedefleme doğruluğudur; sonuçlar kampanya içi veriye göre değişir.';
+
+  const optimization = data.goal === 'sales'
+    ? 'İlk 3-5 gün sonra düşük dönüşüm getiren kanalları azaltıp Google Search ve remarketing tarafını güçlendir.'
+    : data.goal === 'awareness'
+      ? 'Video izlenme oranı ve erişim maliyetine göre YouTube/TikTok/Instagram bütçesini yeniden dengele.'
+      : 'Tıklama maliyeti, CTR ve kaliteli trafik sinyallerine göre bütçeyi haftalık optimize et.';
+
+  const creative = ['13-18', '18-24'].includes(data.audience)
+    ? 'Kısa video, hızlı mesaj, dikey format ve ilk 3 saniyede net fayda anlatımı kullan.'
+    : 'Net teklif, güven unsuru, açıklayıcı görsel/video ve arama niyetine uygun metin kullan.';
+
+  document.getElementById('optimizationCards').innerHTML = `
+    <div class="opt-card"><span>Risk</span><p>${risk}</p></div>
+    <div class="opt-card"><span>Optimizasyon</span><p>${optimization}</p></div>
+    <div class="opt-card"><span>Kreatif önerisi</span><p>${creative}</p></div>
+  `;
+}
+
+function renderChannelPlaybook(data) {
+  document.getElementById('channelPlaybook').innerHTML = `
+    <p class="mini-title">Kanal açıklamaları</p>
+    <div class="playbook-grid">
+      ${data.rows.map(row => `
+        <div class="playbook-card">
+          <strong>${row.channel}</strong>
+          <span>${row.role}</span>
+          <p>${channelReason(row.channel, data.goal, data.sector)}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function renderWeeklyPlan(data) {
-  const weeklyBudget = data.budget / Math.max(Math.ceil(data.duration / 7), 1);
+  const weekCount = Math.max(Math.ceil(data.duration / 7), 1);
+  const weeklyBudget = data.budget / weekCount;
   const weeks = [
     ['1. Hafta', 'Kreatif testleri, hedef kitle denemeleri ve ilk veri toplama süreci.'],
     ['2. Hafta', 'En iyi çalışan kanal, reklam metni ve görsellerin bütçesini artırma.'],
     ['3. Hafta', 'Remarketing, dönüşüm odaklı kampanyalar ve düşük verimli kanalları azaltma.'],
     ['4. Hafta', 'Performans raporu, bütçe optimizasyonu ve sonraki kampanya için öğrenimleri çıkarma.']
-  ];
+  ].slice(0, Math.min(4, weekCount));
 
   document.getElementById('weeklyPlan').innerHTML = `
     <p class="mini-title">Haftalık uygulama planı</p>
@@ -304,6 +409,7 @@ function channelReason(channel, goal, sector) {
   if (channel.includes('YouTube')) return 'Video ile bilinirlik ve açıklayıcı içerik anlatımı için uygundur.';
   if (channel.includes('Remarketing')) return 'Daha önce ilgi göstermiş kullanıcıları tekrar hedefleyerek dönüşüm ihtimalini artırır.';
   if (channel.includes('Influencer')) return 'Güven, sosyal kanıt ve hızlı ürün tanıtımı için destekleyici kanal olarak kullanılabilir.';
+  if (channel.includes('Açık Hava')) return 'Yerel görünürlük, lokasyon bilinirliği ve mağaza trafiği için destekleyici rol oynar.';
   return 'Bu kanal kampanya karmasını tamamlayıcı rol oynar.';
 }
 
@@ -311,18 +417,21 @@ function renderReport(data) {
   const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
   const young = ['13-18', '18-24'].includes(data.audience);
   const report = `
-    <p><strong>${formatter.format(data.budget)}</strong> bütçeli, <strong>${data.duration} günlük</strong> ${goalLabels[data.goal].toLowerCase()} kampanyası için önerilen ana medya kanalları <strong>${topChannels}</strong> olarak belirlenmiştir.</p>
+    <p><strong>${formatter.format(data.budget)}</strong> bütçeli, <strong>${data.duration} günlük</strong> ${goalLabels[data.goal].toLowerCase()} kampanyası için önerilen ana medya kanalları <strong>${topChannels}</strong> olarak belirlenmiştir. Bütçe seviyesi nedeniyle plan <strong>${data.rows.length} ana kanal</strong> ile sınırlandırılmıştır.</p>
 
     <h4>Strateji yorumu</h4>
     <p>${goalStrategyText(data.goal)} ${sectorStrategyText(data.sector)} ${young ? 'Genç hedef kitle seçildiği için TikTok ve Instagram ağırlığı artırılmıştır.' : 'Hedef kitle daha geniş yaş aralığında olduğu için Google ve YouTube kanallarına daha fazla önem verilmiştir.'}</p>
 
     <h4>Tahmini performans</h4>
-    <p>Bu plana göre yaklaşık <strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong> gösterim ve <strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong> tıklama elde edilebilir. Ortalama CPC yaklaşık <strong>${data.avgCpc.toFixed(2)} TL</strong>, ortalama CPM ise yaklaşık <strong>${data.avgCpm.toFixed(2)} TL</strong> seviyesindedir.</p>
+    <p>Bu plana göre yaklaşık <strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong> gösterim ve <strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong> tıklama elde edilebilir. Ortalama CPC yaklaşık <strong>${data.avgCpc.toFixed(2)} TL</strong>, ortalama CPM ise yaklaşık <strong>${data.avgCpm.toFixed(2)} TL</strong> seviyesindedir. Tahmini CTR yaklaşık <strong>%${data.ctr.toFixed(2)}</strong> olarak hesaplanmıştır.</p>
 
     <h4>Kanal öncelikleri</h4>
     <ul>
-      ${data.rows.slice(0, 5).map(row => `<li><strong>${row.channel}:</strong> Bütçenin %${row.percent} oranı, yaklaşık ${formatter.format(row.budget)}.</li>`).join('')}
+      ${data.rows.map(row => `<li><strong>${row.channel}:</strong> %${row.percent} oran, yaklaşık ${formatter.format(row.budget)}. Rol: ${row.role}.</li>`).join('')}
     </ul>
+
+    <h4>Optimizasyon notu</h4>
+    <p>Kampanya yayına alındıktan sonra ilk verilerle en düşük maliyetli ve en kaliteli sonuç getiren kanallar güçlendirilmeli; düşük performanslı kanalların bütçesi azaltılmalıdır.</p>
 
     <p class="notice"><strong>Uyarı:</strong> Bu rapor tahmini medya planlama simülasyonudur. Gerçek sonuçlar reklam kreatifi, hedefleme, rekabet, sezon, ürün fiyatı ve web sitesi kalitesine göre değişebilir.</p>
   `;

@@ -1,4 +1,4 @@
-# KampanyaLab MVP v1.2
+# KampanyaLab MVP
 
 KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye göre medya kanallarına dağıtan Türkiye odaklı medya planlama simülatörüdür.
 
@@ -7,30 +7,23 @@ KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye
 - `index.html` — Ana sayfa ve uygulama arayüzü
 - `style.css` — Tasarım dosyası
 - `app.js` — Bütçe dağılımı, grafik, rapor ve hesaplayıcı mantığı
-- `robots.txt` — Arama motoru tarama ayarı
-- `sitemap.xml` — Temel site haritası
+- `robots.txt` — Arama motoru tarama yönergesi
+- `sitemap.xml` — Site haritası
 
-## v1.2 güncellemesi
+## v1.3 güncellemesi
 
-- SEO meta etiketleri eklendi.
-- Open Graph / Twitter paylaşım etiketleri eklendi.
-- Schema.org WebApplication JSON-LD eklendi.
-- Chart.js CDN sürümü sabitlendi.
-- “Güven ve şeffaflık” bölümü eklendi.
-- Footer profesyonelleştirildi.
-- Gizlilik ve performans uyarıları eklendi.
-- `robots.txt` ve `sitemap.xml` eklendi.
+- Profesyonel medya planı motoru eklendi.
+- Bütçe seviyesine göre önerilen kanal sayısı otomatik azaltılıp artırıldı.
+- Sonuç ekranına bütçe seviyesi, kanal sayısı ve plan odağı özeti eklendi.
+- Tahmini CTR ve ortalama CPM istatistikleri eklendi.
+- Kanal tablosuna rol, gösterim, tıklama, CPM/CPC detayları eklendi.
+- Risk, optimizasyon ve kreatif önerisi kartları eklendi.
+- Kanal açıklamaları bölümü eklendi.
+
+## Çalıştırma
+
+Dosyaları bir klasöre çıkarıp `index.html` dosyasını tarayıcıda açman yeterli.
 
 ## Not
 
 Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garanti etmez.
-Bu sürümde kullanıcı girdileri sunucuya gönderilmez; hesaplamalar tarayıcıda yapılır.
-
-
-## v1.2.1 güncellemesi
-- Footer başlığı ve açıklama metinleri koyu zeminde daha okunur hale getirildi.
-
-
-## v1.2.2 güncellemesi
-- Tarayıcı yenilemesinde form değerlerinin eski kullanıcı girişiyle kalması engellendi.
-- Plan formu ve mini hesaplayıcı inputları için autocomplete kapatıldı.
