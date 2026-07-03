@@ -109,10 +109,10 @@
       </div>
 
       <div class="planner-grid">
-        <form id="plannerForm" class="panel form-panel">
+        <form id="plannerForm" class="panel form-panel" autocomplete="off">
           <label>
             Toplam bütçe (TL)
-            <input type="number" id="budget" min="1000" step="500" value="50000" required />
+            <input type="number" id="budget" min="1000" step="500" value="50000" autocomplete="off" required />
           </label>
 
           <label>
@@ -247,22 +247,22 @@
       <div class="calc-grid">
         <div class="panel calc-card">
           <h3>CPM</h3>
-          <input type="number" id="cpmCost" placeholder="Maliyet (TL)" />
-          <input type="number" id="cpmImpressions" placeholder="Gösterim" />
+          <input type="number" id="cpmCost" placeholder="Maliyet (TL)" autocomplete="off" />
+          <input type="number" id="cpmImpressions" placeholder="Gösterim" autocomplete="off" />
           <button class="btn secondary full" data-calc="cpm">Hesapla</button>
           <p id="cpmResult" class="calc-result">CPM: -</p>
         </div>
         <div class="panel calc-card">
           <h3>CPC</h3>
-          <input type="number" id="cpcCost" placeholder="Maliyet (TL)" />
-          <input type="number" id="cpcClicks" placeholder="Tıklama" />
+          <input type="number" id="cpcCost" placeholder="Maliyet (TL)" autocomplete="off" />
+          <input type="number" id="cpcClicks" placeholder="Tıklama" autocomplete="off" />
           <button class="btn secondary full" data-calc="cpc">Hesapla</button>
           <p id="cpcResult" class="calc-result">CPC: -</p>
         </div>
         <div class="panel calc-card">
           <h3>ROI</h3>
-          <input type="number" id="roiRevenue" placeholder="Gelir (TL)" />
-          <input type="number" id="roiCost" placeholder="Maliyet (TL)" />
+          <input type="number" id="roiRevenue" placeholder="Gelir (TL)" autocomplete="off" />
+          <input type="number" id="roiCost" placeholder="Maliyet (TL)" autocomplete="off" />
           <button class="btn secondary full" data-calc="roi">Hesapla</button>
           <p id="roiResult" class="calc-result">ROI: -</p>
         </div>

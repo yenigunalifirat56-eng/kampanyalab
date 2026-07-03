@@ -402,4 +402,32 @@ document.getElementById('copyReport').addEventListener('click', async () => {
 
 document.getElementById('printReport').addEventListener('click', () => window.print());
 
-createPlan();
+function resetPlannerDefaults() {
+  const defaults = {
+    budget: '50000',
+    goal: 'sales',
+    sector: 'ecommerce',
+    audience: '18-24',
+    duration: '30'
+  };
+
+  Object.entries(defaults).forEach(([id, value]) => {
+    const element = document.getElementById(id);
+    if (element) element.value = value;
+  });
+
+  ['cpmCost', 'cpmImpressions', 'cpcCost', 'cpcClicks', 'roiRevenue', 'roiCost'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.value = '';
+  });
+
+  ['cpmResult', 'cpcResult', 'roiResult'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = `${id.replace('Result', '').toUpperCase()}: -`;
+  });
+}
+
+window.addEventListener('pageshow', () => {
+  resetPlannerDefaults();
+  createPlan();
+});
