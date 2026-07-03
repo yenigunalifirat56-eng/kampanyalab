@@ -34,3 +34,8 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı garan
 - PDF içinde kampanya özeti, performans metrikleri, kanal dağılımı, strateji raporu ve haftalık uygulama planı yer alır.
 - PDF oluşturma için html2pdf.js CDN'i kullanılır; kütüphane yüklenemezse yazdırma/PDF olarak kaydetme seçeneğine geri döner.
 - Sonuç ve rapor alanına ayrı PDF indirme butonları eklendi.
+
+
+## v1.4.1 güncellemesi
+- PDF çıktısında boş sayfa oluşmasına yol açabilen sayfa kırılımı ayarı düzeltildi.
+- PDF tabloları ve kartlarında sayfa geçişleri daha kontrollü hale getirildi.

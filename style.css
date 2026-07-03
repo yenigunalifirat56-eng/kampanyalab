@@ -279,6 +279,24 @@ td strong { color: var(--primary-dark); }
   font-weight: 700;
 }
 
+.pdf-cover,
+.pdf-summary div,
+.pdf-metrics div,
+.weekly-item,
+.pdf-disclaimer {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pdf-table {
+  page-break-inside: auto;
+}
+
+.pdf-table tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
 .footer-links a {
   color: rgba(255,255,255,0.92);
 }
