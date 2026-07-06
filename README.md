@@ -35,3 +35,8 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 - Google Analytics 4 ölçüm etiketi eklendi.
 - Measurement ID: G-G4HHWRLYE2
 - Ziyaretçi ve sayfa görüntüleme ölçümü Google Analytics üzerinden takip edilebilir.
+
+## v2.3.1 güncellemesi
+- Plan oluşturucu artık hazır 50.000 TL / Satış / E-ticaret değerleriyle başlamaz.
+- Kullanıcı bütçe, kampanya amacı, sektör, hedef kitle ve süreyi kendisi seçer.
+- Plan ve PDF çıktısı yalnızca kullanıcı alanları doldurup plan oluşturduktan sonra oluşur.

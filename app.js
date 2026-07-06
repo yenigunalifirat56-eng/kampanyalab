@@ -267,12 +267,83 @@ function normalizePlan(plan) {
   return rounded.filter(item => item.percent > 0).sort((a, b) => b.percent - a.percent);
 }
 
-function createPlan() {
+
+function getPlannerInputValues() {
+  return {
+    budgetRaw: document.getElementById('budget')?.value || '',
+    goal: document.getElementById('goal')?.value || '',
+    sector: document.getElementById('sector')?.value || '',
+    audience: document.getElementById('audience')?.value || '',
+    durationRaw: document.getElementById('duration')?.value || ''
+  };
+}
+
+function hasCompletePlannerInputs() {
+  const values = getPlannerInputValues();
+  return Boolean(values.budgetRaw && values.goal && values.sector && values.audience && values.durationRaw);
+}
+
+function validatePlannerInputs() {
+  const values = getPlannerInputValues();
+  if (!values.budgetRaw || !values.goal || !values.sector || !values.audience || !values.durationRaw) {
+    setFormStatus('Lütfen bütçe, kampanya amacı, sektör, hedef kitle ve süre alanlarının hepsini doldur.');
+    return null;
+  }
+
   const budget = sanitizeBudgetInput();
-  const goal = document.getElementById('goal').value;
-  const sector = document.getElementById('sector').value;
-  const audience = document.getElementById('audience').value;
-  const duration = Number(document.getElementById('duration').value);
+  const duration = Number(values.durationRaw);
+
+  if (!basePlans[values.goal]) {
+    setFormStatus('Lütfen geçerli bir kampanya amacı seç.');
+    return null;
+  }
+
+  return {
+    budget,
+    goal: values.goal,
+    sector: values.sector,
+    audience: values.audience,
+    duration
+  };
+}
+
+function clearPlanOutput() {
+  lastPlanData = null;
+  const resultTitle = document.getElementById('resultTitle');
+  const planSummary = document.getElementById('planSummary');
+  const table = document.getElementById('allocationTable');
+  const stats = document.getElementById('stats');
+  const insights = document.getElementById('insights');
+  const optimizationCards = document.getElementById('optimizationCards');
+  const channelPlaybook = document.getElementById('channelPlaybook');
+  const weeklyPlan = document.getElementById('weeklyPlan');
+  const strategyReport = document.getElementById('strategyReport');
+  const chartCanvas = document.getElementById('budgetChart');
+
+  if (resultTitle) resultTitle.textContent = 'Plan sonucunuz burada görünecek';
+  if (planSummary) planSummary.innerHTML = '<p class="notice">Bütçe, kampanya amacı, sektör, hedef kitle ve süre seçildikten sonra medya planı burada oluşur.</p>';
+  if (table) table.innerHTML = '<tr><td colspan="7">Henüz plan oluşturulmadı.</td></tr>';
+  if (stats) stats.innerHTML = '';
+  if (insights) insights.innerHTML = '';
+  if (optimizationCards) optimizationCards.innerHTML = '';
+  if (channelPlaybook) channelPlaybook.innerHTML = '';
+  if (weeklyPlan) weeklyPlan.innerHTML = '';
+  if (strategyReport) strategyReport.innerHTML = '<p>Plan oluşturduktan sonra strateji raporu burada görünecek.</p>';
+  if (chart) {
+    chart.destroy();
+    chart = null;
+  }
+  if (chartCanvas) chartCanvas.style.display = '';
+}
+
+function createPlan() {
+  const values = validatePlannerInputs();
+  if (!values) {
+    clearPlanOutput();
+    return;
+  }
+
+  const { budget, goal, sector, audience, duration } = values;
 
   const allocation = adjustPlan(basePlans[goal], sector, audience, budget, goal);
   const rows = allocation.map(item => {
@@ -631,7 +702,14 @@ document.getElementById('plannerForm').addEventListener('submit', event => {
 });
 
 ['budget', 'goal', 'sector', 'audience', 'duration'].forEach(id => {
-  document.getElementById(id).addEventListener('input', createPlan);
+  document.getElementById(id).addEventListener('input', () => {
+    if (!hasCompletePlannerInputs()) {
+      clearPlanOutput();
+      setFormStatus('Alanları doldurduktan sonra “Medya Planı Oluştur” butonuna bas.');
+    } else {
+      setFormStatus('Seçimler hazır. Planı yenilemek için “Medya Planı Oluştur” butonuna bas.');
+    }
+  });
 });
 
 document.querySelectorAll('[data-calc]').forEach(button => {
@@ -792,7 +870,10 @@ function buildPdfDocumentDefinition(data) {
 }
 
 function downloadPdfReport() {
-  if (!lastPlanData) createPlan();
+  if (!lastPlanData) {
+    alert('PDF indirmek için önce medya planı oluşturmalısın.');
+    return;
+  }
 
   if (typeof pdfMake === 'undefined') {
     alert('PDF kütüphanesi yüklenemedi. Yazdır seçeneğiyle PDF olarak kaydedebilirsin.');
@@ -870,17 +951,9 @@ copyAiPlanButton?.addEventListener('click', async () => {
 setAiComingSoonMode();
 
 function resetPlannerDefaults() {
-  const defaults = {
-    budget: '50000',
-    goal: 'sales',
-    sector: 'ecommerce',
-    audience: '18-24',
-    duration: '30'
-  };
-
-  Object.entries(defaults).forEach(([id, value]) => {
+  ['budget', 'goal', 'sector', 'audience', 'duration'].forEach(id => {
     const element = document.getElementById(id);
-    if (element) element.value = value;
+    if (element) element.value = '';
   });
 
   document.querySelectorAll('[data-template]').forEach(card => card.classList.remove('is-active'));
@@ -902,7 +975,7 @@ function resetPlannerDefaults() {
 
 window.addEventListener('pageshow', () => {
   resetPlannerDefaults();
-  createPlan();
+  clearPlanOutput();
 });
 
 
