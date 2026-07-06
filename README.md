@@ -30,3 +30,9 @@ KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye
 ## Not
 
 Bu araç ve rehberler tahmini medya planlama ve genel bilgilendirme amacıyla hazırlanmıştır. Gerçek reklam performansı, gelir veya satış garantisi vermez.
+
+
+## v2.5 güncellemesi
+- Rehber sayfaları daha dolu ve SEO odaklı hale getirildi.
+- Reklam bütçesi, CPM, CPC, ROI ve küçük işletme rehberlerine örnekler, tablolar, sık sorulan sorular ve pratik yorumlar eklendi.
+- Rehber sayfalarına FAQPage yapılandırılmış veri eklendi.
