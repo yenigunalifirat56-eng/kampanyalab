@@ -1,906 +1,492 @@
-const formatter = new Intl.NumberFormat('tr-TR', {
-  style: 'currency',
-  currency: 'TRY',
-  maximumFractionDigits: 0
-});
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı</title>
+  <meta name="description" content="KampanyaLab, Türkiye odaklı reklam bütçesi ve medya planlama simülatörüdür. Bütçeni gir, medya kanallarına dağıt, tahmini performans ve kampanya raporu oluştur." />
+  <meta name="keywords" content="reklam bütçesi, medya planlama, kampanya planlama, CPM hesaplama, CPC hesaplama, ROI hesaplama, dijital reklam bütçesi" />
+  <meta name="author" content="KampanyaLab" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kampanyalab.com.tr/" />
 
-const numberFormatter = new Intl.NumberFormat('tr-TR');
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="KampanyaLab" />
+  <meta property="og:title" content="KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı" />
+  <meta property="og:description" content="Bütçeni gir, medya kanallarına dağıt, tahmini performans ve kampanya raporu oluştur." />
+  <meta property="og:url" content="https://kampanyalab.com.tr/" />
 
-const MIN_BUDGET = 1000;
-const MAX_BUDGET = 5000000;
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="KampanyaLab | Reklam Bütçesi ve Medya Planlama Aracı" />
+  <meta name="twitter:description" content="Türkiye odaklı reklam bütçesi ve medya planlama simülatörü." />
 
-function setFormStatus(message, ok = false) {
-  const status = document.getElementById('formStatus');
-  if (!status) return;
-  status.textContent = message || '';
-  status.classList.toggle('is-ok', Boolean(ok && message));
-}
+  <meta name="theme-color" content="#102c78" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js"></script>
 
-function sanitizeBudgetInput() {
-  const input = document.getElementById('budget');
-  if (!input) return MIN_BUDGET;
-
-  let value = Number(input.value || 0);
-  input.classList.remove('is-invalid');
-
-  if (!Number.isFinite(value) || value <= 0) {
-    input.classList.add('is-invalid');
-    setFormStatus('Bütçe alanına en az 1.000 TL girmelisin.');
-    return MIN_BUDGET;
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "KampanyaLab",
+    "url": "https://kampanyalab.com.tr/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "tr-TR",
+    "description": "Türkiye odaklı reklam bütçesi ve medya planlama simülatörü."
   }
-
-  if (value < MIN_BUDGET) {
-    input.classList.add('is-invalid');
-    setFormStatus('Daha anlamlı bir plan için bütçe en az 1.000 TL olmalı.');
-    return MIN_BUDGET;
-  }
-
-  if (value > MAX_BUDGET) {
-    input.value = String(MAX_BUDGET);
-    setFormStatus('Test sınırı olarak bütçe 5.000.000 TL ile sınırlandı. Daha yüksek bütçeler özel planlama gerektirir.');
-    return MAX_BUDGET;
-  }
-
-  setFormStatus('');
-  return value;
-}
-
-const goalLabels = {
-  awareness: 'Bilinirlik',
-  sales: 'Satış',
-  traffic: 'Web site trafiği',
-  social: 'Sosyal medya büyütme',
-  launch: 'Ürün lansmanı',
-  local: 'Yerel işletme tanıtımı'
-};
-
-const sectorLabels = {
-  ecommerce: 'E-ticaret',
-  restaurant: 'Kafe / restoran',
-  fashion: 'Giyim / moda',
-  education: 'Eğitim',
-  technology: 'Teknoloji',
-  beauty: 'Güzellik / kuaför',
-  event: 'Etkinlik',
-  localService: 'Yerel hizmet'
-};
-
-const campaignTemplates = {
-  ecommerceSales: {
-    budget: '50000',
-    goal: 'sales',
-    sector: 'ecommerce',
-    audience: '18-24',
-    duration: '30'
-  },
-  localCafe: {
-    budget: '20000',
-    goal: 'local',
-    sector: 'restaurant',
-    audience: '18-24',
-    duration: '15'
-  },
-  productLaunch: {
-    budget: '75000',
-    goal: 'launch',
-    sector: 'technology',
-    audience: '25-34',
-    duration: '30'
-  },
-  socialGrowth: {
-    budget: '15000',
-    goal: 'social',
-    sector: 'fashion',
-    audience: '18-24',
-    duration: '30'
-  },
-  educationLeads: {
-    budget: '35000',
-    goal: 'traffic',
-    sector: 'education',
-    audience: '25-34',
-    duration: '30'
-  },
-  beautyBooking: {
-    budget: '18000',
-    goal: 'local',
-    sector: 'beauty',
-    audience: '18-24',
-    duration: '15'
-  }
-};
-
-const basePlans = {
-  awareness: {
-    'Instagram Ads': 25,
-    'TikTok Ads': 25,
-    'YouTube Ads': 25,
-    'Display Ads': 15,
-    'Google Search': 10
-  },
-  sales: {
-    'Google Search': 30,
-    'Instagram Ads': 25,
-    'Remarketing': 20,
-    'TikTok Ads': 15,
-    'YouTube Ads': 10
-  },
-  traffic: {
-    'Google Search': 30,
-    'Instagram Ads': 20,
-    'Display Ads': 20,
-    'YouTube Ads': 15,
-    'TikTok Ads': 15
-  },
-  social: {
-    'Instagram Ads': 35,
-    'TikTok Ads': 30,
-    'Influencer': 15,
-    'YouTube Shorts': 10,
-    'Remarketing': 10
-  },
-  launch: {
-    'TikTok Ads': 25,
-    'Instagram Ads': 25,
-    'YouTube Ads': 25,
-    'Influencer': 15,
-    'Google Search': 10
-  },
-  local: {
-    'Instagram Ads': 35,
-    'Google Maps/Search': 30,
-    'TikTok Ads': 15,
-    'Açık Hava': 10,
-    'Remarketing': 10
-  }
-};
-
-const channelBenchmarks = {
-  'Instagram Ads': { cpm: 65, cpc: 5.5, role: 'Keşif ve görsel etkileşim' },
-  'TikTok Ads': { cpm: 55, cpc: 4.8, role: 'Kısa video ve hızlı erişim' },
-  'YouTube Ads': { cpm: 70, cpc: 6.5, role: 'Video bilinirliği' },
-  'YouTube Shorts': { cpm: 58, cpc: 5.2, role: 'Kısa video etkileşimi' },
-  'Display Ads': { cpm: 45, cpc: 4.2, role: 'Geniş görünürlük' },
-  'Google Search': { cpm: 90, cpc: 9.5, role: 'Yüksek satın alma niyeti' },
-  'Google Maps/Search': { cpm: 80, cpc: 7.5, role: 'Yerel arama niyeti' },
-  'Remarketing': { cpm: 50, cpc: 4.0, role: 'Tekrar hedefleme' },
-  'Influencer': { cpm: 85, cpc: 8.5, role: 'Güven ve sosyal kanıt' },
-  'Açık Hava': { cpm: 35, cpc: 0, role: 'Yerel görünürlük' }
-};
-
-const channelColors = [
-  '#2563eb', '#7c3aed', '#0f9f6e', '#f59e0b', '#ef4444', '#0891b2', '#111827'
-];
-
-let chart;
-let lastPlanData = null;
-
-function clonePlan(plan) {
-  return JSON.parse(JSON.stringify(plan));
-}
-
-function addChannel(plan, channel, amount) {
-  plan[channel] = (plan[channel] || 0) + amount;
-}
-
-function adjustPlan(plan, sector, audience, budget, goal) {
-  const adjusted = clonePlan(plan);
-
-  if (['13-18', '18-24'].includes(audience)) {
-    addChannel(adjusted, 'TikTok Ads', 6);
-    addChannel(adjusted, 'Instagram Ads', 4);
-  }
-
-  if (['35-44', '45+'].includes(audience)) {
-    addChannel(adjusted, 'Google Search', 5);
-    addChannel(adjusted, 'YouTube Ads', 4);
-  }
-
-  if (sector === 'restaurant' || sector === 'localService' || sector === 'beauty') {
-    addChannel(adjusted, 'Google Maps/Search', 7);
-    addChannel(adjusted, 'Instagram Ads', 4);
-  }
-
-  if (sector === 'ecommerce') {
-    addChannel(adjusted, 'Remarketing', 6);
-    addChannel(adjusted, 'Google Search', 4);
-  }
-
-  if (sector === 'fashion') {
-    addChannel(adjusted, 'Instagram Ads', 7);
-    addChannel(adjusted, 'TikTok Ads', 4);
-  }
-
-  if (sector === 'education' || sector === 'technology') {
-    addChannel(adjusted, 'Google Search', 6);
-    addChannel(adjusted, 'YouTube Ads', 4);
-  }
-
-  if (budget < 10000) {
-    if (goal === 'sales' || goal === 'traffic') addChannel(adjusted, 'Google Search', 5);
-    addChannel(adjusted, 'Remarketing', 3);
-  }
-
-  return limitChannels(normalizePlan(adjusted), budget);
-}
-
-function channelLimitByBudget(budget) {
-  if (budget < 10000) return 3;
-  if (budget < 25000) return 4;
-  if (budget < 75000) return 5;
-  return 6;
-}
-
-function limitChannels(allocation, budget) {
-  const limit = channelLimitByBudget(budget);
-  if (allocation.length <= limit) return allocation;
-
-  const kept = allocation.slice(0, limit);
-  const removedPercent = allocation.slice(limit).reduce((sum, item) => sum + item.percent, 0);
-  const keptTotal = kept.reduce((sum, item) => sum + item.percent, 0);
-
-  return normalizePlan(Object.fromEntries(kept.map(item => [
-    item.channel,
-    item.percent + (item.percent / keptTotal) * removedPercent
-  ])));
-}
-
-function normalizePlan(plan) {
-  const entries = Object.entries(plan).filter(([, value]) => value > 0);
-  const total = entries.reduce((sum, [, value]) => sum + value, 0);
-  const normalized = entries.map(([channel, value]) => ({
-    channel,
-    percent: value / total * 100
-  }));
-
-  let rounded = normalized.map(item => ({ ...item, percent: Math.round(item.percent) }));
-  let diff = 100 - rounded.reduce((sum, item) => sum + item.percent, 0);
-  rounded.sort((a, b) => b.percent - a.percent);
-
-  let i = 0;
-  while (diff !== 0 && rounded.length > 0) {
-    rounded[i % rounded.length].percent += diff > 0 ? 1 : -1;
-    diff += diff > 0 ? -1 : 1;
-    i++;
-  }
-
-  return rounded.filter(item => item.percent > 0).sort((a, b) => b.percent - a.percent);
-}
-
-function createPlan() {
-  const budget = sanitizeBudgetInput();
-  const goal = document.getElementById('goal').value;
-  const sector = document.getElementById('sector').value;
-  const audience = document.getElementById('audience').value;
-  const duration = Number(document.getElementById('duration').value);
-
-  const allocation = adjustPlan(basePlans[goal], sector, audience, budget, goal);
-  const rows = allocation.map(item => {
-    const channelBudget = budget * item.percent / 100;
-    const benchmark = channelBenchmarks[item.channel] || { cpm: 60, cpc: 6, role: 'Tamamlayıcı kanal' };
-    const impressions = benchmark.cpm > 0 ? (channelBudget / benchmark.cpm) * 1000 : 0;
-    const clicks = benchmark.cpc > 0 ? channelBudget / benchmark.cpc : 0;
-    return {
-      ...item,
-      budget: channelBudget,
-      cpm: benchmark.cpm,
-      cpc: benchmark.cpc,
-      role: benchmark.role,
-      impressions,
-      clicks
-    };
-  });
-
-  const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
-  const totalClicks = rows.reduce((sum, row) => sum + row.clicks, 0);
-  const avgCpm = totalImpressions > 0 ? budget / totalImpressions * 1000 : 0;
-  const avgCpc = totalClicks > 0 ? budget / totalClicks : 0;
-  const ctr = totalImpressions > 0 ? totalClicks / totalImpressions * 100 : 0;
-  const dailyBudget = duration > 0 ? budget / duration : 0;
-
-  renderResults({ budget, goal, sector, audience, duration, rows, totalImpressions, totalClicks, avgCpm, avgCpc, ctr, dailyBudget });
-}
-
-function renderResults(data) {
-  lastPlanData = data;
-  document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı`;
-
-  renderPlanSummary(data);
-
-  const table = document.getElementById('allocationTable');
-  table.innerHTML = data.rows.map(row => `
-    <tr>
-      <td><strong>${row.channel}</strong></td>
-      <td>${row.role}</td>
-      <td>%${row.percent}</td>
-      <td>${formatter.format(row.budget)}</td>
-      <td>${row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez'}</td>
-      <td>${row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'}</td>
-      <td>${row.cpm ? row.cpm.toFixed(0) + ' TL CPM' : '-'}${row.cpc ? '<br><small>' + row.cpc.toFixed(2) + ' TL CPC</small>' : ''}</td>
-    </tr>
-  `).join('');
-
-  document.getElementById('stats').innerHTML = `
-    <div class="stat"><span>Tahmini gösterim</span><strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong></div>
-    <div class="stat"><span>Tahmini tıklama</span><strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong></div>
-    <div class="stat"><span>Ortalama CPC</span><strong>${data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-'}</strong></div>
-    <div class="stat"><span>Ortalama CPM</span><strong>${data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-'}</strong></div>
-    <div class="stat"><span>Tahmini CTR</span><strong>${data.ctr ? '%' + data.ctr.toFixed(2) : '-'}</strong></div>
-    <div class="stat"><span>Günlük bütçe</span><strong>${formatter.format(data.dailyBudget)}</strong></div>
-  `;
-
-  renderInsights(data);
-  renderOptimizationCards(data);
-  renderChannelPlaybook(data);
-  renderWeeklyPlan(data);
-  updateChart(data.rows);
-  renderReport(data);
-}
-
-function renderPlanSummary(data) {
-  const tier = budgetTier(data.budget);
-  const summary = document.getElementById('planSummary');
-  summary.innerHTML = `
-    <div>
-      <span>Bütçe seviyesi</span>
-      <strong>${tier.label}</strong>
-      <p>${tier.description}</p>
-    </div>
-    <div>
-      <span>Kanal sayısı</span>
-      <strong>${data.rows.length} ana kanal</strong>
-      <p>Bütçe seviyesine göre kanal sayısı otomatik dengelendi.</p>
-    </div>
-    <div>
-      <span>Plan odağı</span>
-      <strong>${goalLabels[data.goal]}</strong>
-      <p>${sectorLabels[data.sector]} ve ${data.audience} yaş hedefi dikkate alındı.</p>
-    </div>
-  `;
-}
-
-function budgetTier(budget) {
-  if (budget < 10000) return { label: 'Düşük bütçe', description: 'Daha az kanal, daha net test odağı önerilir.' };
-  if (budget < 25000) return { label: 'Başlangıç bütçesi', description: 'Ana kanallar seçilip öğrenme verisi toplanabilir.' };
-  if (budget < 75000) return { label: 'Orta bütçe', description: 'Test, optimizasyon ve remarketing dengesi kurulabilir.' };
-  return { label: 'Geniş bütçe', description: 'Çok kanallı kampanya ve ayrı kreatif testleri yapılabilir.' };
-}
-
-function updateChart(rows) {
-  const ctx = document.getElementById('budgetChart');
-  const labels = rows.map(row => row.channel);
-  const values = rows.map(row => row.percent);
-
-  if (typeof Chart === 'undefined') {
-    ctx.style.display = 'none';
-    return;
-  }
-
-  if (chart) chart.destroy();
-  chart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{
-        data: values,
-        backgroundColor: channelColors,
-        borderWidth: 0,
-        hoverOffset: 8
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom' },
-        tooltip: {
-          callbacks: {
-            label: context => `${context.label}: %${context.raw}`
-          }
-        }
-      },
-      cutout: '62%'
-    }
-  });
-}
-
-function renderInsights(data) {
-  const strongestChannel = data.rows[0];
-  const measurableRows = data.rows.filter(row => row.clicks > 0);
-  const bestCpc = measurableRows.length ? measurableRows.reduce((best, row) => row.cpc < best.cpc ? row : best, measurableRows[0]) : null;
-  const budgetHealth = data.budget < 10000 ? 'Düşük bütçede kanal sayısı otomatik azaltıldı. İlk hedef hızlı öğrenme olmalı.' : data.budget < 50000 ? 'Orta bütçede test + optimizasyon dengesi kurulabilir.' : 'Bu bütçe ile erişim, dönüşüm ve remarketing aynı anda test edilebilir.';
-
-  document.getElementById('insights').innerHTML = `
-    <div class="insight-card">
-      <span>En güçlü kanal</span>
-      <strong>${strongestChannel.channel} / %${strongestChannel.percent}</strong>
-      <p>${channelReason(strongestChannel.channel, data.goal, data.sector)}</p>
-    </div>
-    <div class="insight-card">
-      <span>En uygun tıklama</span>
-      <strong>${bestCpc ? bestCpc.channel + ' / ' + bestCpc.cpc.toFixed(2) + ' TL' : 'Ölçülmez'}</strong>
-      <p>Tıklama maliyeti düşük kanallar test bütçesi için avantaj sağlayabilir.</p>
-    </div>
-    <div class="insight-card">
-      <span>Bütçe yorumu</span>
-      <strong>${formatter.format(data.dailyBudget)} / gün</strong>
-      <p>${budgetHealth}</p>
-    </div>
-  `;
-}
-
-function renderOptimizationCards(data) {
-  const risk = data.budget < 10000
-    ? 'Bütçe düşük olduğu için çok fazla kanala bölmek öğrenme sürecini zayıflatabilir.'
-    : data.duration <= 7
-      ? 'Kısa kampanya süresinde algoritmaların öğrenme süresi sınırlı kalabilir.'
-      : 'Ana risk kreatif kalitesi ve hedefleme doğruluğudur; sonuçlar kampanya içi veriye göre değişir.';
-
-  const optimization = data.goal === 'sales'
-    ? 'İlk 3-5 gün sonra düşük dönüşüm getiren kanalları azaltıp Google Search ve remarketing tarafını güçlendir.'
-    : data.goal === 'awareness'
-      ? 'Video izlenme oranı ve erişim maliyetine göre YouTube/TikTok/Instagram bütçesini yeniden dengele.'
-      : 'Tıklama maliyeti, CTR ve kaliteli trafik sinyallerine göre bütçeyi haftalık optimize et.';
-
-  const creative = ['13-18', '18-24'].includes(data.audience)
-    ? 'Kısa video, hızlı mesaj, dikey format ve ilk 3 saniyede net fayda anlatımı kullan.'
-    : 'Net teklif, güven unsuru, açıklayıcı görsel/video ve arama niyetine uygun metin kullan.';
-
-  document.getElementById('optimizationCards').innerHTML = `
-    <div class="opt-card"><span>Risk</span><p>${risk}</p></div>
-    <div class="opt-card"><span>Optimizasyon</span><p>${optimization}</p></div>
-    <div class="opt-card"><span>Kreatif önerisi</span><p>${creative}</p></div>
-  `;
-}
-
-function renderChannelPlaybook(data) {
-  document.getElementById('channelPlaybook').innerHTML = `
-    <p class="mini-title">Kanal açıklamaları</p>
-    <div class="playbook-grid">
-      ${data.rows.map(row => `
-        <div class="playbook-card">
-          <strong>${row.channel}</strong>
-          <span>${row.role}</span>
-          <p>${channelReason(row.channel, data.goal, data.sector)}</p>
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-function renderWeeklyPlan(data) {
-  const weekCount = Math.max(Math.ceil(data.duration / 7), 1);
-  const weeklyBudget = data.budget / weekCount;
-  const weeks = [
-    ['1. Hafta', 'Kreatif testleri, hedef kitle denemeleri ve ilk veri toplama süreci.'],
-    ['2. Hafta', 'En iyi çalışan kanal, reklam metni ve görsellerin bütçesini artırma.'],
-    ['3. Hafta', 'Remarketing, dönüşüm odaklı kampanyalar ve düşük verimli kanalları azaltma.'],
-    ['4. Hafta', 'Performans raporu, bütçe optimizasyonu ve sonraki kampanya için öğrenimleri çıkarma.']
-  ].slice(0, Math.min(4, weekCount));
-
-  document.getElementById('weeklyPlan').innerHTML = `
-    <p class="mini-title">Haftalık uygulama planı</p>
-    ${weeks.map(([week, text]) => `
-      <div class="weekly-item">
-        <strong>${week}</strong>
-        <p>${text} Ortalama haftalık bütçe: <strong>${formatter.format(weeklyBudget)}</strong>.</p>
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#planner">Plan oluşturucuya geç</a>
+  <header class="hero">
+    <nav class="navbar">
+      <a href="#" class="logo"><span>Kampanya</span>Lab</a>
+      <button class="nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="primaryNavigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="primaryNavigation">
+        <a href="#planner">Plan Oluştur</a>
+        <a href="#templates">Şablonlar</a>
+        <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
+        <a href="#audience">Kimler Kullanır?</a>
+        <a href="#product">Özellikler</a>
+        <a href="#calculators">Hesaplayıcılar</a>
+        <a href="#how">Nasıl Çalışır?</a>
+        <a href="#trust">Güven</a>
+        <a href="#planner">PDF Rapor</a>
       </div>
-    `).join('')}
-  `;
-}
+    </nav>
 
-function channelReason(channel, goal, sector) {
-  if (channel.includes('Google')) return 'Arama niyeti yüksek kullanıcıları yakalamak için özellikle satış, trafik ve yerel hizmetlerde güçlüdür.';
-  if (channel.includes('Instagram')) return 'Görsel içerik, ürün keşfi ve yerel marka görünürlüğü için dengeli bir ana kanaldır.';
-  if (channel.includes('TikTok')) return 'Genç kitle, kısa video ve hızlı erişim hedeflerinde güçlü bir test kanalıdır.';
-  if (channel.includes('YouTube')) return 'Video ile bilinirlik ve açıklayıcı içerik anlatımı için uygundur.';
-  if (channel.includes('Remarketing')) return 'Daha önce ilgi göstermiş kullanıcıları tekrar hedefleyerek dönüşüm ihtimalini artırır.';
-  if (channel.includes('Influencer')) return 'Güven, sosyal kanıt ve hızlı ürün tanıtımı için destekleyici kanal olarak kullanılabilir.';
-  if (channel.includes('Açık Hava')) return 'Yerel görünürlük, lokasyon bilinirliği ve mağaza trafiği için destekleyici rol oynar.';
-  return 'Bu kanal kampanya karmasını tamamlayıcı rol oynar.';
-}
+    <section class="hero-content">
+      <div>
+        <p class="badge">Türkiye odaklı medya bütçesi simülatörü</p>
+        <h1>Reklam bütçeni doğru kanallara dağıt.</h1>
+        <p class="hero-text">
+          Kampanya hedefini, sektörünü ve bütçeni gir. KampanyaLab sana medya karması,
+          tahmini performans ve uygulanabilir kampanya planı oluştursun.
+        </p>
+        <div class="hero-actions">
+          <a href="#planner" class="btn primary">Plan Oluştur</a>
+          <a href="#calculators" class="btn secondary">CPM / CPC Hesapla</a>
+        </div>
+      </div>
 
-function renderReport(data) {
-  const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
-  const young = ['13-18', '18-24'].includes(data.audience);
-  const report = `
-    <p><strong>${formatter.format(data.budget)}</strong> bütçeli, <strong>${data.duration} günlük</strong> ${goalLabels[data.goal].toLowerCase()} kampanyası için önerilen ana medya kanalları <strong>${topChannels}</strong> olarak belirlenmiştir. Bütçe seviyesi nedeniyle plan <strong>${data.rows.length} ana kanal</strong> ile sınırlandırılmıştır.</p>
+      <div class="hero-card">
+        <p class="mini-title">Demo çıktı</p>
+        <h3>Satış odaklı örnek medya karması</h3>
+        <div class="sample-bars">
+          <div><span>Google Search</span><strong>%30</strong></div>
+          <div><span>Instagram</span><strong>%25</strong></div>
+          <div><span>Remarketing</span><strong>%20</strong></div>
+          <div><span>TikTok</span><strong>%15</strong></div>
+          <div><span>YouTube</span><strong>%10</strong></div>
+        </div>
+      </div>
+    </section>
+  </header>
 
-    <h4>Strateji yorumu</h4>
-    <p>${goalStrategyText(data.goal)} ${sectorStrategyText(data.sector)} ${young ? 'Genç hedef kitle seçildiği için TikTok ve Instagram ağırlığı artırılmıştır.' : 'Hedef kitle daha geniş yaş aralığında olduğu için Google ve YouTube kanallarına daha fazla önem verilmiştir.'}</p>
-
-    <h4>Tahmini performans</h4>
-    <p>Bu plana göre yaklaşık <strong>${numberFormatter.format(Math.round(data.totalImpressions))}</strong> gösterim ve <strong>${numberFormatter.format(Math.round(data.totalClicks))}</strong> tıklama elde edilebilir. Ortalama CPC yaklaşık <strong>${data.avgCpc.toFixed(2)} TL</strong>, ortalama CPM ise yaklaşık <strong>${data.avgCpm.toFixed(2)} TL</strong> seviyesindedir. Tahmini CTR yaklaşık <strong>%${data.ctr.toFixed(2)}</strong> olarak hesaplanmıştır.</p>
-
-    <h4>Kanal öncelikleri</h4>
-    <ul>
-      ${data.rows.map(row => `<li><strong>${row.channel}:</strong> %${row.percent} oran, yaklaşık ${formatter.format(row.budget)}. Rol: ${row.role}.</li>`).join('')}
-    </ul>
-
-    <h4>Optimizasyon notu</h4>
-    <p>Kampanya yayına alındıktan sonra ilk verilerle en düşük maliyetli ve en kaliteli sonuç getiren kanallar güçlendirilmeli; düşük performanslı kanalların bütçesi azaltılmalıdır.</p>
-
-    <p class="notice"><strong>Uyarı:</strong> Bu rapor tahmini medya planlama simülasyonudur. Gerçek sonuçlar reklam kreatifi, hedefleme, rekabet, sezon, ürün fiyatı ve web sitesi kalitesine göre değişebilir.</p>
-  `;
-  document.getElementById('strategyReport').innerHTML = report;
-}
-
-function goalStrategyText(goal) {
-  const texts = {
-    awareness: 'Bilinirlik hedefi seçildiği için erişim ve video görünürlüğü güçlü kanallara ağırlık verilmiştir.',
-    sales: 'Satış hedefi seçildiği için satın alma niyeti yüksek Google Search ve tekrar hedefleme kanalları güçlendirilmiştir.',
-    traffic: 'Trafik hedefi seçildiği için tıklama maliyeti dengeli kanallar ve arama ağı birlikte kullanılmıştır.',
-    social: 'Sosyal medya büyütme hedefi seçildiği için etkileşim ve takipçi kazanımı güçlü platformlar öne çıkarılmıştır.',
-    launch: 'Lansman hedefi seçildiği için video, sosyal medya ve influencer destekli bir görünürlük karması önerilmiştir.',
-    local: 'Yerel tanıtım hedefi seçildiği için Google Maps/Search ve Instagram gibi konum bazlı güçlü kanallar öne çıkarılmıştır.'
-  };
-  return texts[goal] || '';
-}
-
-function sectorStrategyText(sector) {
-  const texts = {
-    ecommerce: 'E-ticaret sektörü için dönüşüm ve remarketing bütçesi kritik görülmüştür.',
-    restaurant: 'Kafe/restoran işletmeleri için yakın çevre, görsel içerik ve harita aramaları önemlidir.',
-    fashion: 'Moda/giyim tarafında görsel performans ve kısa video içerikleri daha yüksek etki yaratabilir.',
-    education: 'Eğitim sektöründe arama niyeti ve açıklayıcı video içerikleri daha güçlü sonuç verebilir.',
-    technology: 'Teknoloji sektöründe arama reklamları ve bilgilendirici video içerikleri öne çıkarılmıştır.',
-    beauty: 'Güzellik/kuaför alanında görsel sosyal medya içerikleri ve yerel aramalar önceliklidir.',
-    event: 'Etkinlik kampanyalarında hızlı erişim, sosyal medya görünürlüğü ve lokasyon hedefleme önemlidir.',
-    localService: 'Yerel hizmetlerde Google Maps/Search ve yakın çevre hedeflemesi daha yüksek niyetli kullanıcı getirebilir.'
-  };
-  return texts[sector] || '';
-}
-
-function calculateMini(type) {
-  if (type === 'cpm') {
-    const cost = Number(document.getElementById('cpmCost').value);
-    const impressions = Number(document.getElementById('cpmImpressions').value);
-    const result = impressions > 0 ? (cost / impressions) * 1000 : 0;
-    document.getElementById('cpmResult').textContent = `CPM: ${result ? result.toFixed(2) + ' TL' : '-'}`;
-  }
-  if (type === 'cpc') {
-    const cost = Number(document.getElementById('cpcCost').value);
-    const clicks = Number(document.getElementById('cpcClicks').value);
-    const result = clicks > 0 ? cost / clicks : 0;
-    document.getElementById('cpcResult').textContent = `CPC: ${result ? result.toFixed(2) + ' TL' : '-'}`;
-  }
-  if (type === 'roi') {
-    const revenue = Number(document.getElementById('roiRevenue').value);
-    const cost = Number(document.getElementById('roiCost').value);
-    const result = cost > 0 ? ((revenue - cost) / cost) * 100 : 0;
-    document.getElementById('roiResult').textContent = `ROI: ${cost ? '%' + result.toFixed(1) : '-'}`;
-  }
-}
-
-function applyTemplate(templateKey) {
-  const template = campaignTemplates[templateKey];
-  if (!template) return;
-
-  Object.entries(template).forEach(([id, value]) => {
-    const element = document.getElementById(id);
-    if (element) element.value = value;
-  });
-
-
-document.querySelectorAll('[data-template]').forEach(card => {
-    card.classList.toggle('is-active', card.dataset.template === templateKey);
-  });
-
-  createPlan();
-  document.getElementById('planner')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
-
-function closeMobileMenu() {
-  navLinks?.classList.remove('is-open');
-  document.body.classList.remove('menu-open');
-  navToggle?.setAttribute('aria-expanded', 'false');
-  navToggle?.setAttribute('aria-label', 'Menüyü aç');
-}
-
-navToggle?.addEventListener('click', () => {
-  const isOpen = navLinks?.classList.toggle('is-open');
-  document.body.classList.toggle('menu-open', Boolean(isOpen));
-  navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
-  navToggle.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
-});
-
-navLinks?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', closeMobileMenu);
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeMobileMenu();
-});
-
-document.addEventListener('click', event => {
-  if (!document.body.classList.contains('menu-open')) return;
-  const clickedInsideMenu = navLinks?.contains(event.target);
-  const clickedToggle = navToggle?.contains(event.target);
-  if (!clickedInsideMenu && !clickedToggle) closeMobileMenu();
-});
-
-document.querySelectorAll('[data-template]').forEach(card => {
-  card.addEventListener('click', () => applyTemplate(card.dataset.template));
-});
-
-document.getElementById('plannerForm').addEventListener('submit', event => {
-  event.preventDefault();
-  createPlan();
-});
-
-['budget', 'goal', 'sector', 'audience', 'duration'].forEach(id => {
-  document.getElementById(id).addEventListener('input', createPlan);
-});
-
-document.querySelectorAll('[data-calc]').forEach(button => {
-  button.addEventListener('click', () => calculateMini(button.dataset.calc));
-});
-
-document.getElementById('copyReport').addEventListener('click', async () => {
-  const text = document.getElementById('strategyReport').innerText;
-  try {
-    await navigator.clipboard.writeText(text);
-    document.getElementById('copyReport').textContent = 'Kopyalandı';
-    setTimeout(() => document.getElementById('copyReport').textContent = 'Metni Kopyala', 1500);
-  } catch {
-    alert('Kopyalama başarısız oldu. Metni manuel seçip kopyalayabilirsin.');
-  }
-});
-
-document.getElementById('printReport').addEventListener('click', () => window.print());
-
-function plainTextFromHtml(html) {
-  const temp = document.createElement('div');
-  temp.innerHTML = html;
-  return temp.innerText.replace(/\n{3,}/g, '\n\n').trim();
-}
-
-function cleanPdfText(text) {
-  return String(text || '')
-    .replace(/\s+\n/g, '\n')
-    .replace(/\n\s+/g, '\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
-
-function buildPdfDocumentDefinition(data) {
-  const generatedAt = new Date().toLocaleDateString('tr-TR');
-  const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
-  const reportText = cleanPdfText(document.getElementById('strategyReport').innerText);
-  const weeklyText = cleanPdfText(document.getElementById('weeklyPlan').innerText);
-
-  const channelRows = data.rows.map(row => ([
-    { text: row.channel, bold: true },
-    row.role || '-',
-    `%${row.percent}`,
-    formatter.format(row.budget),
-    row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez',
-    row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'
-  ]));
-
-  return {
-    pageSize: 'A4',
-    pageMargins: [32, 36, 32, 36],
-    info: {
-      title: `KampanyaLab ${goalLabels[data.goal]} Kampanyası Raporu`,
-      author: 'KampanyaLab',
-      subject: 'Tahmini medya planlama raporu'
-    },
-    footer(currentPage, pageCount) {
-      return {
-        columns: [
-          { text: 'KampanyaLab', margin: [32, 0, 0, 0], color: '#64748b', fontSize: 8 },
-          { text: `${currentPage} / ${pageCount}`, alignment: 'right', margin: [0, 0, 32, 0], color: '#64748b', fontSize: 8 }
-        ]
-      };
-    },
-    styles: {
-      h1: { fontSize: 20, bold: true, color: '#0f172a', margin: [0, 0, 0, 8] },
-      h2: { fontSize: 13, bold: true, color: '#1e3a8a', margin: [0, 18, 0, 8] },
-      small: { fontSize: 8, color: '#64748b' },
-      label: { fontSize: 8, color: '#64748b', margin: [0, 0, 0, 2] },
-      metric: { fontSize: 11, bold: true, color: '#0f172a' },
-      notice: { fontSize: 9, color: '#334155', margin: [0, 8, 0, 0] }
-    },
-    defaultStyle: {
-      fontSize: 9,
-      color: '#1f2937',
-      lineHeight: 1.25
-    },
-    content: [
-      {
-        table: {
-          widths: ['*'],
-          body: [[
-            {
-              stack: [
-                { text: 'KampanyaLab Medya Planı', color: '#bfdbfe', fontSize: 9, bold: true },
-                { text: `${goalLabels[data.goal]} Kampanyası Raporu`, color: '#ffffff', fontSize: 22, bold: true, margin: [0, 6, 0, 4] },
-                { text: `${sectorLabels[data.sector]} sektörü için ${data.duration} günlük tahmini medya planı.`, color: '#dbeafe', fontSize: 10 },
-                { text: `Oluşturma tarihi: ${generatedAt}`, color: '#dbeafe', fontSize: 8, margin: [0, 10, 0, 0] }
-              ],
-              fillColor: '#1e3a8a',
-              margin: [16, 14, 16, 14]
-            }
-          ]]
-        },
-        layout: 'noBorders'
-      },
-      {
-        columns: [
-          { stack: [{ text: 'Bütçe', style: 'label' }, { text: formatter.format(data.budget), style: 'metric' }] },
-          { stack: [{ text: 'Süre', style: 'label' }, { text: `${data.duration} gün`, style: 'metric' }] },
-          { stack: [{ text: 'Hedef kitle', style: 'label' }, { text: data.audience, style: 'metric' }] },
-          { stack: [{ text: 'Ana kanallar', style: 'label' }, { text: topChannels, style: 'metric' }] }
-        ],
-        columnGap: 10,
-        margin: [0, 14, 0, 4]
-      },
-      { text: 'Performans Özeti', style: 'h2' },
-      {
-        columns: [
-          { stack: [{ text: 'Tahmini gösterim', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalImpressions)), style: 'metric' }] },
-          { stack: [{ text: 'Tahmini tıklama', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalClicks)), style: 'metric' }] },
-          { stack: [{ text: 'Ortalama CPC', style: 'label' }, { text: data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-', style: 'metric' }] }
-        ],
-        columnGap: 10
-      },
-      {
-        columns: [
-          { stack: [{ text: 'Ortalama CPM', style: 'label' }, { text: data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-', style: 'metric' }] },
-          { stack: [{ text: 'Tahmini CTR', style: 'label' }, { text: data.ctr ? '%' + data.ctr.toFixed(2) : '-', style: 'metric' }] },
-          { stack: [{ text: 'Günlük bütçe', style: 'label' }, { text: formatter.format(data.dailyBudget), style: 'metric' }] }
-        ],
-        columnGap: 10,
-        margin: [0, 10, 0, 0]
-      },
-      { text: 'Kanal Dağılımı', style: 'h2' },
-      {
-        table: {
-          headerRows: 1,
-          widths: ['*', '*', 32, 56, 58, 52],
-          body: [
-            [
-              { text: 'Kanal', bold: true, color: '#ffffff' },
-              { text: 'Rol', bold: true, color: '#ffffff' },
-              { text: 'Oran', bold: true, color: '#ffffff' },
-              { text: 'Bütçe', bold: true, color: '#ffffff' },
-              { text: 'Gösterim', bold: true, color: '#ffffff' },
-              { text: 'Tıklama', bold: true, color: '#ffffff' }
-            ],
-            ...channelRows
-          ]
-        },
-        layout: {
-          fillColor(rowIndex) { return rowIndex === 0 ? '#1e40af' : (rowIndex % 2 === 0 ? '#f8fafc' : null); },
-          hLineColor() { return '#e2e8f0'; },
-          vLineColor() { return '#e2e8f0'; }
-        }
-      },
-      { text: 'Strateji Raporu', style: 'h2' },
-      { text: reportText, margin: [0, 0, 0, 4] },
-      { text: 'Haftalık Uygulama Planı', style: 'h2' },
-      { text: weeklyText, margin: [0, 0, 0, 4] },
-      {
-        text: 'Uyarı: KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve teklif stratejisine göre değişebilir.',
-        style: 'notice'
-      }
-    ]
-  };
-}
-
-function downloadPdfReport() {
-  if (!lastPlanData) createPlan();
-
-  if (typeof pdfMake === 'undefined') {
-    alert('PDF kütüphanesi yüklenemedi. Yazdır seçeneğiyle PDF olarak kaydedebilirsin.');
-    window.print();
-    return;
-  }
-
-  const fileNameGoal = goalLabels[lastPlanData.goal].toLowerCase().replace(/\s+/g, '-');
-  const docDefinition = buildPdfDocumentDefinition(lastPlanData);
-  pdfMake.createPdf(docDefinition).download(`kampanyalab-${fileNameGoal}-medya-plani.pdf`);
-}
-
-document.getElementById('downloadPdf')?.addEventListener('click', downloadPdfReport);
-document.getElementById('downloadPdfReport')?.addEventListener('click', downloadPdfReport);
+  <main id="main">
+    <section class="section intro" id="how">
+      <div class="section-heading">
+        <p class="badge">MVP v2.0</p>
+        <h2>KampanyaLab AI destekli kampanya planlayıcıya hazırlanıyor</h2>
+      </div>
+      <div class="features">
+        <article>
+          <h3>Akıllı bütçe dağılımı</h3>
+          <p>Bütçeyi kampanya amacı, sektör, hedef kitle ve bütçe seviyesine göre dengeli medya kanallarına böler.</p>
+        </article>
+        <article>
+          <h3>Tahmini performans</h3>
+          <p>CPM, CPC, CTR, gösterim, tıklama ve kanal önceliklerini tahmini olarak simüle eder.</p>
+        </article>
+        <article>
+          <h3>Şablonlu başlangıç</h3>
+          <p>Hazır kampanya senaryolarından birini seçerek formu otomatik doldurur, ardından indirilebilir PDF raporu oluşturur.</p>
+        </article>
+        <article>
+          <h3>AI kampanya fikri</h3>
+          <p>Serbest metinle plan üretme özelliği yakında aktif olacak. Şimdilik medya planı motoru ve hazır şablonları kullanabilirsin.</p>
+        </article>
+      </div>
+    </section>
 
 
 
-// v2.0.1 AI planlayıcı yakında modu
-const aiPlannerForm = document.getElementById('aiPlannerForm');
-const aiPrompt = document.getElementById('aiPrompt');
-const aiStatus = document.getElementById('aiStatus');
-const aiResult = document.getElementById('aiResult');
-const generateAiPlanButton = document.getElementById('generateAiPlan');
-const clearAiPlanButton = document.getElementById('clearAiPlan');
-const copyAiPlanButton = document.getElementById('copyAiPlan');
+    <section class="section product-section" id="product">
+      <div class="product-grid">
+        <div class="product-copy">
+          <p class="badge">Ürün özeti</p>
+          <h2>Kampanya fikrinden indirilebilir medya planına kadar tek ekranda.</h2>
+          <p>
+            KampanyaLab; küçük işletmeler, öğrenciler ve dijital pazarlama ile ilgilenenler için
+            bütçeyi kanallara ayıran, tahmini sonuçları gösteren ve PDF rapor üreten pratik bir medya planlama aracıdır.
+          </p>
+          <div class="product-actions">
+            <a href="#planner" class="btn primary">Hemen plan oluştur</a>
+            <a href="#templates" class="btn secondary bordered">Şablon seç</a>
+          </div>
+        </div>
+        <div class="product-points">
+          <article>
+            <span>01</span>
+            <strong>Bütçeyi gir</strong>
+            <p>Kampanya bütçeni, hedefini, sektörünü ve hedef kitle yaşını seç.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>Medya karmasını gör</strong>
+            <p>Google, Instagram, TikTok, YouTube ve remarketing gibi kanallar için önerilen dağılımı incele.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>Raporu indir</strong>
+            <p>Strateji, tahmini performans ve haftalık planı PDF olarak indir veya yazdır.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-function setAiStatus(message, type = '') {
-  if (!aiStatus) return;
-  aiStatus.textContent = message || '';
-  aiStatus.className = `form-status ${type}`.trim();
-}
+    <section class="section audience-section" id="audience">
+      <div class="section-heading">
+        <p class="badge">Kimler kullanabilir?</p>
+        <h2>Öğrenciden işletmeye herkes için anlaşılır medya planlama.</h2>
+        <p>KampanyaLab, teknik reklam terimlerini sadeleştirip kullanılabilir bir ilk medya planı üretir.</p>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card panel">
+          <div class="audience-icon">🎓</div>
+          <h3>Öğrenciler</h3>
+          <p>Medya planlama, reklam bütçesi ve kampanya raporu konularını örnek çıktılarla daha anlaşılır hale getirir.</p>
+        </article>
+        <article class="audience-card panel">
+          <div class="audience-icon">🏪</div>
+          <h3>Küçük işletmeler</h3>
+          <p>Kafe, kuaför, eğitim kurumu veya e-ticaret gibi işletmeler için başlangıç bütçe dağılımı önerir.</p>
+        </article>
+        <article class="audience-card panel">
+          <div class="audience-icon">📊</div>
+          <h3>Ajans ve freelancerlar</h3>
+          <p>Müşteri görüşmesi öncesinde hızlı medya karması, tahmini performans ve PDF taslak rapor üretir.</p>
+        </article>
+      </div>
+    </section>
 
-function renderAiResult(text, isEmpty = false) {
-  if (!aiResult) return;
-  aiResult.classList.toggle('empty', isEmpty);
-  aiResult.textContent = text;
-}
+    <section class="section value-section">
+      <div class="value-card panel">
+        <div>
+          <p class="badge">Neden farklı?</p>
+          <h2>TL bazlı, Türkiye odaklı ve sade.</h2>
+          <p>
+            KampanyaLab kesin sonuç vadetmez; bunun yerine kampanyaya başlamadan önce fikir veren,
+            bütçe seviyesine göre kanal sayısını ayarlayan ve raporlanabilir bir medya planı taslağı oluşturur.
+          </p>
+        </div>
+        <div class="value-list">
+          <p><strong>✓</strong> Düşük bütçede fazla kanala bölünmeyi azaltır.</p>
+          <p><strong>✓</strong> Şablonlarla hızlı başlangıç sağlar.</p>
+          <p><strong>✓</strong> Sonuçları PDF ve yazdırma çıktısına dönüştürür.</p>
+          <p><strong>✓</strong> Verileri bu v1.7 MVP sürümünde sunucuya göndermez.</p>
+        </div>
+      </div>
+    </section>
 
-function setAiComingSoonMode() {
-  if (aiPrompt) {
-    aiPrompt.value = '';
-    aiPrompt.disabled = true;
-  }
-  if (generateAiPlanButton) {
-    generateAiPlanButton.disabled = true;
-    generateAiPlanButton.textContent = 'Yakında Aktif Olacak';
-  }
-  if (clearAiPlanButton) clearAiPlanButton.disabled = true;
-  renderAiResult('AI destekli kampanya planlayıcı yakında aktif edilecektir. Şimdilik hazır şablonlar, medya planı motoru ve PDF rapor sistemini kullanabilirsin.', true);
-  setAiStatus('AI planlayıcı şu anda yakında modunda. OpenAI API ücretli kullanım gerektirdiği için taslak oluşturma geçici olarak kapalıdır.', 'info');
-}
 
-aiPlannerForm?.addEventListener('submit', event => {
-  event.preventDefault();
-  setAiComingSoonMode();
-});
+    <section class="section templates" id="templates">
+      <div class="section-heading">
+        <p class="badge">Hazır senaryolar</p>
+        <h2>Kampanya şablonları</h2>
+        <p>Başlangıç değerlerini tek tıkla doldur, sonra bütçe ve süreyi istediğin gibi değiştir.</p>
+      </div>
 
-clearAiPlanButton?.addEventListener('click', setAiComingSoonMode);
+      <div class="template-grid">
+        <button class="template-card" type="button" data-template="ecommerceSales">
+          <span>E-ticaret</span>
+          <strong>Satış kampanyası</strong>
+          <p>50.000 TL, 30 gün, 18-24 yaş hedef kitle için satış odaklı dijital medya karması.</p>
+        </button>
+        <button class="template-card" type="button" data-template="localCafe">
+          <span>Kafe / restoran</span>
+          <strong>Yerel tanıtım</strong>
+          <p>20.000 TL, 15 gün, yakın çevre ve sosyal medya görünürlüğü odaklı plan.</p>
+        </button>
+        <button class="template-card" type="button" data-template="productLaunch">
+          <span>Lansman</span>
+          <strong>Yeni ürün duyurusu</strong>
+          <p>75.000 TL, 30 gün, video, sosyal medya ve influencer destekli lansman akışı.</p>
+        </button>
+        <button class="template-card" type="button" data-template="socialGrowth">
+          <span>Sosyal medya</span>
+          <strong>Instagram / TikTok büyüme</strong>
+          <p>15.000 TL, 30 gün, takipçi ve etkileşim büyütme odaklı başlangıç planı.</p>
+        </button>
+        <button class="template-card" type="button" data-template="educationLeads">
+          <span>Eğitim</span>
+          <strong>Kurs kayıt kampanyası</strong>
+          <p>35.000 TL, 30 gün, Google Search ve YouTube ağırlıklı kayıt toplama planı.</p>
+        </button>
+        <button class="template-card" type="button" data-template="beautyBooking">
+          <span>Güzellik</span>
+          <strong>Randevu kampanyası</strong>
+          <p>18.000 TL, 15 gün, Instagram ve yerel arama odaklı randevu alma senaryosu.</p>
+        </button>
+      </div>
+    </section>
 
-copyAiPlanButton?.addEventListener('click', async () => {
-  const text = aiResult?.innerText || '';
-  if (!text || aiResult?.classList.contains('empty')) {
-    setAiStatus('AI planlayıcı yakında modunda olduğu için kopyalanacak taslak yok.', 'info');
-    return;
-  }
-  try {
-    await navigator.clipboard.writeText(text);
-    copyAiPlanButton.textContent = 'Kopyalandı';
-    setTimeout(() => copyAiPlanButton.textContent = 'Metni Kopyala', 1500);
-  } catch {
-    setAiStatus('Kopyalama başarısız oldu. Metni manuel seçip kopyalayabilirsin.', 'error');
-  }
-});
+    <section class="section ai-section" id="ai-planner">
+      <div class="section-heading">
+        <p class="badge">AI destekli planlayıcı · Yakında</p>
+        <h2>AI kampanya planlayıcı yakında aktif olacak.</h2>
+        <p>Bu bölüm şimdilik tanıtım modunda. OpenAI API ücretli kullanım gerektirdiği için AI taslak oluşturma özelliği geçici olarak kapalıdır.</p>
+      </div>
 
-setAiComingSoonMode();
+      <div class="ai-grid">
+        <form id="aiPlannerForm" class="panel ai-form" autocomplete="off">
+          <label>
+            Kampanya briefi
+            <textarea id="aiPrompt" maxlength="1200" rows="7" placeholder="Yakında: Kampanya ihtiyacını buraya yazıp AI destekli strateji taslağı alabileceksin." disabled></textarea>
+            <span class="field-help">Kişisel bilgi, şifre, ödeme bilgisi veya özel veri yazma. Maksimum 1200 karakter.</span>
+          </label>
+          <div class="ai-actions">
+            <button id="generateAiPlan" class="btn primary" type="submit" disabled>Yakında Aktif Olacak</button>
+            <button id="clearAiPlan" class="btn secondary bordered" type="button">Temizle</button>
+          </div>
+          <p id="aiStatus" class="form-status" aria-live="polite"></p>
+          <p class="notice">AI planlayıcı şimdilik kapalıdır. Medya planı motoru, hazır şablonlar ve PDF rapor sistemi çalışmaya devam eder.</p>
+        </form>
 
-function resetPlannerDefaults() {
-  const defaults = {
-    budget: '50000',
-    goal: 'sales',
-    sector: 'ecommerce',
-    audience: '18-24',
-    duration: '30'
-  };
+        <div class="panel ai-result-panel">
+          <div class="result-header">
+            <div>
+              <p class="mini-title">AI çıktısı</p>
+              <h3>Kampanya taslağı</h3>
+            </div>
+            <button id="copyAiPlan" class="btn small" type="button">Metni Kopyala</button>
+          </div>
+          <div id="aiResult" class="ai-result empty">
+            <p>AI destekli kampanya planlayıcı yakında aktif edilecektir. Şimdilik aşağıdaki hazır şablonları ve medya planı motorunu kullanabilirsin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  Object.entries(defaults).forEach(([id, value]) => {
-    const element = document.getElementById(id);
-    if (element) element.value = value;
-  });
+    <section class="section planner" id="planner">
+      <div class="section-heading">
+        <p class="badge">Plan oluşturucu</p>
+        <h2>Kampanyanı planla</h2>
+        <p>Bilgileri gir, medya dağılımını ve tahmini sonuçları anında gör.</p>
+      </div>
 
-  document.querySelectorAll('[data-template]').forEach(card => card.classList.remove('is-active'));
+      <div class="planner-grid">
+        <form id="plannerForm" class="panel form-panel" autocomplete="off">
+          <label>
+            Toplam bütçe (TL)
+            <input type="number" id="budget" min="1000" max="5000000" step="500" value="50000" inputmode="numeric" autocomplete="off" required />
+            <span class="field-help">Minimum 1.000 TL, önerilen üst test sınırı 5.000.000 TL.</span>
+          </label>
 
-  ['cpmCost', 'cpmImpressions', 'cpcCost', 'cpcClicks', 'roiRevenue', 'roiCost'].forEach(id => {
-    const element = document.getElementById(id);
-    if (element) element.value = '';
-  });
+          <label>
+            Kampanya amacı
+            <select id="goal">
+              <option value="awareness">Bilinirlik</option>
+              <option value="sales" selected>Satış</option>
+              <option value="traffic">Web site trafiği</option>
+              <option value="social">Sosyal medya büyütme</option>
+              <option value="launch">Ürün lansmanı</option>
+              <option value="local">Yerel işletme tanıtımı</option>
+            </select>
+          </label>
 
-  ['cpmResult', 'cpcResult', 'roiResult'].forEach(id => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = `${id.replace('Result', '').toUpperCase()}: -`;
-  });
+          <label>
+            Sektör
+            <select id="sector">
+              <option value="ecommerce" selected>E-ticaret</option>
+              <option value="restaurant">Kafe / restoran</option>
+              <option value="fashion">Giyim / moda</option>
+              <option value="education">Eğitim</option>
+              <option value="technology">Teknoloji</option>
+              <option value="beauty">Güzellik / kuaför</option>
+              <option value="event">Etkinlik</option>
+              <option value="localService">Yerel hizmet</option>
+            </select>
+          </label>
 
-  document.getElementById('budget')?.classList.remove('is-invalid');
-  setAiComingSoonMode();
-  setFormStatus('');
-}
+          <label>
+            Hedef kitle yaşı
+            <select id="audience">
+              <option value="13-18">13-18</option>
+              <option value="18-24" selected>18-24</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45+">45+</option>
+            </select>
+          </label>
 
-window.addEventListener('pageshow', () => {
-  resetPlannerDefaults();
-  createPlan();
-});
+          <label>
+            Kampanya süresi
+            <select id="duration">
+              <option value="7">7 gün</option>
+              <option value="15">15 gün</option>
+              <option value="30" selected>30 gün</option>
+              <option value="60">60 gün</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn primary full">Medya Planı Oluştur</button>
+          <p id="formStatus" class="form-status" aria-live="polite"></p>
+          <p class="notice">Not: Sonuçlar gerçek reklam performansı değil, medya planlama simülasyonudur.</p>
+        </form>
+
+        <div class="panel result-panel">
+          <div class="result-header">
+            <div>
+              <p class="mini-title">Önerilen medya karması</p>
+              <h3 id="resultTitle">Satış kampanyası planı</h3>
+            </div>
+            <div class="result-actions">
+              <button id="downloadPdf" class="btn small primary-soft" type="button">PDF İndir</button>
+              <button id="printReport" class="btn small" type="button">Yazdır</button>
+            </div>
+          </div>
+
+          <div id="planSummary" class="plan-summary"></div>
+
+          <p class="result-notice">Bu ekran gerçek reklam hesabı verisi değil, başlangıç medya planı simülasyonudur. En doğru sonuç için kampanya yayındayken gerçek performans verileriyle optimize edilmelidir.</p>
+
+          <div class="chart-wrap">
+            <canvas id="budgetChart"></canvas>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="insight-grid" id="insights"></div>
+
+          <div class="optimization-grid" id="optimizationCards"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kanal</th>
+                  <th>Rol</th>
+                  <th>Oran</th>
+                  <th>Bütçe</th>
+                  <th>Gösterim</th>
+                  <th>Tıklama</th>
+                  <th>CPM/CPC</th>
+                </tr>
+              </thead>
+              <tbody id="allocationTable"></tbody>
+            </table>
+          </div>
+
+          <div class="channel-playbook" id="channelPlaybook"></div>
+
+          <div class="weekly-plan" id="weeklyPlan"></div>
+        </div>
+      </div>
+
+      <div class="panel report-panel">
+        <div class="report-header">
+          <div>
+            <p class="mini-title">Otomatik rapor</p>
+            <h3>Kampanya stratejisi</h3>
+          </div>
+          <div class="result-actions">
+              <button id="downloadPdfReport" class="btn small primary-soft" type="button">PDF Raporu İndir</button>
+              <button id="copyReport" class="btn small" type="button">Metni Kopyala</button>
+            </div>
+        </div>
+        <div id="strategyReport" class="report-text"></div>
+      </div>
+    </section>
+
+
+
+    <section class="section trust" id="trust">
+      <div class="section-heading">
+        <p class="badge">Güven ve kalite</p>
+        <h2>Verilerin sende kalır, sonuçlar tahminidir.</h2>
+        <p>Form hesaplamaları tarayıcı içinde yapılır. AI planlayıcı şimdilik yakında modundadır ve veri gönderimi yapmaz.</p>
+      </div>
+
+      <div class="trust-grid">
+        <article class="panel trust-card">
+          <h3>Tarayıcıda hesaplama</h3>
+          <p>Formdaki bütçe, sektör, hedef ve süre bilgileri tarayıcıda hesaplanır. AI planlayıcı şimdilik kapalıdır; aktif edildiğinde kullanıcıya ayrıca bilgi verilecektir.</p>
+        </article>
+        <article class="panel trust-card">
+          <h3>Performans garantisi değildir</h3>
+          <p>Gösterim, tıklama, CPM ve CPC değerleri tahmini simülasyondur. Gerçek sonuçlar hedefleme, kreatif kalite, rekabet, dönem ve teklif stratejisine göre değişebilir.</p>
+        </article>
+        <article class="panel trust-card">
+          <h3>Başlangıç planı üretir</h3>
+          <p>Çıkan medya karması profesyonel planlama için ilk taslak sağlar. Büyük bütçeli kampanyalarda gerçek reklam hesabı verileriyle ayrıca optimize edilmelidir.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section calculators" id="calculators">
+      <div class="section-heading">
+        <p class="badge">Mini araçlar</p>
+        <h2>CPM / CPC / ROI hesaplayıcı</h2>
+      </div>
+
+      <div class="calc-grid">
+        <div class="panel calc-card">
+          <h3>CPM</h3>
+          <input type="number" id="cpmCost" placeholder="Maliyet (TL)" autocomplete="off" />
+          <input type="number" id="cpmImpressions" placeholder="Gösterim" autocomplete="off" />
+          <button class="btn secondary full" data-calc="cpm">Hesapla</button>
+          <p id="cpmResult" class="calc-result">CPM: -</p>
+        </div>
+        <div class="panel calc-card">
+          <h3>CPC</h3>
+          <input type="number" id="cpcCost" placeholder="Maliyet (TL)" autocomplete="off" />
+          <input type="number" id="cpcClicks" placeholder="Tıklama" autocomplete="off" />
+          <button class="btn secondary full" data-calc="cpc">Hesapla</button>
+          <p id="cpcResult" class="calc-result">CPC: -</p>
+        </div>
+        <div class="panel calc-card">
+          <h3>ROI</h3>
+          <input type="number" id="roiRevenue" placeholder="Gelir (TL)" autocomplete="off" />
+          <input type="number" id="roiCost" placeholder="Maliyet (TL)" autocomplete="off" />
+          <button class="btn secondary full" data-calc="roi">Hesapla</button>
+          <p id="roiResult" class="calc-result">ROI: -</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>KampanyaLab</strong>
+        <p>Reklam bütçesi ve medya planlama aracı.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#planner">Plan Oluştur</a>
+        <a href="#templates">Şablonlar</a>
+        <a href="#templates">Şablonlar</a>
+        <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
+        <a href="#audience">Kimler Kullanır?</a>
+        <a href="#product">Özellikler</a>
+        <a href="#calculators">Hesaplayıcılar</a>
+        <a href="#trust">Güven</a>
+        <a href="#planner">PDF Rapor</a>
+      </div>
+      <p class="footer-note">
+        KampanyaLab tahmini medya planlama simülasyonudur; kesin reklam performansı, gelir veya satış garantisi vermez.
+        Form hesaplamaları tarayıcıda yapılır. AI planlayıcı şimdilik yakında modundadır; veri gönderimi yapmaz.
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
