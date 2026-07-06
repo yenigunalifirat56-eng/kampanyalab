@@ -22,3 +22,10 @@ KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye
 ## Not
 
 Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, gelir veya satış garantisi vermez.
+
+
+## v2.1 güncellemesi
+- Beta ve geri bildirim bölümü eklendi.
+- Kullanıcı geri bildirimi veri tabanına gönderilmeden kopyalanabilir metne dönüştürülür.
+- Footer ve menüye geri bildirim bağlantısı eklendi.
+- AI Planlayıcı yakında modunda kalmaya devam eder.

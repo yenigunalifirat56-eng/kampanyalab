@@ -58,6 +58,7 @@
         <a href="#calculators">Hesaplayıcılar</a>
         <a href="#how">Nasıl Çalışır?</a>
         <a href="#trust">Güven</a>
+        <a href="#feedback">Geri Bildirim</a>
         <a href="#planner">PDF Rapor</a>
       </div>
     </nav>
@@ -93,8 +94,8 @@
   <main id="main">
     <section class="section intro" id="how">
       <div class="section-heading">
-        <p class="badge">MVP v2.0</p>
-        <h2>KampanyaLab AI destekli kampanya planlayıcıya hazırlanıyor</h2>
+        <p class="badge">Beta v2.1</p>
+        <h2>KampanyaLab beta sürecinde gelişmeye devam ediyor.</h2>
       </div>
       <div class="features">
         <article>
@@ -431,6 +432,50 @@
       </div>
     </section>
 
+
+    <section class="section feedback-section" id="feedback">
+      <div class="section-heading">
+        <p class="badge">Beta geri bildirimi</p>
+        <h2>KampanyaLab'ı birlikte geliştirelim.</h2>
+        <p>Bu bölüm veri kaydetmez. Seçimini ve notunu yazdıktan sonra geri bildirim metnini kopyalayıp istediğin kanaldan paylaşabilirsin.</p>
+      </div>
+
+      <div class="feedback-grid">
+        <div class="panel feedback-panel">
+          <p class="mini-title">Bu araç işine yaradı mı?</p>
+          <div class="feedback-options" role="group" aria-label="Geri bildirim seçimi">
+            <button class="feedback-choice" type="button" data-feedback="Evet, yararlı">Evet, yararlı</button>
+            <button class="feedback-choice" type="button" data-feedback="Kısmen yararlı">Kısmen</button>
+            <button class="feedback-choice" type="button" data-feedback="Geliştirilmeli">Geliştirilmeli</button>
+          </div>
+
+          <label class="feedback-label">
+            Ne geliştirelim?
+            <textarea id="feedbackText" rows="5" maxlength="600" placeholder="Örn: Şu sektör eklenebilir, PDF daha detaylı olabilir, mobilde şu bölüm geliştirilebilir..." autocomplete="off"></textarea>
+          </label>
+
+          <div class="feedback-actions">
+            <button id="copyFeedback" class="btn primary" type="button">Geri Bildirimi Kopyala</button>
+            <button id="clearFeedback" class="btn secondary bordered" type="button">Temizle</button>
+          </div>
+          <p id="feedbackStatus" class="form-status" aria-live="polite"></p>
+        </div>
+
+        <div class="panel beta-panel">
+          <p class="mini-title">Beta notları</p>
+          <h3>Şu an çalışan özellikler</h3>
+          <ul>
+            <li>Medya bütçesi dağılım motoru</li>
+            <li>Hazır kampanya şablonları</li>
+            <li>PDF rapor ve yazdırma çıktısı</li>
+            <li>CPM / CPC / ROI mini hesaplayıcıları</li>
+            <li>Mobil uyumlu kullanım</li>
+          </ul>
+          <p class="notice">AI Planlayıcı ödeme gerektirdiği için yakında modundadır. Mevcut araçlar veri kaydetmeden tarayıcıda çalışır.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section calculators" id="calculators">
       <div class="section-heading">
         <p class="badge">Mini araçlar</p>
@@ -472,12 +517,12 @@
       <div class="footer-links">
         <a href="#planner">Plan Oluştur</a>
         <a href="#templates">Şablonlar</a>
-        <a href="#templates">Şablonlar</a>
         <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
         <a href="#audience">Kimler Kullanır?</a>
         <a href="#product">Özellikler</a>
         <a href="#calculators">Hesaplayıcılar</a>
         <a href="#trust">Güven</a>
+        <a href="#feedback">Geri Bildirim</a>
         <a href="#planner">PDF Rapor</a>
       </div>
       <p class="footer-note">

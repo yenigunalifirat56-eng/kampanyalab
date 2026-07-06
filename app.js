@@ -904,3 +904,53 @@ window.addEventListener('pageshow', () => {
   resetPlannerDefaults();
   createPlan();
 });
+
+
+// v2.1 beta geri bildirim alanı
+const feedbackChoices = document.querySelectorAll('[data-feedback]');
+const feedbackText = document.getElementById('feedbackText');
+const feedbackStatus = document.getElementById('feedbackStatus');
+const copyFeedbackButton = document.getElementById('copyFeedback');
+const clearFeedbackButton = document.getElementById('clearFeedback');
+let selectedFeedback = '';
+
+function setFeedbackStatus(message, type = '') {
+  if (!feedbackStatus) return;
+  feedbackStatus.textContent = message || '';
+  feedbackStatus.className = `form-status ${type}`.trim();
+}
+
+feedbackChoices.forEach(button => {
+  button.addEventListener('click', () => {
+    selectedFeedback = button.dataset.feedback || '';
+    feedbackChoices.forEach(item => item.classList.remove('is-active'));
+    button.classList.add('is-active');
+    setFeedbackStatus('Seçim kaydedildi. Not ekleyip geri bildirim metnini kopyalayabilirsin.', 'info');
+  });
+});
+
+copyFeedbackButton?.addEventListener('click', async () => {
+  const note = (feedbackText?.value || '').trim();
+  const feedbackMessage = [
+    'KampanyaLab Beta Geri Bildirimi',
+    `Değerlendirme: ${selectedFeedback || 'Seçilmedi'}`,
+    `Not: ${note || 'Ek not yok'}`,
+    `Sayfa: ${window.location.href}`
+  ].join('\n');
+
+  try {
+    await navigator.clipboard.writeText(feedbackMessage);
+    copyFeedbackButton.textContent = 'Kopyalandı';
+    setFeedbackStatus('Geri bildirim metni kopyalandı. İstediğin kanaldan paylaşabilirsin.', 'ok');
+    setTimeout(() => copyFeedbackButton.textContent = 'Geri Bildirimi Kopyala', 1600);
+  } catch {
+    setFeedbackStatus('Kopyalama başarısız oldu. Metni manuel seçip kopyalayabilirsin.', 'error');
+  }
+});
+
+clearFeedbackButton?.addEventListener('click', () => {
+  selectedFeedback = '';
+  feedbackChoices.forEach(item => item.classList.remove('is-active'));
+  if (feedbackText) feedbackText.value = '';
+  setFeedbackStatus('');
+});
