@@ -1,3 +1,14 @@
+// Sayfa yenilendiğinde tarayıcının eski kaydırma konumunu hatırlamasını engeller.
+// Kullanıcı sayfanın neresinde olursa olsun yenilemede en üstten başlar.
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
+window.addEventListener('pageshow', () => {
+  window.scrollTo(0, 0);
+  setTimeout(() => window.scrollTo(0, 0), 0);
+});
+
 const formatter = new Intl.NumberFormat('tr-TR', {
   style: 'currency',
   currency: 'TRY',

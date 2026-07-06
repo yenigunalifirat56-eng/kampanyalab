@@ -44,3 +44,8 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 
 ## v2.3.2 düzeltmesi
 - Kimler kullanabilir bölümü ile hedef kitle seçimi aynı `id` değerini kullandığı için plan oluşturma doğrulaması hatalı çalışıyordu. Bölüm ID'si ayrıştırıldı ve form seçimleri düzeltildi.
+
+
+## v2.3.3 güncellemesi
+- Sayfa yenilendiğinde tarayıcının eski scroll/kaydırma konumunu hatırlaması engellendi.
+- Kullanıcı sayfanın neresinde olursa olsun yenilemede sayfa en baştan açılır.
