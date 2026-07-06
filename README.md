@@ -40,3 +40,7 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 - Plan oluşturucu artık hazır 50.000 TL / Satış / E-ticaret değerleriyle başlamaz.
 - Kullanıcı bütçe, kampanya amacı, sektör, hedef kitle ve süreyi kendisi seçer.
 - Plan ve PDF çıktısı yalnızca kullanıcı alanları doldurup plan oluşturduktan sonra oluşur.
+
+
+## v2.3.2 düzeltmesi
+- Kimler kullanabilir bölümü ile hedef kitle seçimi aynı `id` değerini kullandığı için plan oluşturma doğrulaması hatalı çalışıyordu. Bölüm ID'si ayrıştırıldı ve form seçimleri düzeltildi.
