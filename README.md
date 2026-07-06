@@ -29,3 +29,10 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 - Kullanıcı geri bildirimi veri tabanına gönderilmeden kopyalanabilir metne dönüştürülür.
 - Footer ve menüye geri bildirim bağlantısı eklendi.
 - AI Planlayıcı yakında modunda kalmaya devam eder.
+
+
+## v2.2 güncellemesi
+- Beta geri bildirim alanı Google Forms bağlantısına taşındı.
+- `Google Formu Aç` butonu eklendi.
+- Kopyalama özelliği yedek/manuel paylaşım seçeneği olarak korundu.
+- Geri bildirimlerin Google Sheets tablosuna düşmesi için form linki bağlandı.
