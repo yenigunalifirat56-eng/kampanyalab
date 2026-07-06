@@ -24,4 +24,20 @@
     <loc>https://www.kampanyalab.com.tr/kucuk-isletme-reklam-butcesi.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/instagram-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/google-ads-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/tiktok-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/youtube-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,38 +1,29 @@
-# KampanyaLab v2.4
+# KampanyaLab
 
 KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye göre medya kanallarına dağıtan Türkiye odaklı medya planlama simülatörüdür.
 
-## v2.4 güncellemesi
+## v2.6 güncellemesi
 
-- Ana sayfaya **Bilgi Merkezi / Rehberler** bölümü eklendi.
-- SEO için 5 ayrı rehber sayfası oluşturuldu:
-  - `reklam-butcesi-nasil-hesaplanir.html`
-  - `cpm-nedir.html`
-  - `cpc-nedir.html`
-  - `roi-nedir.html`
-  - `kucuk-isletme-reklam-butcesi.html`
-- Her rehberin sonunda medya planı oluşturucuya yönlendirme eklendi.
-- `sitemap.xml` yeni rehber sayfalarıyla güncellendi.
-- Canonical URL yapısı `https://www.kampanyalab.com.tr/` formatına göre düzenlendi.
-- Google Analytics etiketi korunur.
-- AI Planlayıcı hâlâ **Yakında** modundadır.
+Bu sürümde platform bazlı SEO rehberleri eklendi ve içerikler dolu hale getirildi:
 
-## Dosyalar
+- `instagram-reklam-butcesi.html` — Instagram reklam bütçesi, günlük bütçe, kreatif testleri, yerel işletme ve e-ticaret örnekleri
+- `google-ads-butcesi.html` — Google Ads bütçesi, arama niyeti, CPC, günlük bütçe ve kampanya türleri
+- `tiktok-reklam-butcesi.html` — TikTok reklam bütçesi, kısa video kreatifleri, hedef kitle ve test bütçesi
+- `youtube-reklam-butcesi.html` — YouTube reklam bütçesi, video reklam, CPM, izlenme maliyeti ve remarketing
 
-- `index.html` — Ana sayfa ve uygulama arayüzü
-- `style.css` — Tasarım dosyası
-- `app.js` — Bütçe dağılımı, grafik, rapor, PDF ve site etkileşimleri
-- `api/ai-plan.js` — AI endpointi, yakında modunda pasif yanıt verir
-- `robots.txt` — Arama motoru yönlendirmesi
-- `sitemap.xml` — Site haritası
-- Rehber sayfaları — SEO ve bilgi merkezi içerikleri
+Ana sayfadaki Bilgi Merkezi bölümü bu yeni rehberlerle güncellendi. `sitemap.xml` yeni sayfaları içerecek şekilde düzenlendi.
+
+## Ana özellikler
+
+- Medya planı motoru
+- Hazır kampanya şablonları
+- PDF rapor
+- CPM / CPC / ROI hesaplayıcı
+- Google Forms geri bildirim bağlantısı
+- Google Analytics entegrasyonu
+- Google Search Console için sitemap ve robots dosyaları
+- AI planlayıcı yakında modu
 
 ## Not
 
-Bu araç ve rehberler tahmini medya planlama ve genel bilgilendirme amacıyla hazırlanmıştır. Gerçek reklam performansı, gelir veya satış garantisi vermez.
-
-
-## v2.5 güncellemesi
-- Rehber sayfaları daha dolu ve SEO odaklı hale getirildi.
-- Reklam bütçesi, CPM, CPC, ROI ve küçük işletme rehberlerine örnekler, tablolar, sık sorulan sorular ve pratik yorumlar eklendi.
-- Rehber sayfalarına FAQPage yapılandırılmış veri eklendi.
+KampanyaLab tahmini medya planlama simülasyonudur. Gerçek reklam performansı, gelir veya satış garantisi vermez.
