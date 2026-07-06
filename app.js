@@ -580,30 +580,6 @@ function applyTemplate(templateKey) {
     if (element) element.value = value;
   });
 
-  const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
-
-navToggle?.addEventListener('click', () => {
-  const isOpen = navLinks?.classList.toggle('is-open');
-  navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
-  navToggle.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
-});
-
-navLinks?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('is-open');
-    navToggle?.setAttribute('aria-expanded', 'false');
-    navToggle?.setAttribute('aria-label', 'Menüyü aç');
-  });
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    navLinks?.classList.remove('is-open');
-    navToggle?.setAttribute('aria-expanded', 'false');
-    navToggle?.setAttribute('aria-label', 'Menüyü aç');
-  }
-});
 
 document.querySelectorAll('[data-template]').forEach(card => {
     card.classList.toggle('is-active', card.dataset.template === templateKey);
@@ -616,26 +592,33 @@ document.querySelectorAll('[data-template]').forEach(card => {
 const navToggle = document.querySelector('.nav-toggle');
 const navLinks = document.querySelector('.nav-links');
 
+function closeMobileMenu() {
+  navLinks?.classList.remove('is-open');
+  document.body.classList.remove('menu-open');
+  navToggle?.setAttribute('aria-expanded', 'false');
+  navToggle?.setAttribute('aria-label', 'Menüyü aç');
+}
+
 navToggle?.addEventListener('click', () => {
   const isOpen = navLinks?.classList.toggle('is-open');
+  document.body.classList.toggle('menu-open', Boolean(isOpen));
   navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
   navToggle.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
 });
 
 navLinks?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('is-open');
-    navToggle?.setAttribute('aria-expanded', 'false');
-    navToggle?.setAttribute('aria-label', 'Menüyü aç');
-  });
+  link.addEventListener('click', closeMobileMenu);
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    navLinks?.classList.remove('is-open');
-    navToggle?.setAttribute('aria-expanded', 'false');
-    navToggle?.setAttribute('aria-label', 'Menüyü aç');
-  }
+  if (event.key === 'Escape') closeMobileMenu();
+});
+
+document.addEventListener('click', event => {
+  if (!document.body.classList.contains('menu-open')) return;
+  const clickedInsideMenu = navLinks?.contains(event.target);
+  const clickedToggle = navToggle?.contains(event.target);
+  if (!clickedInsideMenu && !clickedToggle) closeMobileMenu();
 });
 
 document.querySelectorAll('[data-template]').forEach(card => {
