@@ -22,6 +22,15 @@
   <meta name="twitter:description" content="Türkiye odaklı reklam bütçesi ve medya planlama simülatörü." />
 
   <meta name="theme-color" content="#102c78" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4HHWRLYE2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G4HHWRLYE2');
+  </script>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -437,7 +446,7 @@
       <div class="section-heading">
         <p class="badge">Beta geri bildirimi</p>
         <h2>KampanyaLab'ı birlikte geliştirelim.</h2>
-        <p>Geri bildirimler Google Forms üzerinden toplanır. Form yanıtları KampanyaLab geliştirme süreci için kullanılır; lütfen özel kişisel bilgi yazma.</p>
+        <p>Bu bölüm veri kaydetmez. Seçimini ve notunu yazdıktan sonra geri bildirim metnini kopyalayıp istediğin kanaldan paylaşabilirsin.</p>
       </div>
 
       <div class="feedback-grid">
@@ -455,20 +464,19 @@
           </label>
 
           <div class="feedback-actions">
-            <a class="btn primary" href="https://forms.gle/RLdQhQzZhSPafuRt6" target="_blank" rel="noopener noreferrer">Google Formu Aç</a>
-            <button id="copyFeedback" class="btn secondary bordered" type="button">Metni Kopyala</button>
+            <button id="copyFeedback" class="btn primary" type="button">Geri Bildirimi Kopyala</button>
             <button id="clearFeedback" class="btn secondary bordered" type="button">Temizle</button>
           </div>
           <p id="feedbackStatus" class="form-status" aria-live="polite"></p>
         </div>
 
         <div class="panel beta-panel">
-          <p class="mini-title">Geri bildirim akışı</p>
-          <h3>Nasıl gönderilir?</h3>
+          <p class="mini-title">Beta notları</p>
+          <h3>Şu an çalışan özellikler</h3>
           <ul>
-            <li>Google Formu Aç butonuna bas.</li>
-            <li>Formdaki kısa soruları yanıtla.</li>
-            <li>Yanıtların otomatik olarak Google Sheets tablosuna düşer.</li>
+            <li>Medya bütçesi dağılım motoru</li>
+            <li>Hazır kampanya şablonları</li>
+            <li>PDF rapor ve yazdırma çıktısı</li>
             <li>CPM / CPC / ROI mini hesaplayıcıları</li>
             <li>Mobil uyumlu kullanım</li>
           </ul>

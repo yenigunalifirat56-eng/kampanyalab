@@ -31,8 +31,7 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 - AI Planlayıcı yakında modunda kalmaya devam eder.
 
 
-## v2.2 güncellemesi
-- Beta geri bildirim alanı Google Forms bağlantısına taşındı.
-- `Google Formu Aç` butonu eklendi.
-- Kopyalama özelliği yedek/manuel paylaşım seçeneği olarak korundu.
-- Geri bildirimlerin Google Sheets tablosuna düşmesi için form linki bağlandı.
+## v2.3 güncellemesi
+- Google Analytics 4 ölçüm etiketi eklendi.
+- Measurement ID: G-G4HHWRLYE2
+- Ziyaretçi ve sayfa görüntüleme ölçümü Google Analytics üzerinden takip edilebilir.

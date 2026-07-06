@@ -906,7 +906,7 @@ window.addEventListener('pageshow', () => {
 });
 
 
-// v2.2 beta geri bildirim alanı - Google Forms bağlantılı
+// v2.1 beta geri bildirim alanı
 const feedbackChoices = document.querySelectorAll('[data-feedback]');
 const feedbackText = document.getElementById('feedbackText');
 const feedbackStatus = document.getElementById('feedbackStatus');
@@ -925,7 +925,7 @@ feedbackChoices.forEach(button => {
     selectedFeedback = button.dataset.feedback || '';
     feedbackChoices.forEach(item => item.classList.remove('is-active'));
     button.classList.add('is-active');
-    setFeedbackStatus('Seçim kaydedildi. Google Formu Aç butonuyla resmi geri bildirim formunu doldurabilirsin.', 'info');
+    setFeedbackStatus('Seçim kaydedildi. Not ekleyip geri bildirim metnini kopyalayabilirsin.', 'info');
   });
 });
 
@@ -941,8 +941,8 @@ copyFeedbackButton?.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(feedbackMessage);
     copyFeedbackButton.textContent = 'Kopyalandı';
-    setFeedbackStatus('Geri bildirim metni kopyalandı. Asıl kayıt için Google Formu da doldurabilirsin.', 'ok');
-    setTimeout(() => copyFeedbackButton.textContent = 'Metni Kopyala', 1600);
+    setFeedbackStatus('Geri bildirim metni kopyalandı. İstediğin kanaldan paylaşabilirsin.', 'ok');
+    setTimeout(() => copyFeedbackButton.textContent = 'Geri Bildirimi Kopyala', 1600);
   } catch {
     setFeedbackStatus('Kopyalama başarısız oldu. Metni manuel seçip kopyalayabilirsin.', 'error');
   }
