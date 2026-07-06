@@ -44,3 +44,8 @@ Bu MVP tahmini medya planlama simülasyonudur. Gerçek reklam performansı, geli
 - Klavye odağı, erişilebilirlik ve azaltılmış hareket desteği iyileştirildi.
 - Mobilde tablo kaydırma ipucu ve buton yerleşimleri düzenlendi.
 - Yazdırma çıktısında gereksiz mobil/yardım elemanları gizlendi.
+
+
+## v1.7.1 güncellemesi
+- Mobilde sayfanın sağ tarafında beyaz boşluk oluşturan yatay taşma sorunu düzeltildi.
+- Hero, bölüm ve tablo alanları küçük ekranlarda ekran genişliğine sabitlendi.

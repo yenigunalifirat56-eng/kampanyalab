@@ -1057,3 +1057,80 @@ input.is-invalid {
     display: none !important;
   }
 }
+
+/* v1.7.1: Mobil yatay taşma düzeltmesi */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+}
+
+.hero,
+.section,
+.site-footer,
+.footer-inner,
+.navbar,
+.hero-content {
+  max-width: 100%;
+}
+
+main,
+.hero,
+.section,
+.site-footer {
+  overflow-x: clip;
+}
+
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-export-wrapper,
+.pdf-document {
+  max-width: 100%;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .hero-content,
+  .hero-card,
+  .planner-grid,
+  .features,
+  .calc-grid,
+  .product-grid,
+  .audience-grid,
+  .templates-grid,
+  .trust-grid,
+  .footer-inner {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-card,
+  .panel,
+  .template-card,
+  .audience-card,
+  .product-card,
+  .trust-card {
+    min-width: 0;
+  }
+
+  img,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+}
