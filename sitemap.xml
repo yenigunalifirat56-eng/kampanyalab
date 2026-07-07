@@ -100,4 +100,16 @@
     <loc>https://www.kampanyalab.com.tr/erisim-gosterim-farki.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/hakkinda.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/gizlilik-politikasi.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/iletisim.html</loc>
+    <priority>0.6</priority>
+  </url>
 </urlset>

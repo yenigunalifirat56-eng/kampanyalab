@@ -1,3 +1,15 @@
+# KampanyaLab v3.1
+
+Bu sürümde güven ve şeffaflık için 3 yeni sayfa eklendi:
+
+- `hakkinda.html`
+- `gizlilik-politikasi.html`
+- `iletisim.html`
+
+Ana sayfaya bu sayfalara giden bağlantılar eklendi, footer bağlantıları güncellendi ve `sitemap.xml` yeni sayfalarla güncellendi.
+
+---
+
 # KampanyaLab
 
 KampanyaLab, reklam bütçesini kampanya hedefi, sektör, hedef kitle ve süreye göre medya kanallarına dağıtan Türkiye odaklı medya planlama simülatörüdür.
@@ -50,7 +62,7 @@ KampanyaLab tahmini medya planlama simülasyonudur. Gerçek reklam performansı,
 - sitemap.xml yeni sayfaları içerecek şekilde güncellendi.
 
 
-## v3.0 - İç bağlantı ve SEO güçlendirme
+## v3.1 - İç bağlantı ve SEO güçlendirme
 
 Bu sürümde yeni sayfa eklenmedi; mevcut içerik ağının SEO ve kullanıcı deneyimi güçlendirildi.
 
