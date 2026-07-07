@@ -2,144 +2,206 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.kampanyalab.com.tr/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/reklam-butcesi-nasil-hesaplanir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/cpm-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/cpc-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/roi-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/kucuk-isletme-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/instagram-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/google-ads-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/tiktok-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/youtube-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/kafe-restoran-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/eticaret-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/guzellik-salonu-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/egitim-kursu-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/yerel-isletme-reklam-plani.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/5000-tl-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/10000-tl-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/20000-tl-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/50000-tl-reklam-butcesi.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/dusuk-butce-reklam-plani.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/ctr-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/cpa-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/roas-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/donusum-orani-nedir.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.kampanyalab.com.tr/erisim-gosterim-farki.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.00</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/rehberler.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.kampanyalab.com.tr/hakkinda.html</loc>
-    <priority>0.6</priority>
+    <loc>https://www.kampanyalab.com.tr/reklam-butcesi-nasil-hesaplanir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://www.kampanyalab.com.tr/gizlilik-politikasi.html</loc>
-    <priority>0.5</priority>
+    <loc>https://www.kampanyalab.com.tr/kucuk-isletme-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://www.kampanyalab.com.tr/iletisim.html</loc>
-    <priority>0.6</priority>
+    <loc>https://www.kampanyalab.com.tr/cpm-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/cpc-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/roi-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/ctr-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/cpa-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/roas-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/donusum-orani-nedir.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/erisim-gosterim-farki.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/instagram-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/google-ads-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/tiktok-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/youtube-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/kafe-restoran-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/eticaret-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/guzellik-salonu-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/egitim-kursu-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/yerel-isletme-reklam-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/5000-tl-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/10000-tl-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/20000-tl-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/50000-tl-reklam-butcesi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/dusuk-butce-reklam-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/kafe-ornek-medya-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/eticaret-ornek-medya-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/guzellik-salonu-ornek-medya-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/10000-tl-ornek-medya-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.kampanyalab.com.tr/kucuk-isletme-ornek-medya-plani.html</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/hakkinda.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/gizlilik-politikasi.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/iletisim.html</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
   </url>
 </urlset>

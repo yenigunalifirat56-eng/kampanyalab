@@ -2343,3 +2343,31 @@ main,
     gap: 3px;
   }
 }
+
+
+/* v3.7: SEO kalite temizliği ve güncellik etiketi */
+.article-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.84);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.article-updated::before {
+  content: "✓";
+  color: #93c5fd;
+}
+
+.article-content h2 {
+  scroll-margin-top: 24px;
+}
+
+.footer-links {
+  row-gap: 8px;
+}

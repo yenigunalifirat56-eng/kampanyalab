@@ -134,3 +134,12 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Rehberler Merkezi'ne “Örnek medya planları” kategorisi eklendi.
 - Ana sayfadaki Bilgi Merkezi kategori kartlarına örnek medya planları eklendi.
 - Sitemap yeni sayfalarla güncellendi.
+
+
+## v3.7 — SEO kontrol ve kalite temizliği
+- `sitemap.xml` dosyası tüm canlı HTML sayfalarını kapsayacak şekilde kontrol edildi.
+- Sitemap içine `lastmod`, `changefreq` ve daha düzenli `priority` alanları eklendi.
+- Rehber sayfalarına “Son güncelleme” etiketi eklendi.
+- Rehber sayfalarına `article:modified_time` meta bilgisi eklendi.
+- Menü, footer, rehber merkezi ve iç bağlantı yapısı korunarak kalite temizliği yapıldı.
+- Yeni sayfa eklenmedi; amaç mevcut yapıyı arama motoru ve kullanıcı deneyimi açısından daha temiz hale getirmektir.
