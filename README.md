@@ -73,3 +73,13 @@ Bu sürümde yeni sayfa eklenmedi; mevcut içerik ağının SEO ve kullanıcı d
 - Mobil uyumlu ilgili içerik kartları ve kategori bağlantıları için CSS eklendi.
 
 Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Yine de dosyaları yükledikten sonra canlı siteyi ve birkaç rehber sayfasını kontrol etmek önerilir.
+
+
+## v3.2 - Rehberler Merkezi
+
+- `rehberler.html` sayfası eklendi.
+- Tüm rehberler kategori kategori tek sayfada listelendi.
+- Rehberler sayfasına arama ve kategori filtreleme eklendi.
+- Menü ve footer bağlantıları yeni rehberler merkezine yönlendirildi.
+- Breadcrumb bağlantıları `rehberler.html` adresine güncellendi.
+- `sitemap.xml` dosyasına yeni rehberler merkezi eklendi.
