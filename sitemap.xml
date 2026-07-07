@@ -40,4 +40,24 @@
     <loc>https://www.kampanyalab.com.tr/youtube-reklam-butcesi.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/kafe-restoran-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/eticaret-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/guzellik-salonu-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/egitim-kursu-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/yerel-isletme-reklam-plani.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

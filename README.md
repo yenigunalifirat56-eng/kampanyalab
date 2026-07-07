@@ -27,3 +27,10 @@ Ana sayfadaki Bilgi Merkezi bölümü bu yeni rehberlerle güncellendi. `sitemap
 ## Not
 
 KampanyaLab tahmini medya planlama simülasyonudur. Gerçek reklam performansı, gelir veya satış garantisi vermez.
+
+
+## v2.7 güncellemesi
+- Sektör bazlı 5 yeni rehber sayfası eklendi.
+- Kafe/restoran, e-ticaret, güzellik salonu, eğitim kursu ve yerel işletme reklam planı içerikleri hazırlandı.
+- Ana sayfadaki Bilgi Merkezi bölümü yeni sektör rehberleriyle güncellendi.
+- sitemap.xml yeni sayfaları içerecek şekilde güncellendi.
