@@ -122,3 +122,15 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - PDF içinde güçlü başlık alanı, kampanya özeti, metrik kartları, kanal dağılımı barları ve detaylı performans tablosu eklendi.
 - PDF rapora plan yorumu, risk notu ve sonraki 3 adım bölümü eklendi.
 - Rapor çıktısı paylaşmaya daha uygun, kurumsal ve okunur hale getirildi.
+
+
+## v3.6 — Örnek Medya Planları
+- 5 yeni örnek medya planı sayfası eklendi:
+  - kafe-ornek-medya-plani.html
+  - eticaret-ornek-medya-plani.html
+  - guzellik-salonu-ornek-medya-plani.html
+  - 10000-tl-ornek-medya-plani.html
+  - kucuk-isletme-ornek-medya-plani.html
+- Rehberler Merkezi'ne “Örnek medya planları” kategorisi eklendi.
+- Ana sayfadaki Bilgi Merkezi kategori kartlarına örnek medya planları eklendi.
+- Sitemap yeni sayfalarla güncellendi.
