@@ -2006,3 +2006,78 @@ main,
   .home-proof-grid, .home-guide-categories { grid-template-columns: 1fr; }
   .home-guide-category { min-height: auto; }
 }
+
+
+/* v3.3.2: Masaüstü menü taşma düzeltmesi */
+.navbar {
+  padding-inline: 8px;
+}
+
+.nav-links {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.soon-inline {
+  white-space: nowrap;
+}
+
+@media (max-width: 1520px) {
+  .navbar {
+    gap: 20px;
+  }
+
+  .nav-links {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1380px) {
+  .navbar {
+    align-items: center;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 84px);
+    left: 18px;
+    right: 18px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    max-height: calc(100vh - 118px);
+    overflow-y: auto;
+    padding: 16px;
+    border-radius: 24px;
+    background: #07112f;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 28px 80px rgba(0,0,0,0.45);
+    z-index: 10001;
+    backdrop-filter: none;
+  }
+
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.07);
+    color: #ffffff;
+  }
+}

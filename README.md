@@ -94,3 +94,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 ## v3.3.1
 - Ana menüde logo ile ilk bağlantı arasındaki sıkışma giderildi.
 - Demo medya karması alanına yüzdelerin temsili olduğunu açıklayan not eklendi.
+
+
+## v3.3.2
+- Üst menüde sağ tarafa taşan bağlantılar için masaüstü menü sıkılaştırıldı.
+- Geniş ama daralan ekranlarda (özellikle laptop / tarayıcı zoom durumlarında) menü daha erken hamburger menüye düşecek şekilde düzenlendi.
+- İletişim bağlantısının sağdan taşması engellendi.
