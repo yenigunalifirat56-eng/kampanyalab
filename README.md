@@ -48,3 +48,16 @@ KampanyaLab tahmini medya planlama simülasyonudur. Gerçek reklam performansı,
 - CTR, CPA, ROAS, dönüşüm oranı ve erişim/gösterim farkı içerikleri hazırlandı.
 - Ana sayfadaki Bilgi Merkezi bölümü yeni metrik rehberleriyle güncellendi.
 - sitemap.xml yeni sayfaları içerecek şekilde güncellendi.
+
+
+## v3.0 - İç bağlantı ve SEO güçlendirme
+
+Bu sürümde yeni sayfa eklenmedi; mevcut içerik ağının SEO ve kullanıcı deneyimi güçlendirildi.
+
+- Tüm rehber sayfalarına breadcrumb / sayfa yolu eklendi.
+- Tüm rehber sayfalarına BreadcrumbList yapılandırılmış verisi eklendi.
+- Tüm rehber sayfalarına ilgili rehberler bölümü eklendi.
+- Ana sayfadaki Bilgi Merkezi bölümüne rehber kategori kısayolları eklendi.
+- Mobil uyumlu ilgili içerik kartları ve kategori bağlantıları için CSS eklendi.
+
+Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Yine de dosyaları yükledikten sonra canlı siteyi ve birkaç rehber sayfasını kontrol etmek önerilir.
