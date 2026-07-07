@@ -100,3 +100,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Üst menüde sağ tarafa taşan bağlantılar için masaüstü menü sıkılaştırıldı.
 - Geniş ama daralan ekranlarda (özellikle laptop / tarayıcı zoom durumlarında) menü daha erken hamburger menüye düşecek şekilde düzenlendi.
 - İletişim bağlantısının sağdan taşması engellendi.
+
+
+## v3.3.3
+- Üst bölüm yeniden düzenlendi: KampanyaLab logosu üst satırda sabit tutuldu.
+- Menü bağlantıları logo satırının altına alındı.
+- Geniş ekranlarda menü artık alt satırda gerektiğinde kendi içinde kırılarak gösterilir.
+- Mobilde hamburger menü yapısı korunur.
