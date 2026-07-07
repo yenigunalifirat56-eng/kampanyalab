@@ -324,6 +324,8 @@ function clearPlanOutput() {
   const planSummary = document.getElementById('planSummary');
   const table = document.getElementById('allocationTable');
   const stats = document.getElementById('stats');
+  const resultOverview = document.getElementById('resultOverview');
+  const channelVisual = document.getElementById('channelVisual');
   const insights = document.getElementById('insights');
   const optimizationCards = document.getElementById('optimizationCards');
   const channelPlaybook = document.getElementById('channelPlaybook');
@@ -334,6 +336,8 @@ function clearPlanOutput() {
   if (resultTitle) resultTitle.textContent = 'Plan sonucunuz burada görünecek';
   if (planSummary) planSummary.innerHTML = '<p class="notice">Bütçe, kampanya amacı, sektör, hedef kitle ve süre seçildikten sonra medya planı burada oluşur.</p>';
   if (table) table.innerHTML = '<tr><td colspan="7">Henüz plan oluşturulmadı.</td></tr>';
+  if (resultOverview) resultOverview.innerHTML = '<p>Plan oluşturduktan sonra burada kısa strateji özeti, tahmini skorlar ve uygulanacak ilk adımlar görünecek.</p>';
+  if (channelVisual) channelVisual.innerHTML = '<p>Kanal dağılımı plan oluşturunca burada görsel olarak listelenecek.</p>';
   if (stats) stats.innerHTML = '';
   if (insights) insights.innerHTML = '';
   if (optimizationCards) optimizationCards.innerHTML = '';
@@ -388,6 +392,8 @@ function renderResults(data) {
   document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı`;
 
   renderPlanSummary(data);
+  renderResultOverview(data);
+  renderChannelVisual(data);
 
   const table = document.getElementById('allocationTable');
   table.innerHTML = data.rows.map(row => `
@@ -417,6 +423,67 @@ function renderResults(data) {
   renderWeeklyPlan(data);
   updateChart(data.rows);
   renderReport(data);
+}
+
+function renderResultOverview(data) {
+  const tier = budgetTier(data.budget);
+  const primary = data.rows[0];
+  const secondary = data.rows[1];
+  const riskLevel = data.budget < 10000 || data.duration <= 7 ? 'Dikkatli test' : data.budget >= 50000 ? 'Geniş test alanı' : 'Dengeli test';
+  const focusText = data.goal === 'sales'
+    ? 'Satış niyeti yüksek kanallar ve yeniden hedefleme birlikte kullanılmalı.'
+    : data.goal === 'awareness'
+      ? 'Erişim ve görünürlük odaklı kanallar kreatif testlerle desteklenmeli.'
+      : data.goal === 'local'
+        ? 'Yakın çevre hedefleme, harita/arama niyeti ve sosyal görünürlük birlikte çalışmalı.'
+        : 'İlk amaç hızlı veri toplamak ve iyi çalışan kanalları büyütmek olmalı.';
+
+  document.getElementById('resultOverview').innerHTML = `
+    <div class="overview-card primary-overview">
+      <span class="overview-icon">🎯</span>
+      <div>
+        <span>Plan odağı</span>
+        <strong>${goalLabels[data.goal]} · ${sectorLabels[data.sector]}</strong>
+        <p>${focusText}</p>
+      </div>
+    </div>
+    <div class="overview-card">
+      <span class="overview-icon">📌</span>
+      <div>
+        <span>Ana kanal</span>
+        <strong>${primary.channel} / %${primary.percent}</strong>
+        <p>${secondary ? secondary.channel + ' ikinci destek kanalı olarak önerildi.' : 'Bütçe tek ana kanalda daha net test edilebilir.'}</p>
+      </div>
+    </div>
+    <div class="overview-card">
+      <span class="overview-icon">⚙️</span>
+      <div>
+        <span>Uygulama modu</span>
+        <strong>${riskLevel}</strong>
+        <p>${tier.description}</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderChannelVisual(data) {
+  document.getElementById('channelVisual').innerHTML = `
+    <div class="channel-visual-head">
+      <span>Kanal dağılımı</span>
+      <strong>${formatter.format(data.budget)}</strong>
+    </div>
+    <div class="channel-bars">
+      ${data.rows.map(row => `
+        <div class="channel-bar-row">
+          <div class="channel-bar-meta">
+            <strong>${row.channel}</strong>
+            <span>%${row.percent} · ${formatter.format(row.budget)}</span>
+          </div>
+          <div class="channel-bar-track"><i style="width:${Math.max(row.percent, 4)}%"></i></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 function renderPlanSummary(data) {

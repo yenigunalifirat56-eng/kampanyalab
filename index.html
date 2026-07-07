@@ -462,10 +462,19 @@
 
           <div id="planSummary" class="plan-summary"></div>
 
+          <div id="resultOverview" class="result-overview empty">
+            <p>Plan oluşturduktan sonra burada kısa strateji özeti, tahmini skorlar ve uygulanacak ilk adımlar görünecek.</p>
+          </div>
+
           <p class="result-notice">Bu ekran gerçek reklam hesabı verisi değil, başlangıç medya planı simülasyonudur. En doğru sonuç için kampanya yayındayken gerçek performans verileriyle optimize edilmelidir.</p>
 
-          <div class="chart-wrap">
-            <canvas id="budgetChart"></canvas>
+          <div class="result-visual-grid">
+            <div class="chart-wrap">
+              <canvas id="budgetChart"></canvas>
+            </div>
+            <div id="channelVisual" class="channel-visual empty">
+              <p>Kanal dağılımı plan oluşturunca burada görsel olarak listelenecek.</p>
+            </div>
           </div>
 
           <div class="stats" id="stats"></div>

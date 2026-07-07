@@ -107,3 +107,11 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Menü bağlantıları logo satırının altına alındı.
 - Geniş ekranlarda menü artık alt satırda gerektiğinde kendi içinde kırılarak gösterilir.
 - Mobilde hamburger menü yapısı korunur.
+
+
+## v3.4
+- Sonuç ekranı daha profesyonel hale getirildi.
+- Plan oluşturulduktan sonra kısa strateji özeti kartları eklendi.
+- Kanal dağılımı için görsel bar alanı eklendi.
+- Ağır görsel dosya kullanılmadı; hızlı yüklenen CSS tabanlı görsel düzen tercih edildi.
+- Mobil sonuç görünümü daha okunur hale getirildi.
