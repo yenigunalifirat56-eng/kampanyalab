@@ -60,4 +60,24 @@
     <loc>https://www.kampanyalab.com.tr/yerel-isletme-reklam-plani.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/5000-tl-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/10000-tl-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/20000-tl-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/50000-tl-reklam-butcesi.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/dusuk-butce-reklam-plani.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
