@@ -89,3 +89,8 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Rehberler sayfasında breadcrumb üst yazıyla çakışmayacak şekilde düzeltildi.
 - Arama kutusunun altındaki küçük filtre butonları kaldırıldı.
 - Kategori geçişleri için daha temiz olan büyük kategori bağlantıları bırakıldı.
+
+
+## v3.3.1
+- Ana menüde logo ile ilk bağlantı arasındaki sıkışma giderildi.
+- Demo medya karması alanına yüzdelerin temsili olduğunu açıklayan not eklendi.
