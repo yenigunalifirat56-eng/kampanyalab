@@ -1856,3 +1856,37 @@ main,
     text-align: center;
   }
 }
+
+
+/* v3.2.1 Rehberler merkezi görünüm düzeltmeleri */
+.guides-hub-main .breadcrumb {
+  margin: 0 auto 22px;
+}
+
+.guide-hub-tools {
+  margin-top: -20px;
+}
+
+.guide-hub-quicklinks {
+  justify-content: center;
+  padding: 20px 24px;
+}
+
+.guide-hub-quicklinks a {
+  padding: 12px 18px;
+  font-size: 0.95rem;
+}
+
+.guide-filter-buttons {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .guides-hub-main .breadcrumb {
+    margin: 0 0 18px;
+  }
+
+  .guide-hub-tools {
+    margin-top: 0;
+  }
+}

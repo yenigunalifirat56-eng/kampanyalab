@@ -59,14 +59,6 @@
         <p>Başlık, konu veya kategoriye göre arama yapabilirsin.</p>
       </div>
       <input id="guideSearch" class="guide-search-input" type="search" placeholder="Örn: Google Ads, 10.000 TL, ROAS, kafe..." autocomplete="off" />
-      <div class="guide-filter-buttons" aria-label="Kategori filtreleri">
-        <button type="button" class="active" data-filter="all">Tümü</button>
-        <button type="button" data-filter="Platform rehberleri">Platform</button>
-        <button type="button" data-filter="Sektör rehberleri">Sektör</button>
-        <button type="button" data-filter="Bütçe örnekleri">Bütçe</button>
-        <button type="button" data-filter="Reklam metrikleri sözlüğü">Metrikler</button>
-        <button type="button" data-filter="Genel rehberler">Genel</button>
-      </div>
     </section>
 
     <div class="guide-hub-quicklinks panel">
@@ -271,28 +263,17 @@
 
   <script>
     const searchInput = document.getElementById('guideSearch');
-    const filterButtons = document.querySelectorAll('[data-filter]');
     const guideCards = document.querySelectorAll('.hub-guide-card');
-    let currentFilter = 'all';
 
-    function applyGuideFilters() {
+    function applyGuideSearch() {
       const query = (searchInput.value || '').toLowerCase().trim();
       guideCards.forEach(card => {
-        const matchesFilter = currentFilter === 'all' || card.dataset.category === currentFilter;
         const matchesQuery = !query || card.dataset.text.includes(query);
-        card.style.display = matchesFilter && matchesQuery ? '' : 'none';
+        card.style.display = matchesQuery ? '' : 'none';
       });
     }
 
-    searchInput.addEventListener('input', applyGuideFilters);
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(item => item.classList.remove('active'));
-        button.classList.add('active');
-        currentFilter = button.dataset.filter;
-        applyGuideFilters();
-      });
-    });
+    searchInput.addEventListener('input', applyGuideSearch);
   </script>
 </body>
 </html>
