@@ -824,41 +824,100 @@ function cleanPdfText(text) {
 function buildPdfDocumentDefinition(data) {
   const generatedAt = new Date().toLocaleDateString('tr-TR');
   const topChannels = data.rows.slice(0, 3).map(row => row.channel).join(', ');
+  const primaryChannel = data.rows[0]?.channel || '-';
   const reportText = cleanPdfText(document.getElementById('strategyReport').innerText);
   const weeklyText = cleanPdfText(document.getElementById('weeklyPlan').innerText);
+  const tier = budgetTier(data.budget);
+  const fileGoal = goalLabels[data.goal] || 'Kampanya';
+  const fileSector = sectorLabels[data.sector] || 'Sektör';
+  const safeTotalImpressions = data.totalImpressions > 0 ? numberFormatter.format(Math.round(data.totalImpressions)) : 'Ölçülmez';
+  const safeTotalClicks = data.totalClicks > 0 ? numberFormatter.format(Math.round(data.totalClicks)) : 'Ölçülmez';
 
-  const channelRows = data.rows.map(row => ([
-    { text: row.channel, bold: true },
+  const metricBox = (label, value, note) => ({
+    table: {
+      widths: ['*'],
+      body: [[{
+        stack: [
+          { text: label, fontSize: 8, color: '#64748b', bold: true, margin: [0, 0, 0, 4] },
+          { text: value, fontSize: 15, color: '#0f172a', bold: true },
+          note ? { text: note, fontSize: 7.5, color: '#64748b', margin: [0, 5, 0, 0] } : { text: ' ', fontSize: 1 }
+        ],
+        fillColor: '#f8fafc',
+        margin: [10, 9, 10, 9]
+      }]]
+    },
+    layout: {
+      hLineColor() { return '#e2e8f0'; },
+      vLineColor() { return '#e2e8f0'; },
+      paddingLeft() { return 0; },
+      paddingRight() { return 0; },
+      paddingTop() { return 0; },
+      paddingBottom() { return 0; }
+    }
+  });
+
+  const sectionTitle = title => ({
+    text: title,
+    fontSize: 14,
+    bold: true,
+    color: '#1e3a8a',
+    margin: [0, 18, 0, 8]
+  });
+
+  const recommendationText = data.goal === 'sales'
+    ? 'Satış odaklı kampanyalarda arama niyeti ve remarketing birlikte takip edilmeli. İlk veriler geldikçe düşük dönüşüm getiren kanal payları azaltılmalı.'
+    : data.goal === 'awareness'
+      ? 'Bilinirlik kampanyalarında erişim maliyeti, video izlenme oranı ve frekans birlikte yorumlanmalı. Aynı kreatif uzun süre tek başına kullanılmamalı.'
+      : data.goal === 'local'
+        ? 'Yerel kampanyalarda yakın çevre hedefleme, harita/arama görünürlüğü ve sosyal medya içerikleri birlikte planlanmalı.'
+        : 'İlk aşamada amaç veri toplamak, sonrasında iyi çalışan kanal ve kreatifleri büyütmek olmalı.';
+
+  const riskText = data.budget < 10000
+    ? 'Bütçe düşük olduğu için kanal sayısı sınırlı tutulmalı. Çok fazla kanala bölmek öğrenme verisini zayıflatabilir.'
+    : data.duration <= 7
+      ? 'Süre kısa olduğu için algoritmaların öğrenme dönemi sınırlı kalabilir. İlk günden net teklif ve güçlü kreatif gerekir.'
+      : 'Ana risk; kreatif kalite, hedefleme doğruluğu, rekabet ve web sitesi/landing page performansıdır.';
+
+  const channelTableRows = data.rows.map(row => ([
+    { text: row.channel, bold: true, color: '#0f172a' },
     row.role || '-',
-    `%${row.percent}`,
-    formatter.format(row.budget),
-    row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez',
-    row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez'
+    { text: `%${row.percent}`, alignment: 'center', bold: true },
+    { text: formatter.format(row.budget), alignment: 'right' },
+    { text: row.impressions > 0 ? numberFormatter.format(Math.round(row.impressions)) : 'Ölçülmez', alignment: 'right' },
+    { text: row.clicks > 0 ? numberFormatter.format(Math.round(row.clicks)) : 'Ölçülmez', alignment: 'right' }
+  ]));
+
+  const distributionRows = data.rows.map(row => ([
+    { text: row.channel, bold: true },
+    {
+      stack: [
+        {
+          canvas: [
+            { type: 'rect', x: 0, y: 2, w: 150, h: 8, r: 4, color: '#e2e8f0' },
+            { type: 'rect', x: 0, y: 2, w: Math.max(6, row.percent * 1.5), h: 8, r: 4, color: '#2563eb' }
+          ]
+        }
+      ]
+    },
+    { text: `%${row.percent}`, bold: true, alignment: 'right' },
+    { text: formatter.format(row.budget), alignment: 'right' }
   ]));
 
   return {
     pageSize: 'A4',
-    pageMargins: [32, 36, 32, 36],
+    pageMargins: [36, 42, 36, 46],
     info: {
-      title: `KampanyaLab ${goalLabels[data.goal]} Kampanyası Raporu`,
+      title: `KampanyaLab ${fileGoal} Medya Planı`,
       author: 'KampanyaLab',
       subject: 'Tahmini medya planlama raporu'
     },
     footer(currentPage, pageCount) {
       return {
         columns: [
-          { text: 'KampanyaLab', margin: [32, 0, 0, 0], color: '#64748b', fontSize: 8 },
-          { text: `${currentPage} / ${pageCount}`, alignment: 'right', margin: [0, 0, 32, 0], color: '#64748b', fontSize: 8 }
+          { text: 'KampanyaLab · Tahmini medya planlama raporu', margin: [36, 0, 0, 0], color: '#64748b', fontSize: 8 },
+          { text: `${currentPage} / ${pageCount}`, alignment: 'right', margin: [0, 0, 36, 0], color: '#64748b', fontSize: 8 }
         ]
       };
-    },
-    styles: {
-      h1: { fontSize: 20, bold: true, color: '#0f172a', margin: [0, 0, 0, 8] },
-      h2: { fontSize: 13, bold: true, color: '#1e3a8a', margin: [0, 18, 0, 8] },
-      small: { fontSize: 8, color: '#64748b' },
-      label: { fontSize: 8, color: '#64748b', margin: [0, 0, 0, 2] },
-      metric: { fontSize: 11, bold: true, color: '#0f172a' },
-      notice: { fontSize: 9, color: '#334155', margin: [0, 8, 0, 0] }
     },
     defaultStyle: {
       fontSize: 9,
@@ -869,64 +928,50 @@ function buildPdfDocumentDefinition(data) {
       {
         table: {
           widths: ['*'],
-          body: [[
-            {
-              stack: [
-                { text: 'KampanyaLab Medya Planı', color: '#bfdbfe', fontSize: 9, bold: true },
-                { text: `${goalLabels[data.goal]} Kampanyası Raporu`, color: '#ffffff', fontSize: 22, bold: true, margin: [0, 6, 0, 4] },
-                { text: `${sectorLabels[data.sector]} sektörü için ${data.duration} günlük tahmini medya planı.`, color: '#dbeafe', fontSize: 10 },
-                { text: `Oluşturma tarihi: ${generatedAt}`, color: '#dbeafe', fontSize: 8, margin: [0, 10, 0, 0] }
-              ],
-              fillColor: '#1e3a8a',
-              margin: [16, 14, 16, 14]
-            }
-          ]]
+          body: [[{
+            stack: [
+              { text: 'KampanyaLab', color: '#bfdbfe', fontSize: 10, bold: true, margin: [0, 0, 0, 6] },
+              { text: `${fileGoal} Medya Planı`, color: '#ffffff', fontSize: 24, bold: true, margin: [0, 0, 0, 5] },
+              { text: `${fileSector} sektörü · ${data.audience} yaş hedefi · ${data.duration} günlük kampanya`, color: '#dbeafe', fontSize: 10 },
+              { text: `Oluşturma tarihi: ${generatedAt}`, color: '#bfdbfe', fontSize: 8, margin: [0, 10, 0, 0] }
+            ],
+            fillColor: '#1e3a8a',
+            margin: [18, 16, 18, 16]
+          }]]
         },
-        layout: 'noBorders'
+        layout: 'noBorders',
+        margin: [0, 0, 0, 12]
       },
       {
         columns: [
-          { stack: [{ text: 'Bütçe', style: 'label' }, { text: formatter.format(data.budget), style: 'metric' }] },
-          { stack: [{ text: 'Süre', style: 'label' }, { text: `${data.duration} gün`, style: 'metric' }] },
-          { stack: [{ text: 'Hedef kitle', style: 'label' }, { text: data.audience, style: 'metric' }] },
-          { stack: [{ text: 'Ana kanallar', style: 'label' }, { text: topChannels, style: 'metric' }] }
+          metricBox('Toplam bütçe', formatter.format(data.budget), tier.label),
+          metricBox('Günlük bütçe', formatter.format(data.dailyBudget), `${data.duration} güne bölündü`),
+          metricBox('Ana kanal', primaryChannel, `İlk 3: ${topChannels}`)
         ],
         columnGap: 10,
-        margin: [0, 14, 0, 4]
-      },
-      { text: 'Performans Özeti', style: 'h2' },
-      {
-        columns: [
-          { stack: [{ text: 'Tahmini gösterim', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalImpressions)), style: 'metric' }] },
-          { stack: [{ text: 'Tahmini tıklama', style: 'label' }, { text: numberFormatter.format(Math.round(data.totalClicks)), style: 'metric' }] },
-          { stack: [{ text: 'Ortalama CPC', style: 'label' }, { text: data.avgCpc ? data.avgCpc.toFixed(2) + ' TL' : '-', style: 'metric' }] }
-        ],
-        columnGap: 10
+        margin: [0, 0, 0, 8]
       },
       {
         columns: [
-          { stack: [{ text: 'Ortalama CPM', style: 'label' }, { text: data.avgCpm ? data.avgCpm.toFixed(2) + ' TL' : '-', style: 'metric' }] },
-          { stack: [{ text: 'Tahmini CTR', style: 'label' }, { text: data.ctr ? '%' + data.ctr.toFixed(2) : '-', style: 'metric' }] },
-          { stack: [{ text: 'Günlük bütçe', style: 'label' }, { text: formatter.format(data.dailyBudget), style: 'metric' }] }
+          metricBox('Tahmini gösterim', safeTotalImpressions, 'CPM varsayımlarına göre'),
+          metricBox('Tahmini tıklama', safeTotalClicks, 'CPC varsayımlarına göre'),
+          metricBox('Tahmini CTR', data.ctr ? `%${data.ctr.toFixed(2)}` : '-', 'Yaklaşık oran')
         ],
         columnGap: 10,
-        margin: [0, 10, 0, 0]
+        margin: [0, 0, 0, 8]
       },
-      { text: 'Kanal Dağılımı', style: 'h2' },
+      sectionTitle('Kanal Dağılımı'),
       {
         table: {
-          headerRows: 1,
-          widths: ['*', '*', 32, 56, 58, 52],
+          widths: [110, '*', 40, 70],
           body: [
             [
               { text: 'Kanal', bold: true, color: '#ffffff' },
-              { text: 'Rol', bold: true, color: '#ffffff' },
-              { text: 'Oran', bold: true, color: '#ffffff' },
-              { text: 'Bütçe', bold: true, color: '#ffffff' },
-              { text: 'Gösterim', bold: true, color: '#ffffff' },
-              { text: 'Tıklama', bold: true, color: '#ffffff' }
+              { text: 'Pay', bold: true, color: '#ffffff' },
+              { text: 'Oran', bold: true, color: '#ffffff', alignment: 'right' },
+              { text: 'Bütçe', bold: true, color: '#ffffff', alignment: 'right' }
             ],
-            ...channelRows
+            ...distributionRows
           ]
         },
         layout: {
@@ -935,13 +980,71 @@ function buildPdfDocumentDefinition(data) {
           vLineColor() { return '#e2e8f0'; }
         }
       },
-      { text: 'Strateji Raporu', style: 'h2' },
-      { text: reportText, margin: [0, 0, 0, 4] },
-      { text: 'Haftalık Uygulama Planı', style: 'h2' },
-      { text: weeklyText, margin: [0, 0, 0, 4] },
+      sectionTitle('Detaylı Performans Tablosu'),
       {
-        text: 'Uyarı: KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve teklif stratejisine göre değişebilir.',
-        style: 'notice'
+        table: {
+          headerRows: 1,
+          widths: [82, '*', 34, 58, 60, 52],
+          body: [
+            [
+              { text: 'Kanal', bold: true, color: '#ffffff' },
+              { text: 'Rol', bold: true, color: '#ffffff' },
+              { text: 'Oran', bold: true, color: '#ffffff', alignment: 'center' },
+              { text: 'Bütçe', bold: true, color: '#ffffff', alignment: 'right' },
+              { text: 'Gösterim', bold: true, color: '#ffffff', alignment: 'right' },
+              { text: 'Tıklama', bold: true, color: '#ffffff', alignment: 'right' }
+            ],
+            ...channelTableRows
+          ]
+        },
+        layout: {
+          fillColor(rowIndex) { return rowIndex === 0 ? '#0f172a' : (rowIndex % 2 === 0 ? '#f8fafc' : null); },
+          hLineColor() { return '#e2e8f0'; },
+          vLineColor() { return '#e2e8f0'; }
+        }
+      },
+      sectionTitle('Plan Yorumu'),
+      {
+        table: {
+          widths: ['*', '*'],
+          body: [[
+            {
+              stack: [
+                { text: 'Önerilen yaklaşım', bold: true, color: '#1e3a8a', margin: [0, 0, 0, 5] },
+                { text: recommendationText }
+              ],
+              fillColor: '#eff6ff',
+              margin: [12, 10, 12, 10]
+            },
+            {
+              stack: [
+                { text: 'Dikkat edilmesi gereken risk', bold: true, color: '#9a3412', margin: [0, 0, 0, 5] },
+                { text: riskText }
+              ],
+              fillColor: '#fff7ed',
+              margin: [12, 10, 12, 10]
+            }
+          ]]
+        },
+        layout: 'noBorders'
+      },
+      sectionTitle('Strateji Raporu'),
+      { text: reportText, margin: [0, 0, 0, 4] },
+      sectionTitle('Haftalık Uygulama Planı'),
+      { text: weeklyText, margin: [0, 0, 0, 4] },
+      sectionTitle('Sonraki 3 Adım'),
+      {
+        ol: [
+          'İlk 3-5 gün kampanyayı izleyip CTR, CPC ve kaliteli trafik sinyallerini kontrol et.',
+          'Düşük performanslı kanal veya kreatiflerin bütçesini azaltıp iyi çalışanlara pay aktar.',
+          'Kampanya sonunda öğrenimleri not alıp sonraki dönemde bütçe dağılımını yeniden hesapla.'
+        ]
+      },
+      {
+        text: 'Uyarı: KampanyaLab tahmini medya planlama simülasyonudur. Bu rapor kesin reklam performansı, gelir veya satış garantisi vermez. Gerçek sonuçlar kreatif kalite, hedefleme, rekabet, sezon ve web sitesi deneyimine göre değişebilir.',
+        fontSize: 8,
+        color: '#64748b',
+        margin: [0, 14, 0, 0]
       }
     ]
   };

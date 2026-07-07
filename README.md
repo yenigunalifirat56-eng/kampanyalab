@@ -115,3 +115,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Kanal dağılımı için görsel bar alanı eklendi.
 - Ağır görsel dosya kullanılmadı; hızlı yüklenen CSS tabanlı görsel düzen tercih edildi.
 - Mobil sonuç görünümü daha okunur hale getirildi.
+
+
+## v3.5
+- PDF rapor tasarımı profesyonelleştirildi.
+- PDF içinde güçlü başlık alanı, kampanya özeti, metrik kartları, kanal dağılımı barları ve detaylı performans tablosu eklendi.
+- PDF rapora plan yorumu, risk notu ve sonraki 3 adım bölümü eklendi.
+- Rapor çıktısı paylaşmaya daha uygun, kurumsal ve okunur hale getirildi.
