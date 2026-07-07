@@ -41,3 +41,10 @@ KampanyaLab tahmini medya planlama simülasyonudur. Gerçek reklam performansı,
 - 5.000 TL, 10.000 TL, 20.000 TL, 50.000 TL ve düşük bütçeyle reklam planı içerikleri hazırlandı.
 - Ana sayfadaki Bilgi Merkezi bölümü yeni bütçe rehberleriyle güncellendi.
 - sitemap.xml yeni sayfaları içerecek şekilde güncellendi.
+
+
+## v2.9 güncellemesi
+- Reklam metrikleri sözlüğü için 5 yeni rehber sayfası eklendi.
+- CTR, CPA, ROAS, dönüşüm oranı ve erişim/gösterim farkı içerikleri hazırlandı.
+- Ana sayfadaki Bilgi Merkezi bölümü yeni metrik rehberleriyle güncellendi.
+- sitemap.xml yeni sayfaları içerecek şekilde güncellendi.

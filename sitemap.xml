@@ -80,4 +80,24 @@
     <loc>https://www.kampanyalab.com.tr/dusuk-butce-reklam-plani.html</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/ctr-nedir.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/cpa-nedir.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/roas-nedir.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/donusum-orani-nedir.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kampanyalab.com.tr/erisim-gosterim-farki.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
