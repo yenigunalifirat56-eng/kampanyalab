@@ -1208,23 +1208,3 @@ clearFeedbackButton?.addEventListener('click', () => {
   if (feedbackText) feedbackText.value = '';
   setFeedbackStatus('');
 });
-
-
-
-// v3.8: Tanıtım metni kopyalama
-document.addEventListener('DOMContentLoaded', () => {
-  const copyShareText = document.getElementById('copyShareText');
-  if (!copyShareText) return;
-
-  copyShareText.addEventListener('click', async () => {
-    const text = 'Ücretsiz reklam bütçesi planlama aracı: KampanyaLab ile bütçeni girip medya planı, kanal dağılımı ve PDF rapor oluşturabilirsin. https://www.kampanyalab.com.tr/';
-    try {
-      await navigator.clipboard.writeText(text);
-      copyShareText.textContent = 'Kopyalandı';
-      setTimeout(() => { copyShareText.textContent = 'Tanıtım metnini kopyala'; }, 1800);
-    } catch (error) {
-      copyShareText.textContent = 'Kopyalama başarısız';
-      setTimeout(() => { copyShareText.textContent = 'Tanıtım metnini kopyala'; }, 1800);
-    }
-  });
-});

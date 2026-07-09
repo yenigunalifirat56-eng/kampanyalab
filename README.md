@@ -151,3 +151,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Kullanıcıların aracı denedikten sonra geri bildirim bırakması için daha görünür yönlendirme yapıldı.
 - `trafik-plani.html` iç çalışma notu olarak eklendi ve noindex bırakıldı.
 - Amaç: trafik, geri bildirim ve ilk kullanıcı paylaşım sürecini başlatmak.
+
+
+## v3.8.1
+- Ana sayfadaki “tanıtım metnini kopyala” alanı kaldırıldı.
+- `trafik-plani.html` iç çalışma notu paketten çıkarıldı.
+- Ana sayfa odağı tekrar plan oluşturma, PDF rapor ve geri bildirim akışına alındı.
+- Beta geri bildirim çağrısı sade şekilde korundu.
