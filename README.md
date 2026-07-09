@@ -158,3 +158,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - `trafik-plani.html` iç çalışma notu paketten çıkarıldı.
 - Ana sayfa odağı tekrar plan oluşturma, PDF rapor ve geri bildirim akışına alındı.
 - Beta geri bildirim çağrısı sade şekilde korundu.
+
+
+## v3.9
+- Google’da sık aranan reklam bütçesi ve platform sorularına göre 7 yeni rehber sayfası eklendi.
+- Eklenen sayfalar: Google Ads günlük bütçe, Instagram reklam maliyeti, Facebook reklam bütçesi, reklam bütçesi dağılımı, remarketing, reklam test bütçesi ve Performance Max.
+- Rehberler Merkezi’ne “Google’da sık aranan reklam bütçesi konuları” bölümü eklendi.
+- Sitemap yeni sayfalarla güncellendi.
