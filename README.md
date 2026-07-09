@@ -172,3 +172,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Her sayfaya uzun açıklamalar, örnek tablolar, sık yapılan hatalar, kontrol listesi ve daha güçlü iç bağlantılar eklendi.
 - Sayfalar daha kaliteli, okunabilir ve kullanıcı niyetine daha uygun hale getirildi.
 - FAQ ve Breadcrumb yapılandırılmış veri korundu/güçlendirildi.
+
+## v4.1
+- 6 önemli rehber sayfasına daha okunur tablo ve hafif görsel şema eklendi.
+- Reklam bütçesi dağılımı, Google Ads günlük bütçe, Instagram reklam maliyeti, Facebook bütçesi, remarketing ve reklam test bütçesi sayfaları güçlendirildi.
+- Görseller fotoğraf dosyası yerine CSS/HTML tabanlı hafif şemalar olarak eklendi.
+- Mobil uyumlu tablo ve şema düzenleri iyileştirildi.
