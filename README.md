@@ -165,3 +165,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Eklenen sayfalar: Google Ads günlük bütçe, Instagram reklam maliyeti, Facebook reklam bütçesi, reklam bütçesi dağılımı, remarketing, reklam test bütçesi ve Performance Max.
 - Rehberler Merkezi’ne “Google’da sık aranan reklam bütçesi konuları” bölümü eklendi.
 - Sitemap yeni sayfalarla güncellendi.
+
+
+## v4.0
+- v3.9’da eklenen 7 yeni SEO sayfası kapsamlı rehberlere dönüştürüldü.
+- Her sayfaya uzun açıklamalar, örnek tablolar, sık yapılan hatalar, kontrol listesi ve daha güçlü iç bağlantılar eklendi.
+- Sayfalar daha kaliteli, okunabilir ve kullanıcı niyetine daha uygun hale getirildi.
+- FAQ ve Breadcrumb yapılandırılmış veri korundu/güçlendirildi.

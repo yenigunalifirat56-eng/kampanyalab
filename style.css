@@ -2425,3 +2425,69 @@ main,
     justify-content: flex-start;
   }
 }
+
+
+
+/* v4.0: Daha kapsamlı rehber içerikleri */
+.article-summary-box {
+  border: 1px solid var(--line);
+  background: #f8fafc;
+  border-radius: 22px;
+  padding: 22px;
+  margin: 24px 0;
+}
+
+.article-summary-box h2 {
+  margin-top: 0;
+}
+
+.article-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 24px;
+  font-size: 15px;
+}
+
+.article-card th,
+.article-card td {
+  border: 1px solid var(--line);
+  padding: 13px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-card th {
+  background: #f1f5f9;
+  color: var(--primary-dark);
+}
+
+.article-card ul,
+.article-card ol {
+  line-height: 1.8;
+}
+
+.article-card li {
+  margin: 6px 0;
+}
+
+.breadcrumb {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.breadcrumb a {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+@media (max-width: 700px) {
+  .article-card table {
+    font-size: 14px;
+  }
+
+  .article-card th,
+  .article-card td {
+    padding: 11px;
+  }
+}
