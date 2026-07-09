@@ -143,3 +143,11 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Rehber sayfalarına `article:modified_time` meta bilgisi eklendi.
 - Menü, footer, rehber merkezi ve iç bağlantı yapısı korunarak kalite temizliği yapıldı.
 - Yeni sayfa eklenmedi; amaç mevcut yapıyı arama motoru ve kullanıcı deneyimi açısından daha temiz hale getirmektir.
+
+
+## v3.8
+- Ana sayfaya beta geri bildirim çağrısı eklendi.
+- Ana sayfaya paylaşım / tanıtım metni kopyalama alanı eklendi.
+- Kullanıcıların aracı denedikten sonra geri bildirim bırakması için daha görünür yönlendirme yapıldı.
+- `trafik-plani.html` iç çalışma notu olarak eklendi ve noindex bırakıldı.
+- Amaç: trafik, geri bildirim ve ilk kullanıcı paylaşım sürecini başlatmak.
