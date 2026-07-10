@@ -778,6 +778,63 @@ function applyTemplate(templateKey) {
   });
 
 
+
+// v4.5.2 Rehberler dropdown: hover + click controlled, prevents early close.
+const guidesDropdown = document.querySelector('.nav-dropdown');
+const guidesDropdownTrigger = document.getElementById('guidesDropdownTrigger');
+const guidesDropdownMenu = document.getElementById('guidesDropdownMenu');
+let guidesDropdownCloseTimer;
+
+function openGuidesDropdown() {
+  if (!guidesDropdown || !guidesDropdownTrigger) return;
+  clearTimeout(guidesDropdownCloseTimer);
+  guidesDropdown.classList.add('is-open');
+  guidesDropdownTrigger.setAttribute('aria-expanded', 'true');
+}
+
+function closeGuidesDropdown() {
+  if (!guidesDropdown || !guidesDropdownTrigger) return;
+  guidesDropdown.classList.remove('is-open');
+  guidesDropdownTrigger.setAttribute('aria-expanded', 'false');
+}
+
+function scheduleCloseGuidesDropdown() {
+  clearTimeout(guidesDropdownCloseTimer);
+  guidesDropdownCloseTimer = setTimeout(() => {
+    if (guidesDropdown && !guidesDropdown.matches(':hover') && !guidesDropdown.contains(document.activeElement)) {
+      closeGuidesDropdown();
+    }
+  }, 450);
+}
+
+guidesDropdownTrigger?.addEventListener('click', event => {
+  event.preventDefault();
+  if (guidesDropdown?.classList.contains('is-open')) {
+    closeGuidesDropdown();
+  } else {
+    openGuidesDropdown();
+  }
+});
+
+guidesDropdown?.addEventListener('mouseenter', openGuidesDropdown);
+guidesDropdown?.addEventListener('mouseleave', scheduleCloseGuidesDropdown);
+guidesDropdownMenu?.addEventListener('mouseenter', openGuidesDropdown);
+guidesDropdownMenu?.addEventListener('mouseleave', scheduleCloseGuidesDropdown);
+
+guidesDropdownMenu?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeGuidesDropdown);
+});
+
+document.addEventListener('click', event => {
+  if (!guidesDropdown || !guidesDropdown.classList.contains('is-open')) return;
+  if (!guidesDropdown.contains(event.target)) closeGuidesDropdown();
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeGuidesDropdown();
+});
+
+
 document.querySelectorAll('[data-template]').forEach(card => {
     card.classList.toggle('is-active', card.dataset.template === templateKey);
   });

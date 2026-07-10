@@ -206,3 +206,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Rehberler dropdown menüsünün mouse üzerindeyken erken kapanması düzeltildi.
 - Dropdown menüye maksimum yükseklik ve dikey kaydırma eklendi.
 - Menü ile açılır panel arasındaki boşluk azaltıldı ve hover alanı genişletildi.
+
+## v4.5.2
+- Rehberler dropdown menüsü hover-only yapıdan çıkarılıp JS kontrollü hale getirildi.
+- Rehberler butonuna tıklanınca menü sabit açık kalır; dışarı tıklayınca veya Escape ile kapanır.
+- Mouse menü üzerindeyken erken kapanma sorunu daha sağlam şekilde düzeltildi.
+- Menü içi dikey kaydırma korunur.
