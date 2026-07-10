@@ -196,3 +196,8 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - 5 yeni rehber sayfası eklendi: TV reklamı nasıl verilir, markalar neden TV reklamı verir, TV reklam bütçesi, rating/GRP/reyting ve TV reklamı mı dijital reklam mı.
 - Rehberler Merkezi ve ana sayfa yeni kategori bağlantısıyla güncellendi.
 - Sitemap yeni sayfalarla güncellendi.
+
+## v4.5
+- Ana sayfada üst menüdeki Rehberler bağlantısı dropdown menüye dönüştürüldü.
+- Mouse ile Rehberler üzerine gelince rehber kategorileri ve önemli sayfalar seçilebilir hale getirildi.
+- Mobilde dropdown menü açık/kullanılabilir şekilde düzenlendi.
