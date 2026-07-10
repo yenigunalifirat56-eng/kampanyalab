@@ -184,3 +184,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Müşteri/marka adı, hazırlayan kişi/ajans, kampanya dönemi, hizmet bedeli, KDV oranı ve teklif notu alanları eklendi.
 - PDF raporu müşteri sunumuna daha uygun hale getirildi: müşteri adı, hazırlayan, dönem, teklif notu ve hizmet bedeli bilgileri PDF’e eklendi.
 - PDF dosya adı müşteri adı girildiyse müşteri adına göre oluşturulur.
+
+## v4.3
+- Sosyal Medya Reklam Rehberleri kategorisi eklendi.
+- 8 yeni rehber sayfası eklendi: Instagram reklam nasıl verilir, Reels reklam bütçesi, TikTok reklam bütçesi, Instagram mı TikTok mu, sosyal medya reklam bütçesi, sosyal medya içerik takvimi, reklam kreatifi ve hedef kitle belirleme.
+- Rehberler Merkezi ve ana sayfa yeni kategori bağlantısıyla güncellendi.
+- Sitemap yeni sayfalarla güncellendi.
