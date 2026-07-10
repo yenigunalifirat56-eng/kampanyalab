@@ -2907,3 +2907,50 @@ main,
     padding: 11px 12px;
   }
 }
+
+
+
+/* v4.5.1: Rehberler dropdown kapanma ve kaydırma düzeltmesi */
+.nav-dropdown {
+  padding-bottom: 18px;
+  margin-bottom: -18px;
+}
+
+.nav-dropdown-menu {
+  top: calc(100% + 4px);
+  max-height: min(72vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 999px;
+}
+
+.nav-dropdown-menu::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.nav-dropdown-menu::before {
+  top: -24px;
+  height: 24px;
+}
+
+@media (max-width: 980px) {
+  .nav-dropdown {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .nav-dropdown-menu {
+    max-height: 58vh;
+    overflow-y: auto;
+  }
+}
