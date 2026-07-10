@@ -2669,3 +2669,105 @@ main,
     width: 100%;
   }
 }
+
+
+
+/* v4.2: Ajans / müşteri modu */
+.agency-mode-fields {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.agency-mode-head {
+  margin-bottom: 14px;
+}
+
+.agency-mode-head span {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.09);
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.agency-mode-head strong {
+  display: block;
+  font-size: 17px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.agency-mode-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.form-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-panel textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 14px;
+  font: inherit;
+  color: var(--text);
+  background: #ffffff;
+  min-height: 92px;
+}
+
+.form-panel textarea:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.22);
+  border-color: var(--primary);
+}
+
+.agency-preview-card {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 20px;
+  background: #eff6ff;
+}
+
+.agency-preview-card span {
+  display: block;
+  color: var(--primary-dark);
+  font-weight: 900;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.agency-preview-card strong {
+  display: block;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.agency-preview-card p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .form-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .agency-mode-fields {
+    padding: 15px;
+  }
+}

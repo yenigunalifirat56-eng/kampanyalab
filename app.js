@@ -279,13 +279,23 @@ function normalizePlan(plan) {
 }
 
 
+function getOptionalInputValue(id) {
+  return (document.getElementById(id)?.value || '').trim();
+}
+
 function getPlannerInputValues() {
   return {
     budgetRaw: document.getElementById('budget')?.value || '',
     goal: document.getElementById('goal')?.value || '',
     sector: document.getElementById('sector')?.value || '',
     audience: document.getElementById('audience')?.value || '',
-    durationRaw: document.getElementById('duration')?.value || ''
+    durationRaw: document.getElementById('duration')?.value || '',
+    clientName: getOptionalInputValue('clientName'),
+    preparedBy: getOptionalInputValue('preparedBy'),
+    campaignPeriod: getOptionalInputValue('campaignPeriod'),
+    serviceFeeRaw: getOptionalInputValue('serviceFee'),
+    vatRateRaw: getOptionalInputValue('vatRate'),
+    proposalNote: getOptionalInputValue('proposalNote')
   };
 }
 
@@ -309,12 +319,23 @@ function validatePlannerInputs() {
     return null;
   }
 
+  const serviceFee = Math.max(0, Number(values.serviceFeeRaw || 0));
+  const vatRate = Math.max(0, Number(values.vatRateRaw || 0));
+
   return {
     budget,
     goal: values.goal,
     sector: values.sector,
     audience: values.audience,
-    duration
+    duration,
+    agency: {
+      clientName: values.clientName,
+      preparedBy: values.preparedBy,
+      campaignPeriod: values.campaignPeriod,
+      serviceFee: Number.isFinite(serviceFee) ? serviceFee : 0,
+      vatRate: Number.isFinite(vatRate) ? vatRate : 0,
+      proposalNote: values.proposalNote
+    }
   };
 }
 
@@ -358,7 +379,7 @@ function createPlan() {
     return;
   }
 
-  const { budget, goal, sector, audience, duration } = values;
+  const { budget, goal, sector, audience, duration, agency } = values;
 
   const allocation = adjustPlan(basePlans[goal], sector, audience, budget, goal);
   const rows = allocation.map(item => {
@@ -384,16 +405,18 @@ function createPlan() {
   const ctr = totalImpressions > 0 ? totalClicks / totalImpressions * 100 : 0;
   const dailyBudget = duration > 0 ? budget / duration : 0;
 
-  renderResults({ budget, goal, sector, audience, duration, rows, totalImpressions, totalClicks, avgCpm, avgCpc, ctr, dailyBudget });
+  renderResults({ budget, goal, sector, audience, duration, agency, rows, totalImpressions, totalClicks, avgCpm, avgCpc, ctr, dailyBudget });
 }
 
 function renderResults(data) {
   lastPlanData = data;
-  document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı`;
+  const clientLabel = data.agency?.clientName ? ` · ${data.agency.clientName}` : '';
+  document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı${clientLabel}`;
 
   renderPlanSummary(data);
   renderResultOverview(data);
   renderChannelVisual(data);
+  renderAgencyPreview(data);
 
   const table = document.getElementById('allocationTable');
   table.innerHTML = data.rows.map(row => `
@@ -423,6 +446,31 @@ function renderResults(data) {
   renderWeeklyPlan(data);
   updateChart(data.rows);
   renderReport(data);
+}
+
+
+function renderAgencyPreview(data) {
+  const planSummary = document.getElementById('planSummary');
+  if (!planSummary || !data.agency) return;
+
+  const agency = data.agency;
+  const hasAgencyInfo = agency.clientName || agency.preparedBy || agency.campaignPeriod || agency.serviceFee || agency.proposalNote;
+  if (!hasAgencyInfo) return;
+
+  const vatAmount = agency.serviceFee && agency.vatRate ? agency.serviceFee * agency.vatRate / 100 : 0;
+  const totalOffer = agency.serviceFee ? agency.serviceFee + vatAmount : 0;
+
+  const agencyHtml = `
+    <div class="agency-preview-card">
+      <span>Ajans / müşteri modu aktif</span>
+      <strong>${agency.clientName || 'Müşteri adı belirtilmedi'}</strong>
+      <p>${agency.preparedBy ? 'Hazırlayan: ' + agency.preparedBy : 'PDF raporda hazırlayan alanı boş bırakıldı.'}</p>
+      ${agency.campaignPeriod ? `<p>Kampanya dönemi: ${agency.campaignPeriod}</p>` : ''}
+      ${agency.serviceFee ? `<p>Hizmet bedeli: ${formatter.format(agency.serviceFee)}${agency.vatRate ? ' + KDV · Toplam: ' + formatter.format(totalOffer) : ''}</p>` : ''}
+    </div>
+  `;
+
+  planSummary.insertAdjacentHTML('beforeend', agencyHtml);
 }
 
 function renderResultOverview(data) {
@@ -832,6 +880,16 @@ function buildPdfDocumentDefinition(data) {
   const fileSector = sectorLabels[data.sector] || 'Sektör';
   const safeTotalImpressions = data.totalImpressions > 0 ? numberFormatter.format(Math.round(data.totalImpressions)) : 'Ölçülmez';
   const safeTotalClicks = data.totalClicks > 0 ? numberFormatter.format(Math.round(data.totalClicks)) : 'Ölçülmez';
+  const agency = data.agency || {};
+  const clientName = agency.clientName || 'Belirtilmedi';
+  const preparedBy = agency.preparedBy || 'KampanyaLab';
+  const campaignPeriod = agency.campaignPeriod || `${data.duration} günlük kampanya dönemi`;
+  const proposalNote = agency.proposalNote || 'Bu rapor başlangıç medya planı ve tahmini performans simülasyonu olarak hazırlanmıştır.';
+  const serviceFee = Number(agency.serviceFee || 0);
+  const vatRate = Number(agency.vatRate || 0);
+  const vatAmount = serviceFee > 0 && vatRate > 0 ? serviceFee * vatRate / 100 : 0;
+  const totalOffer = serviceFee + vatAmount;
+  const hasOffer = serviceFee > 0;
 
   const metricBox = (label, value, note) => ({
     table: {
@@ -907,7 +965,7 @@ function buildPdfDocumentDefinition(data) {
     pageSize: 'A4',
     pageMargins: [36, 42, 36, 46],
     info: {
-      title: `KampanyaLab ${fileGoal} Medya Planı`,
+      title: `${clientName !== 'Belirtilmedi' ? clientName + ' · ' : ''}KampanyaLab ${fileGoal} Medya Planı`,
       author: 'KampanyaLab',
       subject: 'Tahmini medya planlama raporu'
     },
@@ -931,9 +989,9 @@ function buildPdfDocumentDefinition(data) {
           body: [[{
             stack: [
               { text: 'KampanyaLab', color: '#bfdbfe', fontSize: 10, bold: true, margin: [0, 0, 0, 6] },
-              { text: `${fileGoal} Medya Planı`, color: '#ffffff', fontSize: 24, bold: true, margin: [0, 0, 0, 5] },
-              { text: `${fileSector} sektörü · ${data.audience} yaş hedefi · ${data.duration} günlük kampanya`, color: '#dbeafe', fontSize: 10 },
-              { text: `Oluşturma tarihi: ${generatedAt}`, color: '#bfdbfe', fontSize: 8, margin: [0, 10, 0, 0] }
+              { text: `${clientName !== 'Belirtilmedi' ? clientName : fileGoal} Medya Planı`, color: '#ffffff', fontSize: 24, bold: true, margin: [0, 0, 0, 5] },
+              { text: `${fileSector} sektörü · ${data.audience} yaş hedefi · ${campaignPeriod}`, color: '#dbeafe', fontSize: 10 },
+              { text: `Hazırlayan: ${preparedBy} · Oluşturma tarihi: ${generatedAt}`, color: '#bfdbfe', fontSize: 8, margin: [0, 10, 0, 0] }
             ],
             fillColor: '#1e3a8a',
             margin: [18, 16, 18, 16]
@@ -942,6 +1000,47 @@ function buildPdfDocumentDefinition(data) {
         layout: 'noBorders',
         margin: [0, 0, 0, 12]
       },
+      {
+        table: {
+          widths: ['*', '*'],
+          body: [
+            [
+              { text: 'Müşteri / Marka', bold: true, color: '#64748b' },
+              { text: clientName, bold: true, color: '#0f172a' }
+            ],
+            [
+              { text: 'Hazırlayan', bold: true, color: '#64748b' },
+              { text: preparedBy, color: '#0f172a' }
+            ],
+            [
+              { text: 'Kampanya dönemi', bold: true, color: '#64748b' },
+              { text: campaignPeriod, color: '#0f172a' }
+            ],
+            [
+              { text: 'Teklif notu', bold: true, color: '#64748b' },
+              { text: proposalNote, color: '#0f172a' }
+            ]
+          ]
+        },
+        layout: {
+          fillColor(rowIndex) { return rowIndex % 2 === 0 ? '#f8fafc' : null; },
+          hLineColor() { return '#e2e8f0'; },
+          vLineColor() { return '#e2e8f0'; }
+        },
+        margin: [0, 0, 0, 12]
+      },
+      ...(hasOffer ? [{
+        table: {
+          widths: ['*', '*', '*'],
+          body: [[
+            { stack: [{ text: 'Reklam bütçesi', color: '#64748b', fontSize: 8, bold: true }, { text: formatter.format(data.budget), bold: true, fontSize: 14 }], fillColor: '#f8fafc', margin: [10, 8, 10, 8] },
+            { stack: [{ text: 'Hizmet bedeli', color: '#64748b', fontSize: 8, bold: true }, { text: formatter.format(serviceFee), bold: true, fontSize: 14 }], fillColor: '#f8fafc', margin: [10, 8, 10, 8] },
+            { stack: [{ text: vatRate ? `Toplam teklif · KDV %${vatRate}` : 'Toplam teklif', color: '#64748b', fontSize: 8, bold: true }, { text: formatter.format(totalOffer), bold: true, fontSize: 14, color: '#1e3a8a' }], fillColor: '#eff6ff', margin: [10, 8, 10, 8] }
+          ]]
+        },
+        layout: 'noBorders',
+        margin: [0, 0, 0, 12]
+      }] : []),
       {
         columns: [
           metricBox('Toplam bütçe', formatter.format(data.budget), tier.label),
@@ -1063,8 +1162,13 @@ function downloadPdfReport() {
   }
 
   const fileNameGoal = goalLabels[lastPlanData.goal].toLowerCase().replace(/\s+/g, '-');
+  const fileNameClient = (lastPlanData.agency?.clientName || '')
+    .toLowerCase()
+    .replace(/[ğ]/g, 'g').replace(/[ü]/g, 'u').replace(/[ş]/g, 's').replace(/[ı]/g, 'i').replace(/[ö]/g, 'o').replace(/[ç]/g, 'c')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
   const docDefinition = buildPdfDocumentDefinition(lastPlanData);
-  pdfMake.createPdf(docDefinition).download(`kampanyalab-${fileNameGoal}-medya-plani.pdf`);
+  pdfMake.createPdf(docDefinition).download(`kampanyalab-${fileNameClient ? fileNameClient + '-' : ''}${fileNameGoal}-medya-plani.pdf`);
 }
 
 document.getElementById('downloadPdf')?.addEventListener('click', downloadPdfReport);

@@ -469,6 +469,47 @@
             </select>
           </label>
 
+
+          <div class="agency-mode-fields">
+            <div class="agency-mode-head">
+              <span>Yeni</span>
+              <strong>Ajans / müşteri modu</strong>
+              <p>Bu alanlar isteğe bağlıdır. Doldurursan PDF rapor müşteri sunumu gibi hazırlanır.</p>
+            </div>
+
+            <label>
+              Müşteri / marka adı
+              <input type="text" id="clientName" maxlength="80" placeholder="Örn. Nova Coffee" autocomplete="off" />
+            </label>
+
+            <label>
+              Hazırlayan kişi / ajans
+              <input type="text" id="preparedBy" maxlength="80" placeholder="Örn. KampanyaLab / Ajans adı" autocomplete="off" />
+            </label>
+
+            <label>
+              Kampanya dönemi
+              <input type="text" id="campaignPeriod" maxlength="80" placeholder="Örn. Ağustos 2026 / 4 haftalık dönem" autocomplete="off" />
+            </label>
+
+            <div class="form-two-col">
+              <label>
+                Hizmet bedeli (TL)
+                <input type="number" id="serviceFee" min="0" step="500" placeholder="Örn. 5000" inputmode="numeric" autocomplete="off" />
+              </label>
+
+              <label>
+                KDV oranı (%)
+                <input type="number" id="vatRate" min="0" max="50" step="1" placeholder="Örn. 20" inputmode="numeric" autocomplete="off" />
+              </label>
+            </div>
+
+            <label>
+              Teklif / sunum notu
+              <textarea id="proposalNote" maxlength="400" rows="3" placeholder="Örn. Bu plan ilk 30 günlük test dönemi için hazırlanmıştır. Sonuçlara göre ikinci ay bütçe dağılımı yeniden optimize edilecektir."></textarea>
+            </label>
+          </div>
+
           <button type="submit" class="btn primary full">Medya Planı Oluştur</button>
           <p id="formStatus" class="form-status" aria-live="polite"></p>
           <p class="notice">Not: Sonuçlar gerçek reklam performansı değil, medya planlama simülasyonudur.</p>
