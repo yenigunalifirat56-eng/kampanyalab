@@ -190,3 +190,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - 8 yeni rehber sayfası eklendi: Instagram reklam nasıl verilir, Reels reklam bütçesi, TikTok reklam bütçesi, Instagram mı TikTok mu, sosyal medya reklam bütçesi, sosyal medya içerik takvimi, reklam kreatifi ve hedef kitle belirleme.
 - Rehberler Merkezi ve ana sayfa yeni kategori bağlantısıyla güncellendi.
 - Sitemap yeni sayfalarla güncellendi.
+
+## v4.4
+- Televizyon Reklam Rehberleri kategorisi eklendi.
+- 5 yeni rehber sayfası eklendi: TV reklamı nasıl verilir, markalar neden TV reklamı verir, TV reklam bütçesi, rating/GRP/reyting ve TV reklamı mı dijital reklam mı.
+- Rehberler Merkezi ve ana sayfa yeni kategori bağlantısıyla güncellendi.
+- Sitemap yeni sayfalarla güncellendi.
