@@ -230,3 +230,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Hover dropdown kaldırıldı, Rehberler tıklanınca açılan modal/panel menüye dönüştürüldü.
 - Modal açıkken arka sayfa scroll kilitlenir; panel kendi içinde kayar.
 - Dışarı tıklama, X butonu ve Escape ile kapatma eklendi.
+
+## v4.6.1
+- Rehberler dropdown/modal denemesi kaldırıldı.
+- Üst menüdeki Rehberler bağlantısı tekrar sade normal link haline getirildi.
+- Kullanıcı deneyimini bozan hover, modal, scroll ve z-index sorunları devre dışı bırakıldı.
+- Rehberler sayfası ana kategori merkezi olarak kullanılmaya devam eder.
