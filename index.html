@@ -61,45 +61,7 @@
       <div class="nav-links" id="primaryNavigation">
         <a href="#planner">Plan Oluştur</a>
         <a href="#templates">Şablonlar</a>
-        <div class="nav-dropdown">
-          <button type="button" class="nav-dropdown-trigger" id="guidesDropdownTrigger" aria-haspopup="true" aria-expanded="false" aria-controls="guidesDropdownMenu">Rehberler</button>
-          <div class="nav-dropdown-menu" id="guidesDropdownMenu" aria-label="Rehber kategorileri">
-            <div class="dropdown-grid">
-              <a href="rehberler.html">
-                <span>Tüm rehberler</span>
-                <strong>Rehberler Merkezi</strong>
-              </a>
-              <a href="rehberler.html#guncel-arama-konulari">
-                <span>SEO konuları</span>
-                <strong>Google’da aranan konular</strong>
-              </a>
-              <a href="rehberler.html#sosyal-medya-reklam-rehberleri">
-                <span>Sosyal medya</span>
-                <strong>Instagram, TikTok, kreatif</strong>
-              </a>
-              <a href="rehberler.html#televizyon-reklam-rehberleri">
-                <span>TV reklamları</span>
-                <strong>TV bütçesi, GRP, reyting</strong>
-              </a>
-              <a href="reklam-butcesi-dagilimi.html">
-                <span>Bütçe</span>
-                <strong>Reklam bütçesi dağılımı</strong>
-              </a>
-              <a href="google-ads-gunluk-butce.html">
-                <span>Google Ads</span>
-                <strong>Günlük bütçe rehberi</strong>
-              </a>
-              <a href="instagram-reklam-nasil-verilir.html">
-                <span>Instagram</span>
-                <strong>Instagram reklam nasıl verilir?</strong>
-              </a>
-              <a href="televizyon-reklami-nasil-verilir.html">
-                <span>Televizyon</span>
-                <strong>TV reklamı nasıl verilir?</strong>
-              </a>
-            </div>
-          </div>
-        </div>
+        <button type="button" class="nav-modal-trigger" id="guidesModalOpen">Rehberler</button>
         <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
         <a href="#who-uses">Kimler Kullanır?</a>
         <a href="#product">Özellikler</a>
@@ -140,6 +102,32 @@
       </div>
     </section>
   </header>
+  <div class="guides-modal" id="guidesModal" aria-hidden="true">
+    <div class="guides-modal-backdrop" data-guides-close></div>
+    <div class="guides-modal-panel" role="dialog" aria-modal="true" aria-labelledby="guidesModalTitle">
+      <div class="guides-modal-head">
+        <div>
+          <p class="badge">Rehberler</p>
+          <h2 id="guidesModalTitle">Rehberler Merkezi</h2>
+          <p>Reklam bütçesi, sosyal medya, Google Ads, TV reklamları ve metrik rehberleri.</p>
+        </div>
+        <button type="button" class="guides-modal-close" data-guides-close aria-label="Kapat">×</button>
+      </div>
+      <div class="guides-modal-grid">
+        <a href="rehberler.html"><span>Tüm rehberler</span><strong>Rehberler Merkezi</strong><p>Tüm içerikleri kategorilere göre incele.</p></a>
+        <a href="rehberler.html#guncel-arama-konulari"><span>SEO konuları</span><strong>Google’da aranan konular</strong><p>En çok merak edilen reklam bütçesi başlıkları.</p></a>
+        <a href="rehberler.html#sosyal-medya-reklam-rehberleri"><span>Sosyal medya</span><strong>Instagram, TikTok, kreatif</strong><p>Sosyal medya reklam bütçesi ve içerik planlama.</p></a>
+        <a href="rehberler.html#televizyon-reklam-rehberleri"><span>TV reklamları</span><strong>TV bütçesi, GRP, reyting</strong><p>Televizyon reklamı ve dijital destek rehberleri.</p></a>
+        <a href="reklam-butcesi-dagilimi.html"><span>Bütçe</span><strong>Reklam bütçesi dağılımı</strong><p>Bütçeyi kanallar arasında nasıl bölebilirsin?</p></a>
+        <a href="google-ads-gunluk-butce.html"><span>Google Ads</span><strong>Günlük bütçe rehberi</strong><p>Google Ads bütçesi günlük plana nasıl çevrilir?</p></a>
+        <a href="instagram-reklam-nasil-verilir.html"><span>Instagram</span><strong>Instagram reklam nasıl verilir?</strong><p>Instagram reklamı için hedef, bütçe ve kreatif adımları.</p></a>
+        <a href="televizyon-reklami-nasil-verilir.html"><span>Televizyon</span><strong>TV reklamı nasıl verilir?</strong><p>TV reklamı verme süreci ve medya planlama mantığı.</p></a>
+        <a href="reklam-kreatifi-nedir.html"><span>Kreatif</span><strong>Reklam kreatifi nedir?</strong><p>Görsel, video, başlık ve CTA’nın performans etkisi.</p></a>
+        <a href="hedef-kitle-nasil-belirlenir.html"><span>Hedef kitle</span><strong>Hedef kitle nasıl belirlenir?</strong><p>Kitle seçimi, bütçe ve remarketing ilişkisi.</p></a>
+      </div>
+    </div>
+  </div>
+
 
   <section class="home-proof" aria-label="KampanyaLab öne çıkan özellikler">
     <div class="home-proof-grid">

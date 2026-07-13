@@ -225,3 +225,8 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Mouse rehber panelindeyken tekerlek artık sayfayı değil paneli kaydıracak şekilde ayarlandı.
 - Panel yüksekliği azaltıldı ve daha net beyaz arka plan/z-index ayarı yapıldı.
 - Panel dışındayken scroll engellenerek sayfanın arkada hareket etmesi önlendi.
+
+## v4.6
+- Hover dropdown kaldırıldı, Rehberler tıklanınca açılan modal/panel menüye dönüştürüldü.
+- Modal açıkken arka sayfa scroll kilitlenir; panel kendi içinde kayar.
+- Dışarı tıklama, X butonu ve Escape ile kapatma eklendi.

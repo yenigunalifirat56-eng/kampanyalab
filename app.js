@@ -860,6 +860,21 @@ document.addEventListener('wheel', event => {
 
 
 
+
+// v4.6 Rehberler modal menü
+const guidesModal=document.getElementById('guidesModal');
+const guidesModalOpen=document.getElementById('guidesModalOpen');
+const guidesModalPanel=guidesModal?.querySelector('.guides-modal-panel');
+let guidesLastFocusedElement=null;
+function openGuidesModal(){if(!guidesModal)return;guidesLastFocusedElement=document.activeElement;guidesModal.classList.add('is-open');guidesModal.setAttribute('aria-hidden','false');document.body.classList.add('guides-modal-open');setTimeout(()=>guidesModal.querySelector('.guides-modal-close')?.focus(),0)}
+function closeGuidesModal(){if(!guidesModal)return;guidesModal.classList.remove('is-open');guidesModal.setAttribute('aria-hidden','true');document.body.classList.remove('guides-modal-open');guidesLastFocusedElement?.focus?.()}
+guidesModalOpen?.addEventListener('click',e=>{e.preventDefault();openGuidesModal()});
+guidesModal?.querySelectorAll('[data-guides-close]').forEach(x=>x.addEventListener('click',closeGuidesModal));
+guidesModal?.querySelectorAll('a').forEach(x=>x.addEventListener('click',closeGuidesModal));
+document.addEventListener('keydown',e=>{if(guidesModal?.classList.contains('is-open')&&e.key==='Escape')closeGuidesModal()});
+document.addEventListener('wheel',e=>{if(!document.body.classList.contains('guides-modal-open'))return;if(guidesModalPanel&&guidesModalPanel.contains(e.target))return;e.preventDefault()},{passive:false});
+
+
 document.querySelectorAll('[data-template]').forEach(card => {
     card.classList.toggle('is-active', card.dataset.template === templateKey);
   });
