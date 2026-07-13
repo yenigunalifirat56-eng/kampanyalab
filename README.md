@@ -219,3 +219,9 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Panel arka planı tamamen opak ve daha yüksek z-index ile ayarlandı.
 - Dropdown menüye zorunlu dikey scroll eklendi.
 - Masaüstü ve mobil için ayrı max-height değerleri düzenlendi.
+
+## v4.5.4
+- Rehberler dropdown açıkken body scroll kilitlendi.
+- Mouse rehber panelindeyken tekerlek artık sayfayı değil paneli kaydıracak şekilde ayarlandı.
+- Panel yüksekliği azaltıldı ve daha net beyaz arka plan/z-index ayarı yapıldı.
+- Panel dışındayken scroll engellenerek sayfanın arkada hareket etmesi önlendi.

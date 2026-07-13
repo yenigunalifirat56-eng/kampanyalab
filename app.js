@@ -789,12 +789,14 @@ function openGuidesDropdown() {
   if (!guidesDropdown || !guidesDropdownTrigger) return;
   clearTimeout(guidesDropdownCloseTimer);
   guidesDropdown.classList.add('is-open');
+  document.body.classList.add('guides-menu-open');
   guidesDropdownTrigger.setAttribute('aria-expanded', 'true');
 }
 
 function closeGuidesDropdown() {
   if (!guidesDropdown || !guidesDropdownTrigger) return;
   guidesDropdown.classList.remove('is-open');
+  document.body.classList.remove('guides-menu-open');
   guidesDropdownTrigger.setAttribute('aria-expanded', 'false');
 }
 
@@ -833,6 +835,29 @@ document.addEventListener('click', event => {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeGuidesDropdown();
 });
+
+// v4.5.4: Mouse rehber panelindeyken sayfa değil panel kaydırılır.
+guidesDropdownMenu?.addEventListener('wheel', event => {
+  if (!guidesDropdown?.classList.contains('is-open')) return;
+
+  const menu = guidesDropdownMenu;
+  const atTop = menu.scrollTop <= 0;
+  const atBottom = Math.ceil(menu.scrollTop + menu.clientHeight) >= menu.scrollHeight;
+
+  if ((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom)) {
+    event.preventDefault();
+    return;
+  }
+
+  event.stopPropagation();
+}, { passive: false });
+
+document.addEventListener('wheel', event => {
+  if (!document.body.classList.contains('guides-menu-open')) return;
+  if (guidesDropdownMenu && guidesDropdownMenu.contains(event.target)) return;
+  event.preventDefault();
+}, { passive: false });
+
 
 
 document.querySelectorAll('[data-template]').forEach(card => {
