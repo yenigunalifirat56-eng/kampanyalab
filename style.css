@@ -3170,3 +3170,200 @@ body.guides-modal-open{overflow:hidden}
 .nav-modal-trigger {
   display: none !important;
 }
+
+
+
+/* v4.7: Kampanya skoru ve reklam metni önerileri */
+.campaign-score {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  align-items: stretch;
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.campaign-score.empty,
+.ad-copy-suggestions.empty {
+  display: block;
+  padding: 16px;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
+.score-ring {
+  --score: 70;
+  min-height: 140px;
+  border-radius: 28px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, #ffffff 0 54%, transparent 55%),
+    conic-gradient(var(--primary) calc(var(--score) * 1%), #dbeafe 0);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+}
+
+.score-ring strong {
+  display: block;
+  font-size: 42px;
+  color: var(--primary-dark);
+  line-height: 1;
+}
+
+.score-ring span {
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.score-content > span,
+.copy-head span,
+.copy-card span {
+  display: block;
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.score-content h4,
+.copy-head h4 {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 22px;
+}
+
+.score-content p,
+.copy-head p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.score-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.score-lists div {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.score-lists strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.score-lists ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.score-lists li + li {
+  margin-top: 6px;
+}
+
+.ad-copy-suggestions {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #ffffff;
+}
+
+.copy-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.copy-head p {
+  max-width: 420px;
+  font-size: 14px;
+}
+
+.copy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.copy-card {
+  padding: 16px;
+  border-radius: 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.copy-card strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.copy-card p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.copy-card em {
+  display: block;
+  font-style: normal;
+  color: var(--primary-dark);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .campaign-score,
+  .score-lists,
+  .copy-grid,
+  .copy-head {
+    grid-template-columns: 1fr;
+  }
+
+  .copy-head {
+    display: block;
+  }
+
+  .score-ring {
+    min-height: 120px;
+  }
+}
+
+
+
+/* v4.7.1: Eski Rehberler modal/dropdown kalıntıları tamamen kapatıldı */
+.guides-modal,
+.guides-modal.is-open,
+.guides-modal-backdrop,
+.guides-modal-panel,
+.nav-modal-trigger,
+.nav-dropdown,
+.nav-dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.guides-modal-open,
+body.guides-menu-open {
+  overflow: auto !important;
+}

@@ -236,3 +236,15 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Üst menüdeki Rehberler bağlantısı tekrar sade normal link haline getirildi.
 - Kullanıcı deneyimini bozan hover, modal, scroll ve z-index sorunları devre dışı bırakıldı.
 - Rehberler sayfası ana kategori merkezi olarak kullanılmaya devam eder.
+
+## v4.7
+- Plan sonucu ekranına Kampanya Skoru eklendi.
+- Skorla birlikte güçlü yönler ve dikkat edilmesi gereken riskler gösterilir.
+- Plan sonucuna reklam metni önerileri eklendi: Instagram/Meta, Google Ads başlıkları, Reels/TikTok fikri ve remarketing mesajı.
+- PDF raporuna kampanya skoru ve kreatif öneri özeti eklendi.
+
+## v4.7.1
+- v4.7 içinde kalan eski Rehberler modal/dropdown kalıntısı tamamen kaldırıldı.
+- Üst menüde Rehberler tekrar sade link olarak çalışır.
+- Eski modalın sayfa altında açık kalması ve kapanmaması sorunu için JS ve CSS failsafe eklendi.
+- v4.7 Kampanya Skoru ve Reklam Metni Önerileri korunur.

@@ -346,6 +346,8 @@ function clearPlanOutput() {
   const table = document.getElementById('allocationTable');
   const stats = document.getElementById('stats');
   const resultOverview = document.getElementById('resultOverview');
+  const campaignScore = document.getElementById('campaignScore');
+  const adCopySuggestions = document.getElementById('adCopySuggestions');
   const channelVisual = document.getElementById('channelVisual');
   const insights = document.getElementById('insights');
   const optimizationCards = document.getElementById('optimizationCards');
@@ -358,6 +360,8 @@ function clearPlanOutput() {
   if (planSummary) planSummary.innerHTML = '<p class="notice">Bütçe, kampanya amacı, sektör, hedef kitle ve süre seçildikten sonra medya planı burada oluşur.</p>';
   if (table) table.innerHTML = '<tr><td colspan="7">Henüz plan oluşturulmadı.</td></tr>';
   if (resultOverview) resultOverview.innerHTML = '<p>Plan oluşturduktan sonra burada kısa strateji özeti, tahmini skorlar ve uygulanacak ilk adımlar görünecek.</p>';
+  if (campaignScore) { campaignScore.classList.add('empty'); campaignScore.innerHTML = '<p>Kampanya skoru plan oluşturulduktan sonra burada görünecek.</p>'; }
+  if (adCopySuggestions) { adCopySuggestions.classList.add('empty'); adCopySuggestions.innerHTML = '<p>Reklam metni önerileri plan oluşturulduktan sonra burada görünecek.</p>'; }
   if (channelVisual) channelVisual.innerHTML = '<p>Kanal dağılımı plan oluşturunca burada görsel olarak listelenecek.</p>';
   if (stats) stats.innerHTML = '';
   if (insights) insights.innerHTML = '';
@@ -408,6 +412,201 @@ function createPlan() {
   renderResults({ budget, goal, sector, audience, duration, agency, rows, totalImpressions, totalClicks, avgCpm, avgCpc, ctr, dailyBudget });
 }
 
+
+function getCampaignScoreData(data) {
+  let score = 62;
+  const strengths = [];
+  const risks = [];
+
+  if (data.budget >= 10000) {
+    score += 8;
+    strengths.push('Bütçe test yapmak için daha yönetilebilir seviyede.');
+  } else {
+    score -= 8;
+    risks.push('Bütçe düşük olduğu için kanal sayısı sınırlı tutulmalı.');
+  }
+
+  if (data.duration >= 15) {
+    score += 8;
+    strengths.push('Kampanya süresi öğrenme ve optimizasyon için uygun.');
+  } else {
+    score -= 7;
+    risks.push('Süre kısa olduğu için ilk günlerde net kreatif ve teklif gerekir.');
+  }
+
+  if (data.rows.length <= 5) {
+    score += 6;
+    strengths.push('Kanal sayısı bütçeyi aşırı bölmeyecek seviyede.');
+  } else {
+    score -= 5;
+    risks.push('Kanal sayısı fazla olursa bütçe küçük parçalara dağılabilir.');
+  }
+
+  if (data.rows.some(row => row.channel.toLowerCase().includes('remarketing'))) {
+    score += 7;
+    strengths.push('Remarketing payı, ilgilenen kullanıcıları tekrar yakalamaya yardımcı olur.');
+  } else if (['sales', 'traffic', 'launch'].includes(data.goal)) {
+    score -= 6;
+    risks.push('Remarketing desteği eklemek dönüşüm hedefinde faydalı olabilir.');
+  }
+
+  if (data.dailyBudget >= 500) {
+    score += 5;
+    strengths.push('Günlük bütçe anlamlı sinyal toplamak için daha uygun.');
+  } else {
+    score -= 4;
+    risks.push('Günlük bütçe düşükse sonuçları yorumlamak daha uzun sürebilir.');
+  }
+
+  if (['restaurant', 'beauty', 'localService'].includes(data.sector) && data.goal === 'local') {
+    score += 5;
+    strengths.push('Yerel işletme hedefi ile sektör seçimi uyumlu.');
+  }
+
+  if (data.goal === 'sales' && data.budget < 15000) {
+    risks.push('Satış hedefi için bütçe düşükse önce küçük test ve remarketing daha mantıklı olabilir.');
+  }
+
+  score = Math.max(35, Math.min(96, Math.round(score)));
+
+  const label = score >= 82 ? 'Güçlü başlangıç planı' : score >= 68 ? 'Dengeli test planı' : 'Dikkatli test edilmeli';
+  const note = score >= 82
+    ? 'Plan genel olarak iyi görünüyor. İlk veriler geldikten sonra kazanan kanal ve kreatiflere bütçe kaydırılmalı.'
+    : score >= 68
+      ? 'Plan başlangıç için kullanılabilir. Ancak ilk hafta kanal ve kreatif performansı yakından takip edilmeli.'
+      : 'Plan çalışabilir ama bütçe, süre veya kanal dağılımı açısından dikkatli ilerlemek gerekir.';
+
+  return {
+    score,
+    label,
+    note,
+    strengths: strengths.slice(0, 3),
+    risks: risks.slice(0, 3)
+  };
+}
+
+function getAdCopySuggestions(data) {
+  const sector = sectorLabels[data.sector] || 'markan';
+  const goal = goalLabels[data.goal] || 'kampanya';
+  const client = data.agency?.clientName || sector;
+  const primaryChannel = data.rows[0]?.channel || 'ana kanal';
+
+  const ctaByGoal = {
+    awareness: 'Markayı keşfet',
+    sales: 'Şimdi incele',
+    traffic: 'Detayları gör',
+    social: 'Hemen takip et',
+    launch: 'Yeni ürünü keşfet',
+    local: 'Yol tarifi al'
+  };
+
+  const hookBySector = {
+    ecommerce: 'Online alışverişte ihtiyacına uygun seçenekleri keşfet.',
+    restaurant: 'Yakınındaki lezzetleri keşfet ve kampanyayı kaçırma.',
+    fashion: 'Yeni sezon ürünlerini ve öne çıkan fırsatları incele.',
+    education: 'Hedeflerine uygun eğitim programını bugün incele.',
+    technology: 'Yeni nesil çözümü keşfet ve detayları gör.',
+    beauty: 'Randevunu planla, kendine iyi bakmaya bugün başla.',
+    event: 'Etkinlik detaylarını incele ve yerini ayırt.',
+    localService: 'Yakınındaki güvenilir hizmet seçeneğini keşfet.'
+  };
+
+  const cta = ctaByGoal[data.goal] || 'Detayları gör';
+  const hook = hookBySector[data.sector] || `${sector} için hazırlanan kampanyayı incele.`;
+
+  return {
+    instagramTitle: `${client} için ${goal.toLowerCase()} kampanyası`,
+    instagramText: `${hook} ${data.duration} günlük kampanya döneminde fırsatları ve detayları görmek için hemen incele.`,
+    googleHeadlines: [
+      `${sector} Reklam Kampanyası`,
+      `${client} Fırsatlarını İncele`,
+      `${cta} | KampanyaLab Planı`
+    ],
+    googleDescription: `${sector} odağında hazırlanan kampanya planını incele. Bütçe, hedef ve kanal dağılımına göre ilk adımı at.`,
+    cta,
+    videoIdea: `${primaryChannel} için 10-15 saniyelik kısa video: ilk 3 saniyede problemi göster, ortada çözümü anlat, son karede “${cta}” çağrısı kullan.`,
+    remarketingText: `Daha önce ilgilenen kullanıcılara kısa hatırlatma: “${client} kampanyasını incelemeyi unutma. Detaylar için tekrar göz at.”`
+  };
+}
+
+function renderCampaignScore(data) {
+  const target = document.getElementById('campaignScore');
+  if (!target) return;
+  const scoreData = getCampaignScoreData(data);
+
+  const strengths = scoreData.strengths.length
+    ? scoreData.strengths.map(item => `<li>${item}</li>`).join('')
+    : '<li>Plan başlangıç için temel medya dağılımı sunuyor.</li>';
+
+  const risks = scoreData.risks.length
+    ? scoreData.risks.map(item => `<li>${item}</li>`).join('')
+    : '<li>İlk veriler geldikten sonra düşük performanslı kanallar azaltılmalı.</li>';
+
+  target.classList.remove('empty');
+  target.innerHTML = `
+    <div class="score-ring" style="--score:${scoreData.score}">
+      <strong>${scoreData.score}</strong>
+      <span>/100</span>
+    </div>
+    <div class="score-content">
+      <span>Kampanya Skoru</span>
+      <h4>${scoreData.label}</h4>
+      <p>${scoreData.note}</p>
+      <div class="score-lists">
+        <div>
+          <strong>Güçlü yönler</strong>
+          <ul>${strengths}</ul>
+        </div>
+        <div>
+          <strong>Dikkat edilmesi gerekenler</strong>
+          <ul>${risks}</ul>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAdCopySuggestions(data) {
+  const target = document.getElementById('adCopySuggestions');
+  if (!target) return;
+  const copy = getAdCopySuggestions(data);
+
+  target.classList.remove('empty');
+  target.innerHTML = `
+    <div class="copy-head">
+      <div>
+        <span>Reklam metni önerileri</span>
+        <h4>Başlangıç kreatif taslakları</h4>
+      </div>
+      <p>Bu metinler kesin sonuç vaadi değildir; ilk reklam taslağı ve kreatif fikir üretimi için kullanılabilir.</p>
+    </div>
+    <div class="copy-grid">
+      <div class="copy-card">
+        <span>Instagram / Meta</span>
+        <strong>${copy.instagramTitle}</strong>
+        <p>${copy.instagramText}</p>
+        <em>CTA: ${copy.cta}</em>
+      </div>
+      <div class="copy-card">
+        <span>Google Ads başlıkları</span>
+        <strong>${copy.googleHeadlines[0]}</strong>
+        <p>${copy.googleHeadlines[1]}<br>${copy.googleHeadlines[2]}</p>
+        <em>${copy.googleDescription}</em>
+      </div>
+      <div class="copy-card">
+        <span>Reels / TikTok fikri</span>
+        <strong>Kısa video akışı</strong>
+        <p>${copy.videoIdea}</p>
+      </div>
+      <div class="copy-card">
+        <span>Remarketing</span>
+        <strong>Hatırlatma mesajı</strong>
+        <p>${copy.remarketingText}</p>
+      </div>
+    </div>
+  `;
+}
+
 function renderResults(data) {
   lastPlanData = data;
   const clientLabel = data.agency?.clientName ? ` · ${data.agency.clientName}` : '';
@@ -415,6 +614,8 @@ function renderResults(data) {
 
   renderPlanSummary(data);
   renderResultOverview(data);
+  renderCampaignScore(data);
+  renderAdCopySuggestions(data);
   renderChannelVisual(data);
   renderAgencyPreview(data);
 
@@ -779,100 +980,19 @@ function applyTemplate(templateKey) {
 
 
 
-// v4.5.2 Rehberler dropdown: hover + click controlled, prevents early close.
-const guidesDropdown = document.querySelector('.nav-dropdown');
-const guidesDropdownTrigger = document.getElementById('guidesDropdownTrigger');
-const guidesDropdownMenu = document.getElementById('guidesDropdownMenu');
-let guidesDropdownCloseTimer;
-
-function openGuidesDropdown() {
-  if (!guidesDropdown || !guidesDropdownTrigger) return;
-  clearTimeout(guidesDropdownCloseTimer);
-  guidesDropdown.classList.add('is-open');
-  document.body.classList.add('guides-menu-open');
-  guidesDropdownTrigger.setAttribute('aria-expanded', 'true');
-}
-
-function closeGuidesDropdown() {
-  if (!guidesDropdown || !guidesDropdownTrigger) return;
-  guidesDropdown.classList.remove('is-open');
-  document.body.classList.remove('guides-menu-open');
-  guidesDropdownTrigger.setAttribute('aria-expanded', 'false');
-}
-
-function scheduleCloseGuidesDropdown() {
-  clearTimeout(guidesDropdownCloseTimer);
-  guidesDropdownCloseTimer = setTimeout(() => {
-    if (guidesDropdown && !guidesDropdown.matches(':hover') && !guidesDropdown.contains(document.activeElement)) {
-      closeGuidesDropdown();
-    }
-  }, 450);
-}
-
-guidesDropdownTrigger?.addEventListener('click', event => {
-  event.preventDefault();
-  if (guidesDropdown?.classList.contains('is-open')) {
-    closeGuidesDropdown();
-  } else {
-    openGuidesDropdown();
-  }
-});
-
-guidesDropdown?.addEventListener('mouseenter', openGuidesDropdown);
-guidesDropdown?.addEventListener('mouseleave', scheduleCloseGuidesDropdown);
-guidesDropdownMenu?.addEventListener('mouseenter', openGuidesDropdown);
-guidesDropdownMenu?.addEventListener('mouseleave', scheduleCloseGuidesDropdown);
-
-guidesDropdownMenu?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', closeGuidesDropdown);
-});
-
-document.addEventListener('click', event => {
-  if (!guidesDropdown || !guidesDropdown.classList.contains('is-open')) return;
-  if (!guidesDropdown.contains(event.target)) closeGuidesDropdown();
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeGuidesDropdown();
-});
-
-// v4.5.4: Mouse rehber panelindeyken sayfa değil panel kaydırılır.
-guidesDropdownMenu?.addEventListener('wheel', event => {
-  if (!guidesDropdown?.classList.contains('is-open')) return;
-
-  const menu = guidesDropdownMenu;
-  const atTop = menu.scrollTop <= 0;
-  const atBottom = Math.ceil(menu.scrollTop + menu.clientHeight) >= menu.scrollHeight;
-
-  if ((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom)) {
-    event.preventDefault();
-    return;
-  }
-
-  event.stopPropagation();
-}, { passive: false });
-
-document.addEventListener('wheel', event => {
-  if (!document.body.classList.contains('guides-menu-open')) return;
-  if (guidesDropdownMenu && guidesDropdownMenu.contains(event.target)) return;
-  event.preventDefault();
-}, { passive: false });
 
 
 
 
-// v4.6 Rehberler modal menü
-const guidesModal=document.getElementById('guidesModal');
-const guidesModalOpen=document.getElementById('guidesModalOpen');
-const guidesModalPanel=guidesModal?.querySelector('.guides-modal-panel');
-let guidesLastFocusedElement=null;
-function openGuidesModal(){if(!guidesModal)return;guidesLastFocusedElement=document.activeElement;guidesModal.classList.add('is-open');guidesModal.setAttribute('aria-hidden','false');document.body.classList.add('guides-modal-open');setTimeout(()=>guidesModal.querySelector('.guides-modal-close')?.focus(),0)}
-function closeGuidesModal(){if(!guidesModal)return;guidesModal.classList.remove('is-open');guidesModal.setAttribute('aria-hidden','true');document.body.classList.remove('guides-modal-open');guidesLastFocusedElement?.focus?.()}
-guidesModalOpen?.addEventListener('click',e=>{e.preventDefault();openGuidesModal()});
-guidesModal?.querySelectorAll('[data-guides-close]').forEach(x=>x.addEventListener('click',closeGuidesModal));
-guidesModal?.querySelectorAll('a').forEach(x=>x.addEventListener('click',closeGuidesModal));
-document.addEventListener('keydown',e=>{if(guidesModal?.classList.contains('is-open')&&e.key==='Escape')closeGuidesModal()});
-document.addEventListener('wheel',e=>{if(!document.body.classList.contains('guides-modal-open'))return;if(guidesModalPanel&&guidesModalPanel.contains(e.target))return;e.preventDefault()},{passive:false});
+
+
+
+
+
+// v4.7.1 Rehberler kalıntı temizliği: eski modal/dropdown sistemi devre dışı.
+document.getElementById('guidesModal')?.remove();
+document.body.classList.remove('guides-modal-open', 'guides-menu-open');
+document.querySelectorAll('.nav-modal-trigger, .nav-dropdown, .nav-dropdown-menu').forEach(item => item.remove());
 
 
 document.querySelectorAll('[data-template]').forEach(card => {
