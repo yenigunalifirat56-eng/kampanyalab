@@ -212,3 +212,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Rehberler butonuna tıklanınca menü sabit açık kalır; dışarı tıklayınca veya Escape ile kapanır.
 - Mouse menü üzerindeyken erken kapanma sorunu daha sağlam şekilde düzeltildi.
 - Menü içi dikey kaydırma korunur.
+
+## v4.5.3
+- Rehberler dropdown paneli fixed konuma alındı.
+- Açılan menünün altındaki ana sayfa yazılarıyla karışması/üst üste binmesi azaltıldı.
+- Panel arka planı tamamen opak ve daha yüksek z-index ile ayarlandı.
+- Dropdown menüye zorunlu dikey scroll eklendi.
+- Masaüstü ve mobil için ayrı max-height değerleri düzenlendi.
