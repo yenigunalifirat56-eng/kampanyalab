@@ -3367,3 +3367,25 @@ body.guides-modal-open,
 body.guides-menu-open {
   overflow: auto !important;
 }
+
+
+
+/* v4.7.2: Rehberler modal acil temizlik */
+.guides-modal,
+.guides-modal-panel,
+.guides-modal-backdrop,
+.guides-modal-head,
+.guides-modal-grid,
+.nav-modal-trigger,
+.nav-dropdown,
+.nav-dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.guides-modal-open,
+body.guides-menu-open {
+  overflow: auto !important;
+}

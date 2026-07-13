@@ -32,7 +32,7 @@
     gtag('config', 'G-G4HHWRLYE2');
   </script>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4.7.2" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js"></script>
@@ -49,8 +49,48 @@
     "description": "Reklam bütçesi hesaplama, medya planlama ve reklam rehberleri merkezi."
   }
   </script>
+
+  <style id="remove-guides-modal-failsafe">
+    .guides-modal,
+    .guides-modal-panel,
+    .guides-modal-backdrop,
+    .guides-modal-head,
+    .guides-modal-grid,
+    .nav-modal-trigger,
+    .nav-dropdown,
+    .nav-dropdown-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    body.guides-modal-open,
+    body.guides-menu-open {
+      overflow: auto !important;
+    }
+  </style>
+
 </head>
 <body>
+
+  <script id="remove-guides-modal-script">
+    (function () {
+      function removeOldGuidesPanels() {
+        document.body.classList.remove('guides-modal-open', 'guides-menu-open');
+        document.querySelectorAll('.guides-modal, .guides-modal-panel, .guides-modal-backdrop, .guides-modal-head, .guides-modal-grid, .nav-modal-trigger, .nav-dropdown, .nav-dropdown-menu').forEach(function (el) {
+          el.remove();
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', removeOldGuidesPanels);
+      } else {
+        removeOldGuidesPanels();
+      }
+      setTimeout(removeOldGuidesPanels, 300);
+      setTimeout(removeOldGuidesPanels, 1000);
+    })();
+  </script>
+
   <a class="skip-link" href="#planner">Plan oluşturucuya geç</a>
   <header class="hero">
     <nav class="navbar">
@@ -741,6 +781,6 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=4.7.2"></script>
 </body>
 </html>

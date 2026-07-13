@@ -1,3 +1,10 @@
+
+// v4.7.2 Rehberler modal acil temizlik
+(function removeOldGuidesPanels() {
+  document.body?.classList?.remove('guides-modal-open', 'guides-menu-open');
+  document.querySelectorAll?.('.guides-modal, .guides-modal-panel, .guides-modal-backdrop, .guides-modal-head, .guides-modal-grid, .nav-modal-trigger, .nav-dropdown, .nav-dropdown-menu').forEach(item => item.remove());
+})();
+
 // Sayfa yenilendiğinde tarayıcının eski kaydırma konumunu hatırlamasını engeller.
 // Kullanıcı sayfanın neresinde olursa olsun yenilemede en üstten başlar.
 if ('scrollRestoration' in window.history) {

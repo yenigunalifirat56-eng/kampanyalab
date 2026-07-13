@@ -248,3 +248,10 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Üst menüde Rehberler tekrar sade link olarak çalışır.
 - Eski modalın sayfa altında açık kalması ve kapanmaması sorunu için JS ve CSS failsafe eklendi.
 - v4.7 Kampanya Skoru ve Reklam Metni Önerileri korunur.
+
+## v4.7.2
+- Rehberler Merkezi modal/panel kalıntısı için acil temizlik yapıldı.
+- index.html içinden eski modal blokları tamamen çıkarıldı.
+- style.css ve app.js dosyalarına cache kırıcı sürüm parametresi eklendi.
+- Inline CSS ve inline JS failsafe eklendi; eski panel görünse bile otomatik gizlenip silinir.
+- v4.7 Kampanya Skoru ve Reklam Metni Önerileri korunur.
