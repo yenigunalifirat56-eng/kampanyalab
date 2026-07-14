@@ -4,25 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KampanyaLab | Reklam Bütçesi Hesaplama ve Medya Planlama</title>
-  <meta name="description" content="KampanyaLab ile reklam bütçeni hesapla, medya planını oluştur, PDF rapor al ve reklam rehberleriyle temel kavramları öğren." />
-  <meta name="keywords" content="reklam bütçesi, medya planlama, kampanya planlama, CPM hesaplama, CPC hesaplama, ROI hesaplama, dijital reklam bütçesi" />
+  <meta name="description" content="KampanyaLab ile reklam bütçeni kanallara dağıt, kampanya skorunu gör, reklam metni önerileri al ve medya planını PDF olarak indir." />
+  <meta name="keywords" content="reklam bütçesi, medya planlama, kampanya planlama, reklam bütçesi hesaplama, medya planı PDF" />
   <meta name="author" content="KampanyaLab" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.kampanyalab.com.tr/" />
-
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="tr_TR" />
   <meta property="og:site_name" content="KampanyaLab" />
-  <meta property="og:title" content="KampanyaLab | Reklam Bütçesi Hesaplama ve Medya Planlama" />
-  <meta property="og:description" content="Reklam bütçeni hesapla, medya planını oluştur ve rehberlerle reklam metriklerini öğren." />
+  <meta property="og:title" content="KampanyaLab | Reklam Bütçesi ve Medya Planlama" />
+  <meta property="og:description" content="Bütçeni, hedefini ve sektörünü seç; kanal dağılımı, kampanya skoru ve PDF medya planı oluştur." />
   <meta property="og:url" content="https://www.kampanyalab.com.tr/" />
-
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="KampanyaLab | Reklam Bütçesi Hesaplama ve Medya Planlama" />
-  <meta name="twitter:description" content="Reklam bütçesi hesaplama, medya planlama ve reklam rehberleri merkezi." />
-
   <meta name="theme-color" content="#102c78" />
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4HHWRLYE2"></script>
   <script>
@@ -31,12 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-G4HHWRLYE2');
   </script>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link rel="stylesheet" href="style.css?v=4.7.2" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js"></script>
-
+  <link rel="stylesheet" href="style.css?v=5.0" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -46,125 +35,82 @@
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
     "inLanguage": "tr-TR",
-    "description": "Reklam bütçesi hesaplama, medya planlama ve reklam rehberleri merkezi."
+    "isAccessibleForFree": true,
+    "description": "Reklam bütçesi hesaplama, medya planı oluşturma ve indirilebilir PDF rapor aracı."
   }
   </script>
-
-  <style id="remove-guides-modal-failsafe">
-    .guides-modal,
-    .guides-modal-panel,
-    .guides-modal-backdrop,
-    .guides-modal-head,
-    .guides-modal-grid,
-    .nav-modal-trigger,
-    .nav-dropdown,
-    .nav-dropdown-menu {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    body.guides-modal-open,
-    body.guides-menu-open {
-      overflow: auto !important;
-    }
-  </style>
-
 </head>
-<body>
+<body class="home-v5">
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <header class="hero hero-v5">
 
-  <script id="remove-guides-modal-script">
-    (function () {
-      function removeOldGuidesPanels() {
-        document.body.classList.remove('guides-modal-open', 'guides-menu-open');
-        document.querySelectorAll('.guides-modal, .guides-modal-panel, .guides-modal-backdrop, .guides-modal-head, .guides-modal-grid, .nav-modal-trigger, .nav-dropdown, .nav-dropdown-menu').forEach(function (el) {
-          el.remove();
-        });
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', removeOldGuidesPanels);
-      } else {
-        removeOldGuidesPanels();
-      }
-      setTimeout(removeOldGuidesPanels, 300);
-      setTimeout(removeOldGuidesPanels, 1000);
-    })();
-  </script>
-
-  <a class="skip-link" href="#planner">Plan oluşturucuya geç</a>
-  <header class="hero">
-    <nav class="navbar">
-      <a href="#" class="logo"><span>Kampanya</span>Lab</a>
+    <nav class="navbar" aria-label="Ana menü">
+      <a href="index.html" class="logo"><span>Kampanya</span>Lab</a>
       <button class="nav-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="primaryNavigation">
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="primaryNavigation">
-        <a href="#planner">Plan Oluştur</a>
-        <a href="#templates">Şablonlar</a>
+        <a href="plan-olustur.html">Plan Oluştur</a>
+        <a href="plan-olustur.html#templates">Şablonlar</a>
         <a href="rehberler.html">Rehberler</a>
-        <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
-        <a href="#who-uses">Kimler Kullanır?</a>
-        <a href="#product">Özellikler</a>
-        <a href="#calculators">Hesaplayıcılar</a>
-        <a href="#how">Nasıl Çalışır?</a>
-        <a href="#trust">Güven</a>
-        <a href="#feedback">Geri Bildirim</a>
         <a href="hakkinda.html">Hakkında</a>
-        <a href="iletisim.html">İletişim</a>
-        <a href="#planner">PDF Rapor</a>
+        <a class="nav-cta" href="plan-olustur.html" data-track="nav_to_planner">Ücretsiz Plan Oluştur</a>
       </div>
     </nav>
-
     <section class="hero-content">
-      <div>
-        <p class="badge">Türkiye odaklı medya bütçesi simülatörü</p>
-        <h1>Reklam bütçeni hesapla, medya planını oluştur.</h1>
-        <p class="hero-text">
-          Bütçeni, hedefini ve sektörünü seç. KampanyaLab sana kanal dağılımı, tahmini performans, PDF rapor ve başlangıç için anlaşılır reklam rehberleri sunsun.
-        </p>
+      <div class="hero-copy">
+        <p class="badge">Ücretsiz · Kayıt gerektirmez</p>
+        <h1>Reklam bütçeni birkaç dakikada plana dönüştür.</h1>
+        <p class="hero-text">Bütçeni, hedefini ve sektörünü seç. KampanyaLab sana kanal dağılımı, kampanya skoru, reklam metni önerileri ve indirilebilir PDF rapor oluştursun.</p>
         <div class="hero-actions">
-          <a href="#planner" class="btn primary">Medya planı oluştur</a>
-          <a href="rehberler.html" class="btn secondary">Rehberleri incele</a>
+          <a href="plan-olustur.html" class="btn primary" data-track="hero_to_planner">Ücretsiz medya planı oluştur</a>
+          <a href="#ornek-cikti" class="btn secondary">Örnek raporu gör</a>
+        </div>
+        <div class="hero-trust-line" aria-label="Kısa güven bilgileri">
+          <span>✓ Kredi kartı gerekmez</span>
+          <span>✓ Veriler tarayıcıda hesaplanır</span>
+          <span>✓ PDF ücretsiz</span>
         </div>
       </div>
-
-      <div class="hero-card">
-        <p class="mini-title">Temsili demo çıktı</p>
-        <h3>Satış odaklı örnek medya karması</h3>
-        <p class="hero-card-note">Bu yüzdeler örnek bir satış kampanyası dağılımıdır. Gerçek plan; bütçe, hedef, sektör ve süre seçimine göre hesaplayıcıda oluşturulur.</p>
+      <div class="hero-card hero-report-card" aria-label="Örnek medya planı özeti">
+        <div class="report-card-head">
+          <div>
+            <p class="mini-title">Örnek medya planı</p>
+            <h3>20.000 TL satış kampanyası</h3>
+          </div>
+          <span class="report-score">82/100</span>
+        </div>
         <div class="sample-bars">
           <div><span>Google Search</span><strong>%30</strong></div>
-          <div><span>Instagram</span><strong>%25</strong></div>
+          <div><span>Instagram Ads</span><strong>%25</strong></div>
           <div><span>Remarketing</span><strong>%20</strong></div>
-          <div><span>TikTok</span><strong>%15</strong></div>
-          <div><span>YouTube</span><strong>%10</strong></div>
+          <div><span>TikTok Ads</span><strong>%15</strong></div>
+          <div><span>YouTube Ads</span><strong>%10</strong></div>
         </div>
+        <p class="hero-card-note">Bu bir ön izlemedir. Gerçek sonuç bütçe, hedef, sektör ve süre seçimine göre hesaplanır.</p>
       </div>
     </section>
   </header>
 
+  <main id="main">
+    <section class="section trust-strip-section home-trust" aria-label="KampanyaLab güven bilgileri">
+      <div class="trust-strip panel">
+        <div><strong>Kayıt gerekmez</strong><span>Formu doldur, sonucu anında gör.</span></div>
+        <div><strong>Ücretsiz PDF</strong><span>Planını indir, yazdır veya müşterinle paylaş.</span></div>
+        <div><strong>Şeffaf simülasyon</strong><span>Tahminleri başlangıç planı olarak değerlendir.</span></div>
+      </div>
+    </section>
+
     <section class="section quick-flow" id="nasil-calisir">
       <div class="section-heading">
         <p class="badge">Nasıl çalışır?</p>
-        <h2>3 adımda reklam bütçeni plana dönüştür.</h2>
-        <p>KampanyaLab, bütçeni ve hedefini alır; sana tahmini kanal dağılımı, kampanya skoru, reklam metni önerileri ve PDF rapor üretir.</p>
+        <h2>3 adımda kampanya planın hazır.</h2>
+        <p>Uzun formlar veya karmaşık tablolar olmadan temel kampanya bilgilerini gir ve uygulanabilir bir başlangıç planı al.</p>
       </div>
       <div class="flow-grid">
-        <div class="flow-card panel">
-          <span>01</span>
-          <h3>Bütçeni gir</h3>
-          <p>Toplam reklam bütçeni ve kampanya süreni yaz. Sistem günlük bütçeyi otomatik hesaplar.</p>
-        </div>
-        <div class="flow-card panel">
-          <span>02</span>
-          <h3>Hedefini seç</h3>
-          <p>Satış, trafik, bilinirlik, sosyal medya büyüme veya yerel tanıtım hedefini belirle.</p>
-        </div>
-        <div class="flow-card panel">
-          <span>03</span>
-          <h3>Planını indir</h3>
-          <p>Medya karmasını, kampanya skorunu, reklam metni önerilerini ve PDF raporunu al.</p>
-        </div>
+        <article class="flow-card panel"><span>01</span><h3>Bütçeni gir</h3><p>Toplam bütçeni ve kampanya süresini seç. Günlük bütçe otomatik hesaplansın.</p></article>
+        <article class="flow-card panel"><span>02</span><h3>Hedefini belirle</h3><p>Satış, trafik, bilinirlik, sosyal büyüme veya yerel tanıtım hedefini seç.</p></article>
+        <article class="flow-card panel"><span>03</span><h3>Planını indir</h3><p>Kanal dağılımı, kampanya skoru, metin önerileri ve PDF raporunu al.</p></article>
       </div>
     </section>
 
@@ -172,671 +118,91 @@
       <div class="section-heading">
         <p class="badge">Örnek çıktı</p>
         <h2>Plan oluşturmadan önce ne alacağını gör.</h2>
-        <p>Aşağıdaki örnek, KampanyaLab’ın üretebildiği medya planı özetinin sadeleştirilmiş bir ön izlemesidir.</p>
+        <p>KampanyaLab yalnızca bütçe yüzdesi vermez; karar vermeyi kolaylaştıran bir kampanya özeti üretir.</p>
       </div>
       <div class="sample-output-grid">
-        <div class="panel sample-brief">
+        <article class="panel sample-brief">
           <span>Örnek senaryo</span>
           <h3>20.000 TL · Kafe / restoran · 15 gün</h3>
-          <p>Yakın çevrede bilinirlik ve rezervasyon/randevu talebi oluşturmak için yerel medya planı.</p>
-          <div class="sample-score">
-            <strong>78/100</strong>
-            <span>Kampanya Skoru</span>
-          </div>
-        </div>
-        <div class="panel sample-mix">
+          <p>Yakın çevrede bilinirlik ve rezervasyon talebi oluşturmak için yerel medya planı.</p>
+          <div class="sample-score"><strong>78/100</strong><span>Kampanya Skoru</span></div>
+        </article>
+        <article class="panel sample-mix">
           <div class="sample-row"><span>Instagram Ads</span><strong>%35</strong><div><i style="width:35%"></i></div></div>
           <div class="sample-row"><span>Google Search</span><strong>%25</strong><div><i style="width:25%"></i></div></div>
           <div class="sample-row"><span>Remarketing</span><strong>%15</strong><div><i style="width:15%"></i></div></div>
           <div class="sample-row"><span>TikTok Ads</span><strong>%15</strong><div><i style="width:15%"></i></div></div>
           <div class="sample-row"><span>YouTube Ads</span><strong>%10</strong><div><i style="width:10%"></i></div></div>
-        </div>
-        <div class="panel sample-deliverables">
+        </article>
+        <article class="panel sample-deliverables">
           <span>Rapor içinde</span>
           <ul>
             <li>Kanal dağılımı ve tahmini performans</li>
-            <li>Güçlü yönler ve riskler</li>
-            <li>Instagram / Google Ads metin önerileri</li>
-            <li>PDF olarak indirilebilir medya planı</li>
+            <li>Güçlü yönler, riskler ve ilk adımlar</li>
+            <li>Google / Instagram reklam metni önerileri</li>
+            <li>İndirilebilir ve yazdırılabilir PDF rapor</li>
           </ul>
-          <a class="btn primary" href="#planner" data-track="sample_to_planner">Kendi planımı oluştur</a>
-        </div>
+          <a class="btn primary" href="plan-olustur.html" data-track="sample_to_planner">Kendi planımı oluştur</a>
+        </article>
       </div>
     </section>
 
-    <section class="section trust-strip-section" id="guven">
-      <div class="trust-strip panel">
-        <div>
-          <strong>Kayıt gerekmez</strong>
-          <span>Formu doldurup sonucu anında görebilirsin.</span>
-        </div>
-        <div>
-          <strong>Kredi kartı gerekmez</strong>
-          <span>Plan oluşturucu ve PDF rapor ücretsizdir.</span>
-        </div>
-        <div>
-          <strong>Veriler tarayıcıda hesaplanır</strong>
-          <span>Sonuçlar tahmini başlangıç medya planıdır.</span>
-        </div>
-      </div>
-    </section>
-
-
-    
-
-  </div>
-
-
-  <section class="home-proof" aria-label="KampanyaLab öne çıkan özellikler">
-    <div class="home-proof-grid">
-      <article>
-        <strong>Ücretsiz</strong>
-        <span>Kayıt olmadan kullan</span>
-      </article>
-      <article>
-        <strong>PDF rapor</strong>
-        <span>Planını indir veya yazdır</span>
-      </article>
-      <article>
-        <strong>Rehber merkezi</strong>
-        <span>Platform, sektör ve metrik içerikleri</span>
-      </article>
-      <article>
-        <strong>TL odaklı</strong>
-        <span>Türkiye için anlaşılır medya planı</span>
-      </article>
-    </div>
-  </section>
-
-
-  <section class="growth-panel" id="growth">
-    <div class="growth-inner">
-      <div>
-        <p class="badge">Beta geri bildirim</p>
-        <h2>Aracı denedikten sonra 1 dakikalık geri bildirim bırak.</h2>
-        <p>KampanyaLab şu anda beta aşamasında. Plan oluşturma, sonuç ekranı ve PDF rapor hakkında gelen geri bildirimlere göre aracı geliştirmeye devam ediyoruz.</p>
-      </div>
-      <div class="growth-actions">
-        <a class="btn primary" href="#planner">Plan oluştur</a>
-        <a class="btn secondary" href="https://forms.gle/RLdQhQzZhSPafuRt6" target="_blank" rel="noopener">Geri bildirim gönder</a>
-      </div>
-    </div>
-  </section>
-
-  <main id="main">
-    <section class="section intro" id="how">
+    <section class="section home-popular-templates" id="templates">
       <div class="section-heading">
-        <p class="badge">Beta v2.1</p>
-        <h2>KampanyaLab beta sürecinde gelişmeye devam ediyor.</h2>
+        <p class="badge">Hızlı başlangıç</p>
+        <h2>Popüler kampanya şablonları</h2>
+        <p>Bir senaryo seç; plan oluşturucu örnek değerlerle açılsın. Bütçeyi ve diğer seçimleri sonra değiştirebilirsin.</p>
       </div>
-      <div class="features">
-        <article>
-          <h3>Akıllı bütçe dağılımı</h3>
-          <p>Bütçeyi kampanya amacı, sektör, hedef kitle ve bütçe seviyesine göre dengeli medya kanallarına böler.</p>
-        </article>
-        <article>
-          <h3>Tahmini performans</h3>
-          <p>CPM, CPC, CTR, gösterim, tıklama ve kanal önceliklerini tahmini olarak simüle eder.</p>
-        </article>
-        <article>
-          <h3>Şablonlu başlangıç</h3>
-          <p>Hazır kampanya senaryolarından birini seçerek formu otomatik doldurur, ardından indirilebilir PDF raporu oluşturur.</p>
-        </article>
-        <article>
-          <h3>AI kampanya fikri</h3>
-          <p>Serbest metinle plan üretme özelliği yakında aktif olacak. Şimdilik medya planı motoru ve hazır şablonları kullanabilirsin.</p>
-        </article>
+      <div class="template-grid compact-template-grid">
+        <a class="template-card" href="plan-olustur.html?template=ecommerceSales#planner">
+          <span>E-ticaret</span><strong>Satış kampanyası</strong><p>50.000 TL ve 30 günlük satış odaklı medya karması.</p><b>Şablonu kullan →</b>
+        </a>
+        <a class="template-card" href="plan-olustur.html?template=localCafe#planner">
+          <span>Kafe / restoran</span><strong>Yerel tanıtım</strong><p>20.000 TL ve 15 günlük yakın çevre odaklı plan.</p><b>Şablonu kullan →</b>
+        </a>
+        <a class="template-card" href="plan-olustur.html?template=socialGrowth#planner">
+          <span>Sosyal medya</span><strong>Instagram / TikTok büyüme</strong><p>15.000 TL ve 30 günlük etkileşim odaklı başlangıç.</p><b>Şablonu kullan →</b>
+        </a>
       </div>
+      <div class="home-guide-actions"><a class="btn secondary bordered" href="plan-olustur.html#templates">Tüm şablonları gör</a></div>
     </section>
 
-
-
-    <section class="section product-section" id="product">
-      <div class="product-grid">
-        <div class="product-copy">
-          <p class="badge">Ürün özeti</p>
-          <h2>Kampanya fikrinden indirilebilir medya planına kadar tek ekranda.</h2>
-          <p>
-            KampanyaLab; küçük işletmeler, öğrenciler ve dijital pazarlama ile ilgilenenler için
-            bütçeyi kanallara ayıran, tahmini sonuçları gösteren ve PDF rapor üreten pratik bir medya planlama aracıdır.
-          </p>
-          <div class="product-actions">
-            <a href="#planner" class="btn primary">Hemen plan oluştur</a>
-            <a href="#templates" class="btn secondary bordered">Şablon seç</a>
-          </div>
-        </div>
-        <div class="product-points">
-          <article>
-            <span>01</span>
-            <strong>Bütçeyi gir</strong>
-            <p>Kampanya bütçeni, hedefini, sektörünü ve hedef kitle yaşını seç.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <strong>Medya karmasını gör</strong>
-            <p>Google, Instagram, TikTok, YouTube ve remarketing gibi kanallar için önerilen dağılımı incele.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <strong>Raporu indir</strong>
-            <p>Strateji, tahmini performans ve haftalık planı PDF olarak indir veya yazdır.</p>
-          </article>
-        </div>
-      
-          <a class="knowledge-card" href="rehberler.html#guncel-arama-konulari">
-            <span>Yeni</span>
-            <h3>Google’da sık aranan konular</h3>
-            <p>Günlük bütçe, reklam maliyeti, remarketing ve test bütçesi rehberleri.</p>
-          </a>
-        </div>
-    </section>
-
-    <section class="section audience-section" id="who-uses">
-      <div class="section-heading">
-        <p class="badge">Kimler kullanabilir?</p>
-        <h2>Öğrenciden işletmeye herkes için anlaşılır medya planlama.</h2>
-        <p>KampanyaLab, teknik reklam terimlerini sadeleştirip kullanılabilir bir ilk medya planı üretir.</p>
-      </div>
-      <div class="audience-grid">
-        <article class="audience-card panel">
-          <div class="audience-icon">🎓</div>
-          <h3>Öğrenciler</h3>
-          <p>Medya planlama, reklam bütçesi ve kampanya raporu konularını örnek çıktılarla daha anlaşılır hale getirir.</p>
-        </article>
-        <article class="audience-card panel">
-          <div class="audience-icon">🏪</div>
-          <h3>Küçük işletmeler</h3>
-          <p>Kafe, kuaför, eğitim kurumu veya e-ticaret gibi işletmeler için başlangıç bütçe dağılımı önerir.</p>
-        </article>
-        <article class="audience-card panel">
-          <div class="audience-icon">📊</div>
-          <h3>Ajans ve freelancerlar</h3>
-          <p>Müşteri görüşmesi öncesinde hızlı medya karması, tahmini performans ve PDF taslak rapor üretir.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section value-section">
-      <div class="value-card panel">
+    <section class="section ai-teaser-section" aria-label="Yakında gelecek özellik">
+      <div class="panel ai-teaser">
+        <div class="ai-teaser-icon">✦</div>
         <div>
-          <p class="badge">Neden farklı?</p>
-          <h2>TL bazlı, Türkiye odaklı ve sade.</h2>
-          <p>
-            KampanyaLab kesin sonuç vadetmez; bunun yerine kampanyaya başlamadan önce fikir veren,
-            bütçe seviyesine göre kanal sayısını ayarlayan ve raporlanabilir bir medya planı taslağı oluşturur.
-          </p>
+          <p class="mini-title">Yakında</p>
+          <h2>AI Kampanya Planlayıcı</h2>
+          <p>Briefini yazarak otomatik strateji taslağı oluşturabileceğin AI destekli alan hazırlanıyor. Mevcut medya planı motoru ve PDF sistemi çalışmaya devam ediyor.</p>
         </div>
-        <div class="value-list">
-          <p><strong>✓</strong> Düşük bütçede fazla kanala bölünmeyi azaltır.</p>
-          <p><strong>✓</strong> Şablonlarla hızlı başlangıç sağlar.</p>
-          <p><strong>✓</strong> Sonuçları PDF ve yazdırma çıktısına dönüştürür.</p>
-          <p><strong>✓</strong> Verileri bu v1.7 MVP sürümünde sunucuya göndermez.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="section templates" id="templates">
-      <div class="section-heading">
-        <p class="badge">Hazır senaryolar</p>
-        <h2>Kampanya şablonları</h2>
-        <p>Başlangıç değerlerini tek tıkla doldur, sonra bütçe ve süreyi istediğin gibi değiştir.</p>
-      </div>
-
-      <div class="template-grid">
-        <button class="template-card" type="button" data-template="ecommerceSales">
-          <span>E-ticaret</span>
-          <strong>Satış kampanyası</strong>
-          <p>50.000 TL, 30 gün, 18-24 yaş hedef kitle için satış odaklı dijital medya karması.</p>
-        </button>
-        <button class="template-card" type="button" data-template="localCafe">
-          <span>Kafe / restoran</span>
-          <strong>Yerel tanıtım</strong>
-          <p>20.000 TL, 15 gün, yakın çevre ve sosyal medya görünürlüğü odaklı plan.</p>
-        </button>
-        <button class="template-card" type="button" data-template="productLaunch">
-          <span>Lansman</span>
-          <strong>Yeni ürün duyurusu</strong>
-          <p>75.000 TL, 30 gün, video, sosyal medya ve influencer destekli lansman akışı.</p>
-        </button>
-        <button class="template-card" type="button" data-template="socialGrowth">
-          <span>Sosyal medya</span>
-          <strong>Instagram / TikTok büyüme</strong>
-          <p>15.000 TL, 30 gün, takipçi ve etkileşim büyütme odaklı başlangıç planı.</p>
-        </button>
-        <button class="template-card" type="button" data-template="educationLeads">
-          <span>Eğitim</span>
-          <strong>Kurs kayıt kampanyası</strong>
-          <p>35.000 TL, 30 gün, Google Search ve YouTube ağırlıklı kayıt toplama planı.</p>
-        </button>
-        <button class="template-card" type="button" data-template="beautyBooking">
-          <span>Güzellik</span>
-          <strong>Randevu kampanyası</strong>
-          <p>18.000 TL, 15 gün, Instagram ve yerel arama odaklı randevu alma senaryosu.</p>
-        </button>
+        <a class="btn secondary bordered" href="https://forms.gle/RLdQhQzZhSPafuRt6" target="_blank" rel="noopener" data-track="feedback_click">Görüş bildir</a>
       </div>
     </section>
 
     <section class="section guides-section home-guides" id="guides">
       <div class="section-heading">
         <p class="badge">Bilgi merkezi</p>
-        <h2>Rehberleri kategoriye göre keşfet.</h2>
-        <p>Ana sayfada hızlı başlangıç için rehber kategorilerini gösteriyoruz. Tüm yazıları aramak ve filtrelemek için Rehberler Merkezi'ne geçebilirsin.</p>
+        <h2>Reklam bütçesini doğru kurmak için rehberler.</h2>
+        <p>Platform, sektör, bütçe ve metrik rehberleriyle planını hazırlamadan önce temel kararlarını netleştir.</p>
       </div>
-
-      <div class="home-guide-categories">
-        <a class="home-guide-category panel" href="rehberler.html#genel">
-          <span>01</span>
-          <strong>Genel rehberler</strong>
-          <p>Reklam bütçesi, küçük işletme planlaması ve temel medya planlama mantığı.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#platform">
-          <span>02</span>
-          <strong>Platform rehberleri</strong>
-          <p>Instagram, Google Ads, TikTok ve YouTube reklam bütçesi rehberleri.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#sektor">
-          <span>03</span>
-          <strong>Sektör rehberleri</strong>
-          <p>Kafe, e-ticaret, güzellik salonu, eğitim kursu ve yerel işletme örnekleri.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#butce">
-          <span>04</span>
-          <strong>Bütçe örnekleri</strong>
-          <p>5.000 TL, 10.000 TL, 20.000 TL, 50.000 TL ve düşük bütçe planları.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#ornek-medya-planlari">
-          <span>05</span>
-          <strong>Örnek medya planları</strong>
-          <p>Kafe, e-ticaret, güzellik salonu, 10.000 TL ve küçük işletme örnek planları.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#reklam-metrikleri-sozlugu">
-          <span>06</span>
-          <strong>Metrik sözlüğü</strong>
-          <p>CPM, CPC, CTR, CPA, ROAS, ROI, dönüşüm oranı ve erişim/gösterim farkı.</p>
-        </a>
-        <a class="home-guide-category panel" href="rehberler.html#kampanya-donemi-reklam-planlari">
-          <span>07</span>
-          <strong>Kampanya dönemi planları</strong>
-          <p>Black Friday, 11.11, bayram, yılbaşı ve özel gün reklam bütçesi rehberleri.</p>
-        </a>
+      <div class="home-guide-categories home-guide-categories-v5">
+        <a class="home-guide-category panel" href="rehberler.html#platform-rehberleri"><span>01</span><strong>Platform rehberleri</strong><p>Google Ads, Instagram, TikTok ve YouTube bütçeleri.</p></a>
+        <a class="home-guide-category panel" href="rehberler.html#sektor-rehberleri"><span>02</span><strong>Sektör rehberleri</strong><p>E-ticaret, kafe, eğitim, güzellik ve yerel işletmeler.</p></a>
+        <a class="home-guide-category panel" href="rehberler.html#butce-ornekleri"><span>03</span><strong>Bütçe örnekleri</strong><p>5.000 TL'den 50.000 TL'ye örnek plan yaklaşımları.</p></a>
+        <a class="home-guide-category panel" href="rehberler.html#reklam-metrikleri-sozlugu"><span>04</span><strong>Metrik sözlüğü</strong><p>CPM, CPC, CTR, CPA, ROAS ve ROI açıklamaları.</p></a>
       </div>
-
-      <div class="home-guide-actions">
-        <a class="btn primary" href="rehberler.html">Tüm rehberleri aç</a>
-        <a class="btn secondary bordered" href="#planner">Önce medya planı oluştur</a>
-      </div>
+      <div class="home-guide-actions"><a class="btn primary" href="rehberler.html">Tüm rehberleri incele</a></div>
     </section>
 
-    <section class="section ai-section" id="ai-planner">
-      <div class="section-heading">
-        <p class="badge">AI destekli planlayıcı · Yakında</p>
-        <h2>AI kampanya planlayıcı yakında aktif olacak.</h2>
-        <p>Bu bölüm şimdilik tanıtım modunda. OpenAI API ücretli kullanım gerektirdiği için AI taslak oluşturma özelliği geçici olarak kapalıdır.</p>
-      </div>
-
-      <div class="ai-grid">
-        <form id="aiPlannerForm" class="panel ai-form" autocomplete="off">
-          <label>
-            Kampanya briefi
-            <textarea id="aiPrompt" maxlength="1200" rows="7" placeholder="Yakında: Kampanya ihtiyacını buraya yazıp AI destekli strateji taslağı alabileceksin." disabled></textarea>
-            <span class="field-help">Kişisel bilgi, şifre, ödeme bilgisi veya özel veri yazma. Maksimum 1200 karakter.</span>
-          </label>
-          <div class="ai-actions">
-            <button id="generateAiPlan" class="btn primary" type="submit" disabled>Yakında Aktif Olacak</button>
-            <button id="clearAiPlan" class="btn secondary bordered" type="button">Temizle</button>
-          </div>
-          <p id="aiStatus" class="form-status" aria-live="polite"></p>
-          <p class="notice">AI planlayıcı şimdilik kapalıdır. Medya planı motoru, hazır şablonlar ve PDF rapor sistemi çalışmaya devam eder.</p>
-        </form>
-
-        <div class="panel ai-result-panel">
-          <div class="result-header">
-            <div>
-              <p class="mini-title">AI çıktısı</p>
-              <h3>Kampanya taslağı</h3>
-            </div>
-            <button id="copyAiPlan" class="btn small" type="button">Metni Kopyala</button>
-          </div>
-          <div id="aiResult" class="ai-result empty">
-            <p>AI destekli kampanya planlayıcı yakında aktif edilecektir. Şimdilik aşağıdaki hazır şablonları ve medya planı motorunu kullanabilirsin.</p>
-          </div>
-        </div>
+    <section class="section final-cta-section">
+      <div class="final-cta">
+        <p class="badge">Başlamaya hazır mısın?</p>
+        <h2>Bütçeni boş bir tabloda değil, anlaşılır bir planda gör.</h2>
+        <p>Formu birkaç dakikada doldur; medya karmasını, kampanya skorunu ve PDF raporunu hemen oluştur.</p>
+        <a class="btn primary" href="plan-olustur.html" data-track="final_to_planner">Ücretsiz plan oluştur</a>
       </div>
     </section>
-
-
-
-    <section class="section trust-pages-section" id="site-info">
-      <div class="section-heading">
-        <p class="badge">Güven ve şeffaflık</p>
-        <h2>KampanyaLab hakkında daha fazla bilgi</h2>
-        <p>Sitenin amacı, gizlilik yaklaşımı ve geri bildirim kanalları hakkında kısa bilgilendirme sayfaları.</p>
-      </div>
-      <div class="guide-grid">
-        <a class="guide-card panel" href="hakkinda.html">
-          <span>Kurumsal</span>
-          <strong>Hakkında</strong>
-          <p>KampanyaLab nedir, kimler için hazırlanmıştır ve nasıl kullanılmalıdır?</p>
-        </a>
-        <a class="guide-card panel" href="gizlilik-politikasi.html">
-          <span>Gizlilik</span>
-          <strong>Gizlilik Politikası</strong>
-          <p>Google Analytics, geri bildirim formu ve veri kullanımı hakkında açıklama.</p>
-        </a>
-        <a class="guide-card panel" href="iletisim.html">
-          <span>İletişim</span>
-          <strong>İletişim ve geri bildirim</strong>
-          <p>Öneri, hata bildirimi ve geliştirme fikri göndermek için bağlantılar.</p>
-        </a>
-      
-          <a class="knowledge-card" href="rehberler.html#sosyal-medya-reklam-rehberleri">
-            <span>Yeni</span>
-            <h3>Sosyal medya reklam rehberleri</h3>
-            <p>Instagram, Reels, TikTok, hedef kitle ve reklam kreatifi rehberleri.</p>
-          </a>
-        
-          <a class="knowledge-card" href="rehberler.html#televizyon-reklam-rehberleri">
-            <span>Yeni</span>
-            <h3>Televizyon reklam rehberleri</h3>
-            <p>TV reklamı nasıl verilir, neden kullanılır, bütçesi nasıl planlanır?</p>
-          </a>
-        </div>
-    </section>
-
-    <section class="section planner" id="planner">
-      <div class="section-heading">
-        <p class="badge">Plan oluşturucu</p>
-        <h2>Kampanyanı planla</h2>
-        <p>Bilgileri gir, medya dağılımını ve tahmini sonuçları anında gör.</p>
-      </div>
-
-      <div class="planner-grid">
-        <form id="plannerForm" class="panel form-panel" autocomplete="off">
-          <label>
-            Toplam bütçe (TL)
-            <input type="number" id="budget" min="1000" max="5000000" step="500" placeholder="Örn. 20000" inputmode="numeric" autocomplete="off" required />
-            <span class="field-help">Minimum 1.000 TL, önerilen üst test sınırı 5.000.000 TL.</span>
-          </label>
-
-          <label>
-            Kampanya amacı
-            <select id="goal">
-              <option value="" selected disabled>Seçiniz</option>
-              <option value="awareness">Bilinirlik</option>
-              <option value="sales">Satış</option>
-              <option value="traffic">Web site trafiği</option>
-              <option value="social">Sosyal medya büyütme</option>
-              <option value="launch">Ürün lansmanı</option>
-              <option value="local">Yerel işletme tanıtımı</option>
-            </select>
-          </label>
-
-          <label>
-            Sektör
-            <select id="sector">
-              <option value="" selected disabled>Seçiniz</option>
-              <option value="ecommerce">E-ticaret</option>
-              <option value="restaurant">Kafe / restoran</option>
-              <option value="fashion">Giyim / moda</option>
-              <option value="education">Eğitim</option>
-              <option value="technology">Teknoloji</option>
-              <option value="beauty">Güzellik / kuaför</option>
-              <option value="event">Etkinlik</option>
-              <option value="localService">Yerel hizmet</option>
-            </select>
-          </label>
-
-          <label>
-            Hedef kitle yaşı
-            <select id="audience">
-              <option value="" selected disabled>Seçiniz</option>
-              <option value="13-18">13-18</option>
-              <option value="18-24">18-24</option>
-              <option value="25-34">25-34</option>
-              <option value="35-44">35-44</option>
-              <option value="45+">45+</option>
-            </select>
-          </label>
-
-          <label>
-            Kampanya süresi
-            <select id="duration">
-              <option value="" selected disabled>Seçiniz</option>
-              <option value="7">7 gün</option>
-              <option value="15">15 gün</option>
-              <option value="30">30 gün</option>
-              <option value="60">60 gün</option>
-            </select>
-          </label>
-
-
-          <div class="agency-mode-fields">
-            <div class="agency-mode-head">
-              <span>Yeni</span>
-              <strong>Ajans / müşteri modu</strong>
-              <p>Bu alanlar isteğe bağlıdır. Doldurursan PDF rapor müşteri sunumu gibi hazırlanır.</p>
-            </div>
-
-            <label>
-              Müşteri / marka adı
-              <input type="text" id="clientName" maxlength="80" placeholder="Örn. Nova Coffee" autocomplete="off" />
-            </label>
-
-            <label>
-              Hazırlayan kişi / ajans
-              <input type="text" id="preparedBy" maxlength="80" placeholder="Örn. KampanyaLab / Ajans adı" autocomplete="off" />
-            </label>
-
-            <label>
-              Kampanya dönemi
-              <input type="text" id="campaignPeriod" maxlength="80" placeholder="Örn. Ağustos 2026 / 4 haftalık dönem" autocomplete="off" />
-            </label>
-
-            <div class="form-two-col">
-              <label>
-                Hizmet bedeli (TL)
-                <input type="number" id="serviceFee" min="0" step="500" placeholder="Örn. 5000" inputmode="numeric" autocomplete="off" />
-              </label>
-
-              <label>
-                KDV oranı (%)
-                <input type="number" id="vatRate" min="0" max="50" step="1" placeholder="Örn. 20" inputmode="numeric" autocomplete="off" />
-              </label>
-            </div>
-
-            <label>
-              Teklif / sunum notu
-              <textarea id="proposalNote" maxlength="400" rows="3" placeholder="Örn. Bu plan ilk 30 günlük test dönemi için hazırlanmıştır. Sonuçlara göre ikinci ay bütçe dağılımı yeniden optimize edilecektir."></textarea>
-            </label>
-          </div>
-
-          <button type="submit" class="btn primary full">Medya Planı Oluştur</button>
-          <p id="formStatus" class="form-status" aria-live="polite"></p>
-          <p class="notice">Not: Sonuçlar gerçek reklam performansı değil, medya planlama simülasyonudur.</p>
-        </form>
-
-        <div class="panel result-panel">
-          <div class="result-header">
-            <div>
-              <p class="mini-title">Önerilen medya karması</p>
-              <h3 id="resultTitle">Plan sonucunuz burada görünecek</h3>
-            </div>
-            <div class="result-actions">
-              <button id="downloadPdf" class="btn small primary-soft" type="button">PDF İndir</button>
-              <button id="printReport" class="btn small" type="button">Yazdır</button>
-            </div>
-          </div>
-
-          <div id="planSummary" class="plan-summary"></div>
-
-          <div id="resultOverview" class="result-overview empty">
-            <p>Plan oluşturduktan sonra burada kısa strateji özeti, tahmini skorlar ve uygulanacak ilk adımlar görünecek.</p>
-          </div>
-
-          <div id="campaignScore" class="campaign-score empty">
-            <p>Kampanya skoru plan oluşturulduktan sonra burada görünecek.</p>
-          </div>
-
-          <div id="adCopySuggestions" class="ad-copy-suggestions empty">
-            <p>Reklam metni önerileri plan oluşturulduktan sonra burada görünecek.</p>
-          </div>
-
-          <p class="result-notice">Bu ekran gerçek reklam hesabı verisi değil, başlangıç medya planı simülasyonudur. En doğru sonuç için kampanya yayındayken gerçek performans verileriyle optimize edilmelidir.</p>
-
-          <div class="result-visual-grid">
-            <div class="chart-wrap">
-              <canvas id="budgetChart"></canvas>
-            </div>
-            <div id="channelVisual" class="channel-visual empty">
-              <p>Kanal dağılımı plan oluşturunca burada görsel olarak listelenecek.</p>
-            </div>
-          </div>
-
-          <div class="stats" id="stats"></div>
-
-          <div class="insight-grid" id="insights"></div>
-
-          <div class="optimization-grid" id="optimizationCards"></div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Kanal</th>
-                  <th>Rol</th>
-                  <th>Oran</th>
-                  <th>Bütçe</th>
-                  <th>Gösterim</th>
-                  <th>Tıklama</th>
-                  <th>CPM/CPC</th>
-                </tr>
-              </thead>
-              <tbody id="allocationTable"></tbody>
-            </table>
-          </div>
-
-          <div class="channel-playbook" id="channelPlaybook"></div>
-
-          <div class="weekly-plan" id="weeklyPlan"></div>
-        </div>
-      </div>
-
-      <div class="panel report-panel">
-        <div class="report-header">
-          <div>
-            <p class="mini-title">Otomatik rapor</p>
-            <h3>Kampanya stratejisi</h3>
-          </div>
-          <div class="result-actions">
-              <button id="downloadPdfReport" class="btn small primary-soft" type="button">PDF Raporu İndir</button>
-              <button id="copyReport" class="btn small" type="button">Metni Kopyala</button>
-            </div>
-        </div>
-        <div id="strategyReport" class="report-text"></div>
-      </div>
-    </section>
-
-
-
-    <section class="section trust" id="trust">
-      <div class="section-heading">
-        <p class="badge">Güven ve kalite</p>
-        <h2>Verilerin sende kalır, sonuçlar tahminidir.</h2>
-        <p>Form hesaplamaları tarayıcı içinde yapılır. AI planlayıcı şimdilik yakında modundadır ve veri gönderimi yapmaz.</p>
-      </div>
-
-      <div class="trust-grid">
-        <article class="panel trust-card">
-          <h3>Tarayıcıda hesaplama</h3>
-          <p>Formdaki bütçe, sektör, hedef ve süre bilgileri tarayıcıda hesaplanır. AI planlayıcı şimdilik kapalıdır; aktif edildiğinde kullanıcıya ayrıca bilgi verilecektir.</p>
-        </article>
-        <article class="panel trust-card">
-          <h3>Performans garantisi değildir</h3>
-          <p>Gösterim, tıklama, CPM ve CPC değerleri tahmini simülasyondur. Gerçek sonuçlar hedefleme, kreatif kalite, rekabet, dönem ve teklif stratejisine göre değişebilir.</p>
-        </article>
-        <article class="panel trust-card">
-          <h3>Başlangıç planı üretir</h3>
-          <p>Çıkan medya karması profesyonel planlama için ilk taslak sağlar. Büyük bütçeli kampanyalarda gerçek reklam hesabı verileriyle ayrıca optimize edilmelidir.</p>
-        </article>
-      </div>
-    </section>
-
-
-    <section class="section feedback-section" id="feedback">
-      <div class="section-heading">
-        <p class="badge">Beta geri bildirimi</p>
-        <h2>KampanyaLab'ı birlikte geliştirelim.</h2>
-        <p>Bu bölüm veri kaydetmez. Seçimini ve notunu yazdıktan sonra geri bildirim metnini kopyalayıp istediğin kanaldan paylaşabilirsin.</p>
-      </div>
-
-      <div class="feedback-grid">
-        <div class="panel feedback-panel">
-          <p class="mini-title">Bu araç işine yaradı mı?</p>
-          <div class="feedback-options" role="group" aria-label="Geri bildirim seçimi">
-            <button class="feedback-choice" type="button" data-feedback="Evet, yararlı">Evet, yararlı</button>
-            <button class="feedback-choice" type="button" data-feedback="Kısmen yararlı">Kısmen</button>
-            <button class="feedback-choice" type="button" data-feedback="Geliştirilmeli">Geliştirilmeli</button>
-          </div>
-
-          <label class="feedback-label">
-            Ne geliştirelim?
-            <textarea id="feedbackText" rows="5" maxlength="600" placeholder="Örn: Şu sektör eklenebilir, PDF daha detaylı olabilir, mobilde şu bölüm geliştirilebilir..." autocomplete="off"></textarea>
-          </label>
-
-          <div class="feedback-actions">
-            <button id="copyFeedback" class="btn primary" type="button">Geri Bildirimi Kopyala</button>
-            <button id="clearFeedback" class="btn secondary bordered" type="button">Temizle</button>
-          </div>
-          <p id="feedbackStatus" class="form-status" aria-live="polite"></p>
-        </div>
-
-        <div class="panel beta-panel">
-          <p class="mini-title">Beta notları</p>
-          <h3>Şu an çalışan özellikler</h3>
-          <ul>
-            <li>Medya bütçesi dağılım motoru</li>
-            <li>Hazır kampanya şablonları</li>
-            <li>PDF rapor ve yazdırma çıktısı</li>
-            <li>CPM / CPC / ROI mini hesaplayıcıları</li>
-            <li>Mobil uyumlu kullanım</li>
-          </ul>
-          <p class="notice">AI Planlayıcı ödeme gerektirdiği için yakında modundadır. Mevcut araçlar veri kaydetmeden tarayıcıda çalışır.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section calculators" id="calculators">
-      <div class="section-heading">
-        <p class="badge">Mini araçlar</p>
-        <h2>CPM / CPC / ROI hesaplayıcı</h2>
-      </div>
-
-      <div class="calc-grid">
-        <div class="panel calc-card">
-          <h3>CPM</h3>
-          <input type="number" id="cpmCost" placeholder="Maliyet (TL)" autocomplete="off" />
-          <input type="number" id="cpmImpressions" placeholder="Gösterim" autocomplete="off" />
-          <button class="btn secondary full" data-calc="cpm">Hesapla</button>
-          <p id="cpmResult" class="calc-result">CPM: -</p>
-        </div>
-        <div class="panel calc-card">
-          <h3>CPC</h3>
-          <input type="number" id="cpcCost" placeholder="Maliyet (TL)" autocomplete="off" />
-          <input type="number" id="cpcClicks" placeholder="Tıklama" autocomplete="off" />
-          <button class="btn secondary full" data-calc="cpc">Hesapla</button>
-          <p id="cpcResult" class="calc-result">CPC: -</p>
-        </div>
-        <div class="panel calc-card">
-          <h3>ROI</h3>
-          <input type="number" id="roiRevenue" placeholder="Gelir (TL)" autocomplete="off" />
-          <input type="number" id="roiCost" placeholder="Maliyet (TL)" autocomplete="off" />
-          <button class="btn secondary full" data-calc="roi">Hesapla</button>
-          <p id="roiResult" class="calc-result">ROI: -</p>
-        </div>
-      </div>
-    </section>
-</main>
+  </main>
 
   <footer class="footer">
     <div class="footer-inner">
@@ -845,27 +211,18 @@
         <p>Reklam bütçesi ve medya planlama aracı.</p>
       </div>
       <div class="footer-links">
-        <a href="#planner">Plan Oluştur</a>
-        <a href="#templates">Şablonlar</a>
+        <a href="plan-olustur.html">Plan Oluştur</a>
+        <a href="plan-olustur.html#templates">Şablonlar</a>
         <a href="rehberler.html">Rehberler</a>
-        <a href="#ai-planner">AI Planlayıcı <span class="soon-inline">Yakında</span></a>
-        <a href="#who-uses">Kimler Kullanır?</a>
-        <a href="#product">Özellikler</a>
-        <a href="#calculators">Hesaplayıcılar</a>
-        <a href="#trust">Güven</a>
-        <a href="#feedback">Geri Bildirim</a>
         <a href="hakkinda.html">Hakkında</a>
-        <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+        <a href="gizlilik-politikasi.html">Gizlilik</a>
         <a href="iletisim.html">İletişim</a>
-        <a href="#planner">PDF Rapor</a>
+        <a href="https://forms.gle/RLdQhQzZhSPafuRt6" target="_blank" rel="noopener" data-track="feedback_click">Geri Bildirim</a>
       </div>
-      <p class="footer-note">
-        KampanyaLab tahmini medya planlama simülasyonudur; kesin reklam performansı, gelir veya satış garantisi vermez.
-        Form hesaplamaları tarayıcıda yapılır. AI planlayıcı şimdilik yakında modundadır; veri gönderimi yapmaz.
-      </p>
+      <p class="footer-note">KampanyaLab tahmini bir başlangıç medya planı üretir; kesin reklam performansı, gelir veya satış garantisi vermez. Hesaplamalar tarayıcıda yapılır.</p>
     </div>
   </footer>
-
-  <script src="app.js?v=4.7.2"></script>
+  <a class="mobile-plan-cta" href="plan-olustur.html" data-track="mobile_sticky_to_planner">Ücretsiz Plan Oluştur</a>
+  <script src="site.js?v=5.0"></script>
 </body>
 </html>

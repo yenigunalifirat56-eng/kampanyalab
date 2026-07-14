@@ -237,6 +237,8 @@ function setupInteractionTracking() {
   });
 }
 
+setupInteractionTracking();
+
 let lastPlanData = null;
 
 function clonePlan(plan) {
@@ -433,7 +435,6 @@ function createPlan() {
   const values = validatePlannerInputs();
   if (!values) {
     clearPlanOutput();
-  setupInteractionTracking();
     return;
   }
 
@@ -1550,9 +1551,16 @@ function resetPlannerDefaults() {
   setFormStatus('');
 }
 
+function applyTemplateFromUrl() {
+  const templateKey = new URLSearchParams(window.location.search).get('template');
+  if (!templateKey || !campaignTemplates[templateKey]) return;
+  window.setTimeout(() => applyTemplate(templateKey), 0);
+}
+
 window.addEventListener('pageshow', () => {
   resetPlannerDefaults();
   clearPlanOutput();
+  applyTemplateFromUrl();
 });
 
 

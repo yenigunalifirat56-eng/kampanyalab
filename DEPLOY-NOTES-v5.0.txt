@@ -1,0 +1,25 @@
+KampanyaLab v5.0
+
+Yapılan ana değişiklikler:
+- Ana sayfa sadeleştirildi ve dönüşüm odaklı hale getirildi.
+- Menü: Plan Oluştur, Şablonlar, Rehberler, Hakkında + güçlü CTA.
+- Plan oluşturucu plan-olustur.html sayfasına taşındı.
+- Ana sayfada popüler 3 şablon, plan sayfasında 6 şablon bulunur.
+- AI alanı büyük kapalı form yerine küçük “Yakında” kartına dönüştürüldü.
+- Mobil ana sayfaya sabit Plan Oluştur butonu eklendi.
+- Eski sürüm/Beta v2.1/v1.7 MVP yazıları ana sayfadan kaldırıldı.
+- Rehberlerdeki plan bağlantıları plan-olustur.html sayfasına güncellendi.
+- sitemap.xml dosyasına plan-olustur.html eklendi.
+- GA4 eventleri korunur: plan_created, pdf_downloaded, guide_to_planner_click, feedback_click, template_selected.
+
+Yükleme:
+ZIP içindeki tüm dosya ve klasörleri mevcut site dosyalarının üzerine yükleyin.
+Özellikle yeni plan-olustur.html ve site.js dosyalarının yüklendiğini kontrol edin.
+Yüklemeden sonra tarayıcı önbelleğini temizleyin veya Ctrl+F5 kullanın.
+
+Hızlı kontrol:
+1. Ana sayfadaki “Ücretsiz medya planı oluştur” butonuna tıklayın.
+2. Plan sayfasında bir şablon seçin.
+3. Sonuç, Kampanya Skoru ve reklam metni önerilerinin oluştuğunu kontrol edin.
+4. PDF indirme butonunu deneyin.
+5. Mobil menüyü ve ana sayfadaki sabit CTA’yı kontrol edin.
