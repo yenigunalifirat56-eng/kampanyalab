@@ -3553,3 +3553,79 @@ body.guides-menu-open {
     padding-top: 34px;
   }
 }
+
+
+
+/* v4.9.1: Ana sayfada güven kutusu ile eski özellik kartlarının üst üste binmesini düzeltme */
+.hero-features,
+.hero-feature-grid,
+.hero-badges,
+.hero-card-grid,
+.value-grid-floating,
+.feature-floating-grid {
+  position: static !important;
+  transform: none !important;
+  margin-top: 22px !important;
+  z-index: 1 !important;
+}
+
+.trust-strip-section {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 34px;
+  margin-bottom: 18px;
+}
+
+.trust-strip {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0 !important;
+}
+
+.beta-section,
+.feedback-section,
+.trust-pages-section,
+.guides-section,
+.planner {
+  position: relative;
+  z-index: 1;
+  clear: both;
+}
+
+@media (min-width: 901px) {
+  .trust-strip-section + section {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-features,
+  .hero-feature-grid,
+  .hero-badges,
+  .hero-card-grid,
+  .value-grid-floating,
+  .feature-floating-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin-top: 18px !important;
+  }
+
+  .trust-strip-section {
+    padding-bottom: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+/* v4.9.1 ek güvenlik: koyu güven kutusundan sonra gelen kartlar üstüne binmesin */
+.trust-strip-section + .section,
+.trust-strip-section + div,
+.trust-strip-section + .feedback-section {
+  margin-top: 28px !important;
+}
+
+.beta-feedback,
+.beta-feedback-section,
+.feedback-panel,
+.feedback-card {
+  clear: both;
+}

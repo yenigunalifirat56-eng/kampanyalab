@@ -283,3 +283,8 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
   - feedback_click
   - template_selected
 - v4.8 kampanya dönemi rehberleri ve v4.7.2 Kampanya Skoru sistemi korundu.
+
+## v4.9.1
+- v4.9 sonrası ana sayfada güven kutusu ile eski özellik kartlarının üst üste binmesi düzeltildi.
+- Güven kutusu, özellik kartları ve beta geri bildirim bölümü arasına güvenli boşluk ve katman düzeni eklendi.
+- v4.9 kullanıcı akışı ve GA4 event takibi korunur.
