@@ -1,0 +1,19 @@
+KampanyaLab v5.1 - rehber görsel sistemi ilk faz
+
+Bu güncellemede:
+- Rehberlerdeki Plan Oluştur bağlantıları plan-olustur.html sayfasına yönlendirildi.
+- İlk fazda 9 öncelikli rehbere anlamlı görsel bloklar eklendi.
+- Kullanılan görseller hafif HTML/CSS tabanlıdır; ek görsel dosyası gerektirmez.
+
+Güncellenen rehberler:
+- reklam-butcesi-nasil-hesaplanir.html
+- google-ads-butcesi.html
+- instagram-reklam-butcesi.html
+- 10000-tl-reklam-butcesi.html
+- 20000-tl-reklam-butcesi.html
+- kucuk-isletme-reklam-butcesi.html
+- eticaret-reklam-butcesi.html
+- cpm-nedir.html
+- ctr-nedir.html
+
+Not: reklam-butcesi-dagilimi.html, reklam-test-butcesi.html, remarketing-nedir.html, facebook-reklam-butcesi.html, google-ads-gunluk-butce.html ve instagram-reklam-maliyeti.html dosyalarında görsel bloklar zaten mevcuttu.
