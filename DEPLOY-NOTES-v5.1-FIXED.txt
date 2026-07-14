@@ -1,0 +1,7 @@
+KampanyaLab v5.1 FIXED
+
+Bu paket v5.0 ana sayfa ve planlayıcı düzenini korur.
+Rehber görsel sistemi ilk fazı 9 öncelikli rehbere eklenmiştir.
+Önceki v5.1 paketindeki yanlış eski index.html bu pakette düzeltilmiştir.
+
+Yükleme: Paket içindeki tüm dosyaları mevcut repo köküne kopyalayın ve değişiklikleri commit/push edin.

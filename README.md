@@ -288,3 +288,15 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - v4.9 sonrası ana sayfada güven kutusu ile eski özellik kartlarının üst üste binmesi düzeltildi.
 - Güven kutusu, özellik kartları ve beta geri bildirim bölümü arasına güvenli boşluk ve katman düzeni eklendi.
 - v4.9 kullanıcı akışı ve GA4 event takibi korunur.
+
+
+## v5.0 — Sade ana sayfa ve ayrı plan oluşturucu
+- Ana sayfa dönüşüm odaklı olarak kısaltıldı; tekrarlanan ürün, beta ve güven bölümleri birleştirildi.
+- Üst menü Plan Oluştur, Şablonlar, Rehberler ve Hakkında bağlantılarına indirildi.
+- Medya planı motoru `plan-olustur.html` sayfasına taşındı.
+- Rehberlerdeki eski `index.html#planner` bağlantıları yeni plan oluşturucuya yönlendirildi.
+- Popüler üç şablon ana sayfada tutuldu; plan sayfasında form önce, altı şablonun tamamı daha sonra yer alıyor.
+- AI planlayıcı büyük ve kapalı form yerine küçük bir “Yakında” kartına dönüştürüldü.
+- Mobil ana sayfaya sabit “Ücretsiz Plan Oluştur” CTA’sı eklendi.
+- GA4 özel eventleri korunur: `plan_created`, `pdf_downloaded`, `guide_to_planner_click`, `feedback_click`, `template_selected`.
+- `sitemap.xml` dosyasına `plan-olustur.html` eklendi.
