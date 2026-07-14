@@ -255,3 +255,31 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - style.css ve app.js dosyalarına cache kırıcı sürüm parametresi eklendi.
 - Inline CSS ve inline JS failsafe eklendi; eski panel görünse bile otomatik gizlenip silinir.
 - v4.7 Kampanya Skoru ve Reklam Metni Önerileri korunur.
+
+## v4.8
+- Yeni kategori eklendi: Kampanya Dönemi Reklam Planları.
+- 8 yeni dönemsel SEO rehberi eklendi:
+  - Black Friday reklam bütçesi
+  - 11.11 reklam bütçesi
+  - Sevgililer Günü reklam bütçesi
+  - Ramazan reklam kampanyası
+  - Anneler Günü reklam bütçesi
+  - Okula dönüş reklam bütçesi
+  - Yılbaşı reklam kampanyası
+  - Bayram reklam kampanyası
+- Rehberler Merkezi ve ana sayfa kategori kartları güncellendi.
+- Sitemap yeni sayfalarla güncellendi.
+
+## v4.9
+- Ana sayfaya 3 adımda kullanım bölümü eklendi.
+- Ana sayfaya örnek KampanyaLab çıktısı bölümü eklendi.
+- Ana sayfaya kayıt/kredi kartı gerekmeyen güven kutusu eklendi.
+- Rehberlerden plan oluşturucuya giden CTA metinleri güçlendirildi.
+- GA4 event takibi eklendi:
+  - plan_created
+  - pdf_downloaded
+  - report_copied
+  - guide_to_planner_click
+  - feedback_click
+  - template_selected
+- v4.8 kampanya dönemi rehberleri ve v4.7.2 Kampanya Skoru sistemi korundu.

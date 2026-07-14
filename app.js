@@ -191,6 +191,52 @@ const channelColors = [
 ];
 
 let chart;
+
+function trackEvent(eventName, params = {}) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, {
+        event_category: 'KampanyaLab',
+        ...params
+      });
+    }
+  } catch (error) {
+    console.warn('[Analytics] event tracking failed', eventName, error);
+  }
+}
+
+function setupInteractionTracking() {
+  document.querySelectorAll('[data-track]').forEach(item => {
+    item.addEventListener('click', () => {
+      trackEvent(item.dataset.track, {
+        link_text: (item.textContent || '').trim().slice(0, 80),
+        link_url: item.getAttribute('href') || ''
+      });
+    });
+  });
+
+  document.querySelectorAll('a[href*="#planner"]').forEach(item => {
+    if (!item.dataset.trackedPlannerLink) {
+      item.dataset.trackedPlannerLink = 'true';
+      item.addEventListener('click', () => {
+        trackEvent('guide_to_planner_click', {
+          page_path: window.location.pathname,
+          link_text: (item.textContent || '').trim().slice(0, 80)
+        });
+      });
+    }
+  });
+
+  const feedbackLinks = document.querySelectorAll('a[href*="forms.gle"], a[href*="docs.google.com/forms"]');
+  feedbackLinks.forEach(item => {
+    item.addEventListener('click', () => {
+      trackEvent('feedback_click', {
+        page_path: window.location.pathname
+      });
+    });
+  });
+}
+
 let lastPlanData = null;
 
 function clonePlan(plan) {
@@ -387,6 +433,7 @@ function createPlan() {
   const values = validatePlannerInputs();
   if (!values) {
     clearPlanOutput();
+  setupInteractionTracking();
     return;
   }
 
@@ -615,6 +662,12 @@ function renderAdCopySuggestions(data) {
 }
 
 function renderResults(data) {
+  trackEvent('plan_created', {
+    goal: data.goal,
+    sector: data.sector,
+    budget: data.budget,
+    duration: data.duration
+  });
   lastPlanData = data;
   const clientLabel = data.agency?.clientName ? ` · ${data.agency.clientName}` : '';
   document.getElementById('resultTitle').textContent = `${goalLabels[data.goal]} kampanyası planı${clientLabel}`;
@@ -980,6 +1033,10 @@ function applyTemplate(templateKey) {
   const template = campaignTemplates[templateKey];
   if (!template) return;
 
+  trackEvent('template_selected', {
+    template_name: templateKey
+  });
+
   Object.entries(template).forEach(([id, value]) => {
     const element = document.getElementById(id);
     if (element) element.value = value;
@@ -1069,6 +1126,7 @@ document.querySelectorAll('[data-calc]').forEach(button => {
 document.getElementById('copyReport').addEventListener('click', async () => {
   const text = document.getElementById('strategyReport').innerText;
   try {
+    trackEvent('report_copied', { page_path: window.location.pathname });
     await navigator.clipboard.writeText(text);
     document.getElementById('copyReport').textContent = 'Kopyalandı';
     setTimeout(() => document.getElementById('copyReport').textContent = 'Metni Kopyala', 1500);
@@ -1077,7 +1135,10 @@ document.getElementById('copyReport').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('printReport').addEventListener('click', () => window.print());
+document.getElementById('printReport').addEventListener('click', () => {
+  trackEvent('report_printed', { page_path: window.location.pathname });
+  window.print();
+});
 
 function plainTextFromHtml(html) {
   const temp = document.createElement('div');
@@ -1392,7 +1453,14 @@ function downloadPdfReport() {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const docDefinition = buildPdfDocumentDefinition(lastPlanData);
-  pdfMake.createPdf(docDefinition).download(`kampanyalab-${fileNameClient ? fileNameClient + '-' : ''}${fileNameGoal}-medya-plani.pdf`);
+  const pdfFileName = `kampanyalab-${fileNameClient ? fileNameClient + '-' : ''}${fileNameGoal}-medya-plani.pdf`;
+  trackEvent('pdf_downloaded', {
+    file_name: pdfFileName,
+    budget: lastPlanData.budget,
+    goal: lastPlanData.goal,
+    sector: lastPlanData.sector
+  });
+  pdfMake.createPdf(docDefinition).download(pdfFileName);
 }
 
 document.getElementById('downloadPdf')?.addEventListener('click', downloadPdfReport);
