@@ -300,3 +300,35 @@ Not: Yeni URL eklenmediği için sitemap.xml adres listesi v2.9 ile aynıdır. Y
 - Mobil ana sayfaya sabit “Ücretsiz Plan Oluştur” CTA’sı eklendi.
 - GA4 özel eventleri korunur: `plan_created`, `pdf_downloaded`, `guide_to_planner_click`, `feedback_click`, `template_selected`.
 - `sitemap.xml` dosyasına `plan-olustur.html` eklendi.
+
+## v5.1 — Rehber görsel sistemi Faz 1
+- Öncelikli reklam bütçesi ve metrik rehberlerine hafif HTML/CSS tabanlı görsel özetler eklendi.
+- Reklam bütçesi hesaplama, Google Ads, Instagram, 10.000 TL, 20.000 TL, küçük işletme, e-ticaret, CPM ve CTR rehberleri görselleştirildi.
+- Rehberlerdeki plan oluşturma bağlantıları `plan-olustur.html` sayfasına yönlendirildi.
+- Ana sayfa ve medya planı motoru korunur.
+
+## v5.2 — Rehber görsel sistemi Faz 2
+- 5.000 TL ve 50.000 TL reklam bütçesi rehberlerine bütçe dağılım grafikleri eklendi.
+- Hedef kitle belirleme, e-ticaret ve küçük işletme örnek medya planlarına akış ve karar şemaları eklendi.
+- ROAS, CPA ve dönüşüm oranı rehberlerine metrik hesaplama akışları eklendi.
+- Black Friday rehberine kampanya öncesi, satış dönemi ve remarketing zaman akışı eklendi.
+
+## v5.3 — İçerik derinleştirme Faz 1
+- Ana rehberlere örnek plan varsayımları eklendi.
+- Gerçekçi işletme ve kampanya senaryoları oluşturuldu.
+- Bütçe oranlarının neden seçildiğini açıklayan bölümler eklendi.
+- Reklam bütçesi hesaplama, bütçe dağılımı, Google Ads, Instagram, küçük işletme, e-ticaret, 10.000 TL, 20.000 TL, reklam test bütçesi ve hedef kitle rehberleri geliştirildi.
+
+## v5.3.1 — CSS düzeltmesi
+- v5.3 paketindeki eksik ana CSS dosyası düzeltildi.
+- Tam site tasarımı geri getirildi ve yeni içerik stilleri ana CSS dosyasına birleştirildi.
+- Ana sayfa, plan oluşturucu ve önceki rehber görselleri korunur.
+
+## v5.4 — Rehber ayrıştırma ve gelişmiş arama
+- Rehberler sayfasındaki arama sistemi tüm rehber kategorilerini kapsayacak şekilde güncellendi.
+- Arama sonucunda bulunan rehber sayısı gösterilir ve eşleşmeyen kategoriler gizlenir.
+- Instagram reklam bütçesi, reklam maliyeti, reklam verme ve Reels bütçesi rehberlerinin amaçları net biçimde ayrıştırıldı.
+- TikTok toplam bütçe ve kreatif test bütçesi rehberleri birbirinden ayrıldı.
+- 10.000 TL bütçe rehberi ile 10.000 TL örnek medya planının kullanım amacı netleştirildi.
+- İlgili rehberlere “Bu rehberin odağı” kutuları ve yönlendirici bağlantılar eklendi.
+- GA4 event takibi, plan oluşturucu, PDF sistemi ve v5 ana sayfa yapısı korunur.
