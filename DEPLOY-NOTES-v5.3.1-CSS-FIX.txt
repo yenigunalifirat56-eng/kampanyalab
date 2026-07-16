@@ -1,0 +1,12 @@
+KampanyaLab v5.3.1 - CSS düzeltmesi
+
+Sorun:
+Önceki v5.3 paketinde style.css dosyası yalnızca yeni içerik bloklarının stillerini içeriyordu. Ana site tasarım kodları eksik olduğu için HTML biçimsiz görünüyordu.
+
+Düzeltme:
+- Tam 75 KB ana style.css geri getirildi.
+- v5.3 içerik derinliği stilleri ana CSS'in sonuna eklendi.
+- app.js, site.js, api klasörü, robots.txt ve sitemap.xml tam pakette korundu.
+- v5.3 rehber içerik güncellemeleri korundu.
+
+Bu paketteki tüm dosyaları repo köküne yükleyip mevcut dosyaların üzerine yazın.
