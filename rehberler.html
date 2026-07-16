@@ -59,6 +59,7 @@
         <p>Başlık, konu veya kategoriye göre arama yapabilirsin.</p>
       </div>
       <input id="guideSearch" class="guide-search-input" type="search" placeholder="Örn: Google Ads, 10.000 TL, ROAS, kafe..." autocomplete="off" />
+      <p id="guideSearchStatus" class="guide-search-status" aria-live="polite">Tüm rehberler gösteriliyor.</p>
     </section>
 
     <div class="guide-hub-quicklinks panel">
@@ -68,6 +69,10 @@
       <a href="#butce-ornekleri">Bütçe örnekleri</a>
       <a href="#ornek-medya-planlari">Örnek medya planları</a>
       <a href="#reklam-metrikleri-sozlugu">Metrik sözlüğü</a>
+      <a href="#guncel-arama-konulari">Popüler konular</a>
+      <a href="#sosyal-medya-reklam-rehberleri">Sosyal medya</a>
+      <a href="#kampanya-donemi-reklam-planlari">Kampanya dönemleri</a>
+      <a href="#televizyon-reklam-rehberleri">TV reklamları</a>
     </div>
 
     
@@ -334,8 +339,8 @@
           </a>
           <a class="guide-card" href="tiktok-reklam-butcesi-nasil-belirlenir.html" data-category="social">
             <span>Sosyal medya reklamları</span>
-            <h3>TikTok reklam bütçesi nasıl belirlenir?</h3>
-            <p>TikTok reklam bütçesi rehberi: kısa video stratejisi, hedef kitle, kreatif testi, günlük bütçe ve performans takibi.</p>
+            <h3>TikTok kreatif test bütçesi</h3>
+            <p>Video varyasyonları, test süresi ve kazanan kreatife bütçe kaydırma yaklaşımı.</p>
           </a>
           <a class="guide-card" href="instagram-mi-tiktok-mu.html" data-category="social">
             <span>Sosyal medya reklamları</span>
@@ -473,17 +478,52 @@
 
   <script>
     const searchInput = document.getElementById('guideSearch');
-    const guideCards = document.querySelectorAll('.hub-guide-card');
+    const searchStatus = document.getElementById('guideSearchStatus');
+    const guideCards = Array.from(document.querySelectorAll('.guide-card'));
+    const guideSections = Array.from(document.querySelectorAll('.guide-hub-category, .guide-category'));
+
+    const normalizeGuideText = (value) => (value || '')
+      .toLocaleLowerCase('tr-TR')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ı/g, 'i')
+      .replace(/[^a-z0-9\s.]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
 
     function applyGuideSearch() {
-      const query = (searchInput.value || '').toLowerCase().trim();
+      const query = normalizeGuideText(searchInput.value);
+      let visibleCount = 0;
+
       guideCards.forEach(card => {
-        const matchesQuery = !query || card.dataset.text.includes(query);
-        card.style.display = matchesQuery ? '' : 'none';
+        const searchableText = normalizeGuideText([
+          card.dataset.title,
+          card.dataset.text,
+          card.dataset.category,
+          card.textContent
+        ].filter(Boolean).join(' '));
+        const queryTokens = query.split(' ').filter(Boolean);
+        const matchesQuery = !queryTokens.length || queryTokens.every(token => searchableText.includes(token));
+        card.hidden = !matchesQuery;
+        if (matchesQuery) visibleCount += 1;
       });
+
+      guideSections.forEach(section => {
+        const hasVisibleCard = Array.from(section.querySelectorAll('.guide-card')).some(card => !card.hidden);
+        section.hidden = Boolean(query) && !hasVisibleCard;
+      });
+
+      if (!query) {
+        searchStatus.textContent = `Tüm ${guideCards.length} rehber gösteriliyor.`;
+      } else if (visibleCount === 0) {
+        searchStatus.textContent = `“${searchInput.value.trim()}” için rehber bulunamadı.`;
+      } else {
+        searchStatus.textContent = `${visibleCount} rehber bulundu.`;
+      }
     }
 
     searchInput.addEventListener('input', applyGuideSearch);
+    applyGuideSearch();
   </script>
   <script src="site.js?v=5.0"></script>
 </body>

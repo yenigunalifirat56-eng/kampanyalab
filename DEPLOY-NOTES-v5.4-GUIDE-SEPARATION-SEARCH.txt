@@ -1,0 +1,15 @@
+KampanyaLab v5.4 - Rehber ayrıştırma ve arama düzeltmesi
+
+Temel: v5.3.1 CSS Fix stabil paketi.
+
+Yapılanlar:
+- Rehberler sayfasındaki arama artık tüm .guide-card öğelerinde çalışır.
+- Sosyal medya, popüler konular, kampanya dönemleri ve TV rehberleri de aranabilir.
+- Arama sonucu sayısı gösterilir; sonuçsuz kategoriler geçici olarak gizlenir.
+- Hızlı kategori bağlantılarına yeni kategoriler eklendi.
+- Instagram bütçe / maliyet / reklam verme / Reels içerikleri amaçlarına göre ayrıştırıldı.
+- TikTok toplam bütçe içeriği ile kreatif test bütçesi içeriği ayrıştırıldı.
+- 10.000 TL bütçe rehberi ile hazır örnek medya planının farkı açıklandı.
+- TikTok ikinci sayfasının başlığı kreatif test niyetine göre güncellendi.
+
+Ana sayfa, plan oluşturucu, style.css ana yapısı ve önceki v5.3 içerik güncellemeleri korunmuştur.
