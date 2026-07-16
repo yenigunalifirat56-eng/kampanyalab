@@ -1,0 +1,22 @@
+KampanyaLab v5.2 - Rehber görsel sistemi Faz 2
+
+Bu paket, mevcut stabil v5.1 fixed sürümü temel alınarak hazırlanmıştır.
+Ana sayfa ve plan oluşturucu yapısı korunmuştur.
+
+Faz 2 kapsamında güncellenen sayfalar:
+- 5000-tl-reklam-butcesi.html
+- 50000-tl-reklam-butcesi.html
+- hedef-kitle-nasil-belirlenir.html
+- eticaret-ornek-medya-plani.html
+- kucuk-isletme-ornek-medya-plani.html
+- roas-nedir.html
+- cpa-nedir.html
+- donusum-orani-nedir.html
+- black-friday-reklam-butcesi.html
+
+Eklenenler:
+- Anlamlı HTML/CSS tabanlı görsel bloklar
+- Akış şemaları, bütçe dağılım barları ve metrik akışları
+- Tasarımla uyumlu hafif görsel özet bileşenleri
+
+Not: Bu paketi repo köküne yükleyip mevcut dosyaların üzerine yazabilirsin.
