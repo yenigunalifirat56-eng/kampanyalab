@@ -1,0 +1,24 @@
+KampanyaLab v5.3 - İçerik derinleştirme Faz 1
+
+Bu paket v5.2 stabil sürümü temel alınarak hazırlanmıştır. Ana sayfa, plan oluşturucu ve önceki rehber görselleri korunmuştur.
+
+Güncellenen ana rehberler:
+- reklam-butcesi-nasil-hesaplanir.html
+- reklam-butcesi-dagilimi.html
+- google-ads-butcesi.html
+- instagram-reklam-butcesi.html
+- kucuk-isletme-reklam-butcesi.html
+- eticaret-reklam-butcesi.html
+- 10000-tl-reklam-butcesi.html
+- 20000-tl-reklam-butcesi.html
+- reklam-test-butcesi.html
+- hedef-kitle-nasil-belirlenir.html
+
+Eklenen içerik bileşenleri:
+- Örnek plan varsayımları
+- Gerçekçi işletme ve kampanya senaryoları
+- Bütçe oranlarının gerekçeleri
+- Uyarı ve yorum notları
+- 10.000 TL ve 20.000 TL sayfalarında eksik görsel özetlerin tamamlanması
+
+Değiştirilen rehberlerde son güncelleme tarihi 16 Temmuz 2026 olarak yenilenmiştir.
